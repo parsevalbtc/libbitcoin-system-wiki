@@ -321,7 +321,7 @@ The tendency toward reduced participation in [Mining](#mine) or [Validation](#va
 The tendency toward few [Miners](#miner), including consolidation by [Relays](#relay).
 > Collusion is a common alias for this.
 #### Centralization
-The tendency toward few [Merchants](#merchants).
+The tendency toward few [Merchants](#merchant).
 > Merchants directly control validation.
 #### Delegation
 The tendency toward few [Owners](#owner).
