@@ -18,16 +18,16 @@ purchasing-power-this-year = purchasing-power-last-year * annual-growth-ratio
 The presumption of fixed-supply money price deflation also rests on the assumption of positive economic growth. In the case of economic contraction the money exhibits [price inflation](https://en.wikipedia.org/wiki/Inflation). The case of economic growth (increasing wealth) implies interest exceeds depreciation. Both interest and depreciation must always be positive as implied by [time preference](Time-Preference-Fallacy).
 ```
 interest-ratio > depreciation-ratio > 100%
-growth-ratio / interest-ratio = depreciation-ratio
-growth-ratio / interest-ratio > 100%
-growth-ratio < interest-ratio
+interest-ratio / growth-ratio = depreciation-ratio
+interest-ratio / growth-ratio > 100%
+interest-ratio > growth-ratio
 ```
 Economic contraction (decreasing wealth) implies an increasing rate of [interest](Glossary#interest), as implied by the [theory of marginal utility](https://en.wikipedia.org/wiki/Marginal_utility), until positive growth is restored. As such contraction is a self-correcting condition.
 ```
 depreciation-ratio > interest-ratio > 100%
-growth-ratio / interest-ratio = depreciation-ratio
-growth-ratio / interest-ratio > 100%
-growth-ratio < interest-ratio
+interest-ratio / growth-ratio = depreciation-ratio
+interest-ratio / growth-ratio > 100%
+interest-ratio > growth-ratio
 ```
 Notice that in both cases of economic growth and contraction, interest must exceed growth, as [lending](Glossary#loan) is the only source of growth. Given that growth is the sole basis of deflation in a deflationary money, hoarding the money represents monetary depreciation (consumption).
 
