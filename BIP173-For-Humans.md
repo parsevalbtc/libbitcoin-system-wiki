@@ -4,31 +4,35 @@ address   => a..90 characters in the form [prefix][separator][payload]
 prefix    -> 1..p characters from { '!'..'~' }
 separator -> '1'
 payload   => (version)(program)(checksum)
-version   -> 1 number from { 0 .. 16 } mapped to base32
-program   -> 0..n bytes converted to base32
-checksum  -> 6 values from base32
+version   -> 1 base32 value from { 0 .. 16 }
+program   -> 4..64 base32 values (converted from 2..40 bytes)
+checksum  -> 6 base32 values
 ```
-The minimum address length `a` is deduced from `1 + 1 + 1 + 0 + 6 = 9`.
+The minimum address length `a` is deduced from `1 + 1 + 1 + 4 + 6 = 13`.
 
 > There are several BIP173 "bech32" test vectors that exclude the version. These are not valid addresses.
 
-The maximum prefix length `p` is deduced from `90 - 1 - 1 - 0 - 6 = 82`.
+The maximum prefix length `p` is deduced from `90 - 1 - 1 - 4 - 6 = 78`.
 
 > There are BIP173 "bech32" test vectors that exclude the version and therefore overstate the maximum prefix length. These are not valid addresses.
 
-The maximum program length `n` is deduced from `90 - a = 81`.
+The maximum program length is deduced from `90 - a = 77`, but is further constrained to `4..64` base32 values (2-40 bytes) by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki).
 
-The payload length ranges from `1 + 0 + 6 = 7` to `n - 7 = 74`. 
+The payload length ranges from `1 + 4 + 6 = 11` to `1 + 64 + 6 = 71`. 
 
 > It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
 
-Constraints on the witness version and program are provided by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki). All valid versions must be supported despite lack of semantic validation for the program of undefined versions. The program should be validated for known witness versions.
+Constraints on the witness version and program are provided by BIP141. All valid versions must be supported despite lack of semantic validation for the program of undefined versions. The program should be validated for known witness versions.
 
-> Libbitcoin provides a "strict" parsing option which only accepts addresses with known witness programs.
+> Libbitcoin provides a "strict" parsing option which rejects addresses with unknown witness programs.
+
+BIP141 explicitly limits programs to between 2 and 40 bytes, however this is not a necessary limit of the above address parsing.
+
+> Semantic evaluation of the witness version and program is much more straightforward once the program is converted to bytes.
 
 Prefixes other than "bc" and "tb" are considered invalid.
 
-> There are many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
+> There are many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb". Given that the prefix maximum length is not otherwise limited, addresses may be a full 90 characters, and given treatment of the minimum prefix length as one character, the minimum address length is 13. Strict parsing limits addresses to between 14 and 74 characters by adding the two character prefix constraint.
 
 Case is ignored, but mixed case is considered invalid.
 
