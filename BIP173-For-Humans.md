@@ -133,7 +133,7 @@ While [BIP173](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki) p
 ```
 
 ## Checksum Computation
-The checksum is computed over base32 values and compared with `bech32_constant(...)` for validation. The constant abstracts a deviation from BIP173 required by [BIP350](https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki).
+The checksum is computed over base32 values and compared with `bech32_constant(version)` for validation. The constant abstracts a version-dependent deviation from BIP173 required by [BIP350](https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki).
 
 The input to creating or validating a checksum is `(prefix)(version)(program)`. Utilities for expanding the string prefix (for checksum computation) and the integer checksum to base32 (for address incorporation) are also shown below.
 
