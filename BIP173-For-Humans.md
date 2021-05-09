@@ -72,7 +72,7 @@ While BIP173 program conversion is often exceedingly opaque, it is really as sim
     for (const auto& value: data)
         bit_writer.write_bits(value, 5);
 
-    // If padded and valid 8-to-5 conversion drop pad byte, clear if invalid.
+    // If padded and valid 8-to-5 conversion, drop pad byte, clear if invalid.
     if ((data.size() * 5) % 8 != 0)
         out.resize(out.back() == 0x00 ? out.size() - 1u : 0);
 ```
