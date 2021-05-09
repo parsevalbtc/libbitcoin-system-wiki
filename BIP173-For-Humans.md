@@ -30,7 +30,7 @@ Constraints on the witness version and program are provided by BIP141. All valid
 
 Case is ignored, but mixed case is considered invalid.
 
-## Base32
+## Base32 Encoding
 Base32 characters have the following 1:1 mapping to/from base32 values. Only the payload is base32 encoded in an address, the prefix and separator are merely string concatenated with the encoded payload.
 
 > Upper and lower case characters are mapped to the same values, so single-casing simplifies implementation.
