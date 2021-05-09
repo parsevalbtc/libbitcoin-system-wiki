@@ -4,7 +4,7 @@ address   => a..90 characters in the form [prefix][separator][payload]
 prefix    -> 1..p characters from { '!'..'~' }
 separator -> '1'
 payload   => (version)(program)(checksum)
-version   -> 1 base32 value from { 0 .. 16 }
+version   -> 1 base32 value from { 0..16 }
 program   -> 4..64 base32 values (converted from 2..40 bytes)
 checksum  -> 6 base32 values
 ```
