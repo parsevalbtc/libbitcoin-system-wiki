@@ -18,11 +18,19 @@ The maximum prefix length `p` is deduced from `90 - 1 - 1 - 6 = 82`. Subtracted 
 
 The maximum program length `n` is deduced from `90 - a = 81`.
 
+> It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
+
 Case is ignored, but mixed case is considered invalid.
+
+Prefixes other than "bc" and "tb" are considered invalid.
+
+> There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
 
 ## Program Constraints
 
 Constraints on the witness version and program are provided by BIP141. All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
+
+> Libbitcoin provides a "strict" parsing option which limits program validation to known versions.
 
 ## Base32
 Base32 characters have the following 1:1 mapping to/from base32 values.
