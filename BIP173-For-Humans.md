@@ -52,7 +52,7 @@ Program conversion from bytes to/from base32 values follows a linear bit mapping
 [11111111][11111111] => [11111][11111][11111][1xxxx]
 [11111][11111][11111][1xxxx] => [11111111][11111111][xxxxpppp]
 ```
-The 8-to-5 bit mapping pads the last value with 1..4 zero bits (x).
+The 8-to-5 bit mapping pads the last value with 1..4 zero bits (x). Multiples of 5 bytes will not be padded.
 
 The 5-to-8 bit mapping trims 1..4 bits (which must be zero). When `(source.size() * 5) % 8` is non-zero, the last source value was padded.
 
