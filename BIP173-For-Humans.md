@@ -107,11 +107,11 @@ The 8-to-5 bit mapping pads the last value with 1..4 zero bits (x). Multiples of
 
 The 5-to-8 bit mapping trims 1..4 bits (which must be zero). When `(source.size() * 5) % 8` is non-zero, the last source value was padded.
 
-> When writing whole bytes from source, the last byte, e.g. `[xxxxpppp]`, will either be unpadded or *all* padding (and must be dropped). If size indicates source padding, and the last byte is non-zero, the source was not converted properly from bytes. This must be tested in order to invalidate malformed addresses. Bit twiddling is necessary when working in assembler or C, but in C++ is the antipattern of [accidental complexity](https://en.wikipedia.org/wiki/No_Silver_Bullet).
+> When writing whole bytes from source, the last byte, e.g. `[xxxxpppp]`, will either be unpadded or *all* padding (and must be dropped). If size indicates source padding, and the last byte is non-zero, the source was not converted properly from bytes. This must be tested in order to invalidate malformed addresses.
 
 While [BIP173](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki) program conversion is often exceedingly [opaque](https://github.com/sipa/bech32/blob/master/ref/c%2B%2B/segwit_addr.cpp#L33-L54), it is really as simple as this.
 
-> It is often the case that when manipulating bits on arbitrary byte boundaries, code becomes exceedingly complex and fragile. Often the solution is to use a bit stream reader and/or writer. This eliminates what is essentially an [impedance mismatch](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch), reducing the problem to its essence (e.g. "read 8, write 5" or "read 5, write 8").
+> It is often the case that when manipulating bits on arbitrary byte boundaries, code becomes exceedingly complex and fragile. Often the solution is to use a bit stream reader and/or writer. This eliminates what is essentially an [impedance mismatch](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch), reducing the problem to its essence (e.g. "read 8, write 5" or "read 5, write 8"). Bit twiddling is necessary when working in assembler or C, but in C++ this the antipattern of [accidental complexity](https://en.wikipedia.org/wiki/No_Silver_Bullet).
 
 ```cpp
     // 8-to-5 conversion snippet
