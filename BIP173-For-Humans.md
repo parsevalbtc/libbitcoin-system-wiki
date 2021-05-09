@@ -22,15 +22,17 @@ The payload length ranges from `1 + 0 + 6 = 7` to `n - 7 = 74`.
 
 > It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
 
-Prefixes other than "bc" and "tb" are considered invalid.
-
-> There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
-
 Constraints on the witness version and program are provided by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki). All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
 
 > Libbitcoin provides a "strict" parsing option which only validates known witness versions.
 
+Prefixes other than "bc" and "tb" are considered invalid.
+
+> There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
+
 Case is ignored, but mixed case is considered invalid.
+
+> Addresses are required to be created as lower case, however this is of no consequence given that mixed case is invalid and all upper case is not.
 
 ## Base32 Encoding
 Base32 characters have the following 1:1 mapping to/from base32 values. Only the payload is base32 encoded in an address, the prefix and separator are merely string concatenated with the encoded payload.
@@ -153,12 +155,13 @@ size_t bech32_expanded_prefix_size(const std::string& prefix)
 
 void bech32_expand_prefix(base32_chunk& out, const std::string& prefix)
 {
-    const auto size = prefix.size();
+    const auto lower = ascii_to_lower(prefix);
+    const auto size = lower.size();
     out[size] = 0x00;
 
     for (size_t index = 0; index < size; ++index)
     {
-        char character = prefix[index];
+        char character = lower[index];
         out[index] = character >> 5;
         out[size + 1u + index] = character;
     }
