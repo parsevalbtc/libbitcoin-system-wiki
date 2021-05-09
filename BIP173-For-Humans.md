@@ -8,15 +8,15 @@ version   -> 1 number from { 0 .. 16 } mapped to base32
 program   -> 0..n bytes converted to base32
 checksum  -> 6 values from base32
 ```
-The minimum address length `a` is deduced from `1 + 1 + 1 + 6 = 9`. Added are the minimum lengths of `prefix`, `separator`, `version` and `checksum` respectively.
+The minimum address length `a` is deduced from `1 + 1 + 1 + 0 + 6 = 9`. Added are the minimum lengths of all components.
 
-> There are several BIP173 "bech32" test vectors that exclude `version`. These are not valid addresses.
+> There are several BIP173 "bech32" test vectors that exclude the version. These are not valid addresses.
 
-The maximum prefix length `p` is deduced from `90 - 1 - 1 - 6 = 82`. Subtracted are the minimum lengths of `separator`, `version` and `checksum` respectively.
+The maximum prefix length `p` is deduced from `90 - 1 - 1 - 0 - 6 = 82`. Subtracted are the minimum lengths of all other components.
 
-> There are BIP173 "bech32" test vectors that exclude `version` and therefore overstate the maximum prefix length. These are not valid addresses.
+> There are BIP173 "bech32" test vectors that exclude the version and therefore overstate the maximum prefix length. These are not valid addresses.
 
-The maximum program length `n` is deduced from `90 - a = 81`.
+The maximum program length `n` is deduced from `90 - a = 81` and the payload length ranges from `1 + 0 + 6 = 7` to `n - 7 = 74`. 
 
 > It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
 
