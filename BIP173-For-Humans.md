@@ -32,7 +32,7 @@ Prefixes other than "bc" and "tb" are considered invalid.
 
 Case is ignored, but mixed case is considered invalid.
 
-> Addresses are required to be created as lower case, however this is of no consequence given that mixed case is invalid and all upper case is not.
+> Addresses are required to be created as lower case, however this is of no consequence given that fully upper or lower addresses are equally valid.
 
 ## Base32 Encoding
 Base32 characters have the following 1:1 mapping to/from base32 values. Only the payload is base32 encoded in an address, the prefix and separator are merely string concatenated with the encoded payload.
