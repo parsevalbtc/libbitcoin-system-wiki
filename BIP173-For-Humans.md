@@ -44,7 +44,58 @@ letters   => {'a', 29}, {'c', 24}, {'d', 13}, {'e', 25}, {'f',  9}, {'g',  8}, {
              {'v', 12}, {'w', 14}, {'x',  6}, {'y',  4}, {'z',  2}
 ```
 
-> Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides base32 functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, "bech32" functions for checksum computation, and the `witness_address` class for address manipulation. 
+> Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides base32 functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, "bech32" functions for checksum computation, and the `witness_address` class for address manipulation.
+
+```cpp
+constexpr char encode[] = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+constexpr uint8_t decode[] =
+{
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    15,   0xff, 10,   17,   21,   20,   26,   30,
+    7,    5,    0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 29,   0xff, 24,   13,   25,   9,    8,
+    23,   0xff, 18,   22,   31,   27,   19,   0xff,
+    1,    0,    3,    16,   11,   28,   12,   14,
+    6,    4,    2,    0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 29,   0xff, 24,   13,   25,   9,    8,
+    23,   0xff, 18,   22,   31,   27,   19,   0xff,
+    1,    0,    3,    16,   11,   28,   12,   14,
+    6,    4,    2,    0xff, 0xff, 0xff, 0xff, 0xff
+};
+
+std::string encode_base32(const base32_chunk& data)
+{
+    std::string out;
+    out.reserve(data.size());
+
+    for (auto value: data)
+        out.push_back(encode[value]);
+
+    return out;
+}
+
+bool decode_base32(base32_chunk& out, const std::string& in)
+{
+    out.reserve(in.size());
+
+    for (auto character: in)
+    {
+        const auto value = decode[character];
+
+        if (value == 0xff)
+            return false;
+
+        out.push_back(value);
+    }
+
+    return true;
+}
+```
 
 ## Program Conversion
 Program conversion from bytes to/from base32 values follows a linear bit mapping, shown with most significant bytes and bits to the left.
@@ -80,7 +131,7 @@ While BIP173 program conversion is often exceedingly opaque, it is really as sim
 ## Checksum Computation
 The checksum is computed over base32 values and compared with `constant(...)` value for validation.
 
-The input to creating or validating a checksum is `(prefix)(version)(program)`. Utilities for expanding the string prefix (for checksum computation) and the integer checksum to base32 (for address incorporation) are provided.
+The input to creating or validating a checksum is `(prefix)(version)(program)`. Utilities for expanding the string prefix (for checksum computation) and the integer checksum to base32 (for address incorporation) are also shown below.
 
 > BIP173 test vector checksums fail under BIP350 where their version is non-zero.
 
