@@ -22,7 +22,7 @@ The payload length ranges from `1 + 0 + 6 = 7` to `n - 7 = 74`.
 
 > It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
 
-Constraints on the witness version and program are provided by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki). All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
+Constraints on the witness version and program are provided by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki). All valid versions must be supported despite lack of semantic validation for the program of undefined versions. The program should be validated for known witness versions.
 
 > Libbitcoin provides a "strict" parsing option which only validates known witness versions.
 
