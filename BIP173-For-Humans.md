@@ -28,7 +28,7 @@ Constraints on the witness version and program are provided by [BIP141](https://
 
 Prefixes other than "bc" and "tb" are considered invalid.
 
-> There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
+> There are many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
 
 Case is ignored, but mixed case is considered invalid.
 
