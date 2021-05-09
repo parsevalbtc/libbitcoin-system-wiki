@@ -30,7 +30,7 @@ Case is ignored, but mixed case is considered invalid.
 
 Constraints on the witness version and program are provided by BIP141. All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
 
-> Libbitcoin provides a "strict" parsing option which limits program validation to known versions.
+> Libbitcoin provides a "strict" parsing option which only validates known program versions.
 
 ## Base32
 Base32 characters have the following 1:1 mapping to/from base32 values.
