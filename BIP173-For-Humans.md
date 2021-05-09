@@ -33,7 +33,7 @@ Constraints on the witness version and program are provided by BIP141. All valid
 > Libbitcoin provides a "strict" parsing option which only validates known witness versions.
 
 ## Base32
-Base32 characters have the following 1:1 mapping to/from base32 values.
+Base32 characters have the following 1:1 mapping to/from base32 values. Note that only the payload is base32 encoded in an address.
 
 > Upper and lower case characters are mapped to the same values, so single-casing simplifies implementation.
 
@@ -43,6 +43,8 @@ letters   => {'a', 29}, {'c', 24}, {'d', 13}, {'e', 25}, {'f',  9}, {'g',  8}, {
              {'l', 31}, {'m', 27}, {'n', 19}, {'p',  1}, {'q',  0}, {'r',  3}, {'s', 16}, {'t', 11}, {'u', 28},
              {'v', 12}, {'w', 14}, {'x',  6}, {'y',  4}, {'z',  2}
 ```
+
+> Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides base32 functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, "bech32" functions for checksum computation, and the `witness_address` class for address manipulation. 
 
 ## Program Conversion
 Program conversion from bytes to/from base32 values follows a linear bit mapping, shown with most significant bytes and bits to the left.
