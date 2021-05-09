@@ -24,7 +24,7 @@ Prefixes other than "bc" and "tb" are considered invalid.
 
 > There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
 
-Constraints on the witness version and program are provided by BIP141. All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
+Constraints on the witness version and program are provided by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki). All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
 
 > Libbitcoin provides a "strict" parsing option which only validates known witness versions.
 
@@ -109,7 +109,9 @@ The 5-to-8 bit mapping trims 1..4 bits (which must be zero). When `(source.size(
 
 > When writing whole bytes from source, the last byte, e.g. `[xxxxpppp]`, will either be unpadded or *all* padding (and must be dropped). If size indicates source padding, and the last byte is non-zero, the source was not converted properly from bytes. This must be tested in order to invalidate malformed addresses.
 
-While BIP173 program conversion is often exceedingly opaque, it is really as simple as this.
+While [BIP173](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki) program conversion is often exceedingly [opaque](https://github.com/sipa/bech32/blob/master/ref/c%2B%2B/segwit_addr.cpp#L33-L54), it is really as simple as this.
+
+> It is often the case that when manipulating bits on arbitrary byte boundaries, code becomes exceedingly complex and fragile. The solution is often to use a bit stream reader and/or writer.
 
 ```cpp
     // 8-to-5 conversion snippet
@@ -127,7 +129,7 @@ While BIP173 program conversion is often exceedingly opaque, it is really as sim
 ```
 
 ## Checksum Computation
-The checksum is computed over base32 values and compared with `constant(...)` value for validation.
+The checksum is computed over base32 values and compared with `bech32_constant(...)` value for validation. This is a deviation from BIP173 required by [BIP350](https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki).
 
 The input to creating or validating a checksum is `(prefix)(version)(program)`. Utilities for expanding the string prefix (for checksum computation) and the integer checksum to base32 (for address incorporation) are also shown below.
 
