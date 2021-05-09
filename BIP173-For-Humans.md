@@ -58,6 +58,29 @@ The 5-to-8 bit mapping trims 1..4 bits (which must be zero). When `(source.size(
 
 > When writing whole bytes from source, the last byte, e.g. `[xxxxpppp]`, will either be unpadded or *all* padding (and must be dropped). If size indicates source padding, and the last byte is non-zero, the source was not converted properly from bytes. This must be tested in order to invalidate malformed addresses.
 
+While BIP173 program conversion is often exceedingly opaque, it is really as simple as this.
+
+```cpp
+    // 8-to-5 conversion snippet
+    while (!bit_reader.is_exhausted())
+        out.push_back(bit_reader.read_bits(5));
+```
+```cpp
+    // 5-to-8 conversion snippet
+    for (const auto& value: data)
+        bit_writer.write_bits(value, 5);
+
+    if ((data.size() * 5) % 8 != 0)
+    {
+        // Invalid 8-to-5 conversion.
+        if (out.back() != 0x00)
+            return {};
+
+        // Drop full byte of padding.
+        out.resize(out.size() - 1u);
+    }
+```
+
 ## Checksum Computation
 The checksum is computed over base32 values and compared with `constant(...)` value for validation.
 
