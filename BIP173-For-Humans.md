@@ -10,7 +10,7 @@ checksum  -> 6 base32 values
 ```
 The minimum address length `a` is deduced from `1 + 1 + 1 + 4 + 6 = 13`.
 
-> There are several BIP173 "bech32" test vectors that exclude the version. These are not valid addresses.
+> There are several BIP173 "bech32" test vectors that exclude the version/program. These are not valid addresses.
 
 The maximum prefix length `p` is deduced from `90 - 1 - 1 - 4 - 6 = 78`.
 
