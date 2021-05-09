@@ -1,4 +1,4 @@
-## Address
+## Address Constraints
 ```
 address   => a..90 characters in the form [prefix][separator][payload]
 prefix    -> 1..p characters from { '!'..'~' }
