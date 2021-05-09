@@ -26,10 +26,6 @@ Constraints on the witness version and program are provided by BIP141. All valid
 
 > Libbitcoin provides a "strict" parsing option which rejects addresses with unknown witness programs.
 
-BIP141 explicitly limits programs to between 2 and 40 bytes, however this is not a necessary limit of the above address parsing.
-
-> Semantic evaluation of the witness version and program is much more straightforward once the program is converted to bytes.
-
 Prefixes other than "bc" and "tb" are considered invalid.
 
 > There are many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb". Given that the prefix maximum length is not otherwise limited, addresses may be a full 90 characters, and given treatment of the minimum prefix length as one character, the minimum address length is 13. Strict parsing limits addresses to between 14 and 74 characters by adding the two character prefix constraint.
@@ -175,7 +171,7 @@ void bech32_expand_checksum(base32_chunk& out, uint32_t checksum)
 {
     auto index = out.size() - bech32_checksum_size;
 
-    // The top two bits of the 32 bit checksum are discarded.
+    // The top two bits of the 32 bit checksum are unused/discarded.
     out[index++] = (checksum >> 25);
     out[index++] = (checksum >> 20);
     out[index++] = (checksum >> 15);
