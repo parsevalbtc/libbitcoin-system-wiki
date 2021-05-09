@@ -24,16 +24,14 @@ Prefixes other than "bc" and "tb" are considered invalid.
 
 > There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
 
-Case is ignored, but mixed case is considered invalid.
-
-## Program Constraints
-
 Constraints on the witness version and program are provided by BIP141. All valid versions should be supported despite lack of semantic validation for the program of undefined versions. The program must be validated for known witness versions.
 
 > Libbitcoin provides a "strict" parsing option which only validates known witness versions.
 
+Case is ignored, but mixed case is considered invalid.
+
 ## Base32
-Base32 characters have the following 1:1 mapping to/from base32 values. Note that only the payload is base32 encoded in an address.
+Base32 characters have the following 1:1 mapping to/from base32 values. Only the payload is base32 encoded in an address, the prefix and separator are merely string concatenated with the encoded payload.
 
 > Upper and lower case characters are mapped to the same values, so single-casing simplifies implementation.
 
