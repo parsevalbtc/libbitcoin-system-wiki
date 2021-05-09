@@ -199,7 +199,7 @@ uint32_t bech32_checksum(const base32_chunk& data)
 
 // BIP173: All versions use 0x00000001 (bech32).
 // BIP350: Nonzero versions use 0x2bc830a3 (bech32m).
-uint32_t constant(uint8_t version)
+uint32_t bech32_constant(uint8_t version)
 {
     return version == 0 ? 0x00000001 : 0x2bc830a3;
 }
