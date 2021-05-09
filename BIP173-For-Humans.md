@@ -16,7 +16,7 @@ The maximum prefix length `p` is deduced from `90 - 1 - 1 - 4 - 6 = 78`.
 
 > There are BIP173 "bech32" test vectors that exclude the version and therefore overstate the maximum prefix length. These are not valid addresses.
 
-The maximum program length is deduced from `90 - a = 77`, but is further limited to `4..64` base32 values (2-40 bytes) by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki).
+The maximum program length is deduced from `90 - a = 77`, but further limited to `4..64` base32 values (2-40 bytes) by [BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki).
 
 The payload length ranges from `1 + 4 + 6 = 11` to `1 + 64 + 6 = 71`. 
 
