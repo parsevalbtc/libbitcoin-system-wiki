@@ -20,11 +20,11 @@ The maximum program length `n` is deduced from `90 - a = 81`.
 
 > It is not necessary to enforce the deduced length limits, as these follow from the others. However it may be useful in providing more detailed parse feedback.
 
-Case is ignored, but mixed case is considered invalid.
-
 Prefixes other than "bc" and "tb" are considered invalid.
 
 > There are a good many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb".
+
+Case is ignored, but mixed case is considered invalid.
 
 ## Program Constraints
 
