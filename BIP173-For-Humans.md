@@ -192,7 +192,7 @@ uint32_t bech32_checksum(const base32_chunk& data)
     for (const auto& value: data)
     {
         const uint32_t coeficient = (checksum >> 25);
-        checksum = ((checksum & 0x1ffffff) << 5) ^ value;
+        checksum = ((checksum & 0x01ffffff) << 5) ^ value;
 
         if (coeficient & 0x01) checksum ^= generator[0];
         if (coeficient & 0x02) checksum ^= generator[1];
