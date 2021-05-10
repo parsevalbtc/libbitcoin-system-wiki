@@ -148,57 +148,49 @@ typedef std::vector<uint5_t> base32_chunk;
 
 const size_t bech32_checksum_size = 6;
 
-size_t bech32_expanded_prefix_size(const std::string& prefix)
+base32_chunk bech32_expand_prefix(const std::string& prefix)
 {
-    return 2u * prefix.size() + 1u;
-}
-
-void bech32_expand_prefix(base32_chunk& out, const std::string& prefix)
-{
+    const auto size = prefix.size();
     const auto lower = ascii_to_lower(prefix);
-    const auto size = lower.size();
-    out[size] = 0x00;
+    base32_chunk out(2u * size + 1u, 0x00);
 
     for (size_t index = 0; index < size; ++index)
     {
-        char character = lower[index];
+        const char character = lower[index];
         out[index] = character >> 5;
         out[size + 1u + index] = character;
     }
+
+    out[size] = 0x00;
+    return out;
 }
 
-void bech32_expand_checksum(base32_chunk& out, uint32_t checksum)
+base32_chunk bech32_expand_checksum(uint32_t checksum)
 {
-    auto index = out.size() - bech32_checksum_size;
-
-    // The top two bits of the 32 bit checksum are unused/discarded.
-    out[index++] = (checksum >> 25);
-    out[index++] = (checksum >> 20);
-    out[index++] = (checksum >> 15);
-    out[index++] = (checksum >> 10);
-    out[index++] = (checksum >> 5);
-    out[index++] = (checksum >> 0);
+    base32_chunk out(bech32_checksum_size, 0x00);
+    out[0] = (checksum >> 25);
+    out[1] = (checksum >> 20);
+    out[2] = (checksum >> 15);
+    out[3] = (checksum >> 10);
+    out[4] = (checksum >> 5);
+    out[5] = (checksum >> 0);
+    return out;
 }
 
 uint32_t bech32_checksum(const base32_chunk& data)
 {
-    static const uint32_t generator[] =
-    {
-        0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3
-    };
-
     uint32_t checksum = 1;
 
     for (const auto& value: data)
     {
         const uint32_t coeficient = (checksum >> 25);
-        checksum = ((checksum & 0x01ffffff) << 5) ^ value;
+        checksum = ((checksum & 0x01ffffff) << 5) ^ value.convert_to<uint8_t>();
 
-        if (coeficient & 0x01) checksum ^= generator[0];
-        if (coeficient & 0x02) checksum ^= generator[1];
-        if (coeficient & 0x04) checksum ^= generator[2];
-        if (coeficient & 0x08) checksum ^= generator[3];
-        if (coeficient & 0x10) checksum ^= generator[4];
+        if (coeficient & 0x01) checksum ^= 0x3b6a57b2;
+        if (coeficient & 0x02) checksum ^= 0x26508e6d;
+        if (coeficient & 0x04) checksum ^= 0x1ea119fa;
+        if (coeficient & 0x08) checksum ^= 0x3d4233dd;
+        if (coeficient & 0x10) checksum ^= 0x2a1462b3;
     }
 
     return checksum;
