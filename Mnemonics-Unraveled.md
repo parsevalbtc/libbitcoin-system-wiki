@@ -42,7 +42,7 @@ An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bi
 > The Electrum v1 encoding is (inadvertently) not fully bidirectional.
 ### Normal Form
 A `normal form` is a standard word, sentence or passphrase [character](https://en.wikipedia.org/wiki/Character_encoding) representation.
-> A single [glyph](https://en.wikipedia.org/wiki/Glyph) may have multiple distinct Unicode [code points](https://en.wikipedia.org/wiki/Code_point), and many distinct glyphs may be visually indistinguishable or rendered identically.
+> A single [glyph](https://en.wikipedia.org/wiki/Glyph) may have multiple distinct Unicode [code points](https://en.wikipedia.org/wiki/Code_point), and many distinct glyphs may be rendered similarly or identically.
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
