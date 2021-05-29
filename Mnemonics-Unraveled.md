@@ -22,6 +22,9 @@ A `mnemonic` is an ordered set of words from a single dictionary, conforming to 
 > Electrum v1 does not implement checksum constraints.
 
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
+### Sentence
+A `sentence` is a mnemonic represented in a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) delimiters.
+> Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
 ### Encoding
 An `encoding` is a standard transform between mnemonics and a numeric representation.
 ### Entropy
@@ -40,9 +43,7 @@ A `master private key` is a secret number that defines a Bitcoin wallet, allowin
 
 > Electrum v1 represents this as a base16-encoded 32 byte number (elliptic curve private key).
 ### Master Public Key
-A `master public key` is a non-secret number, allowing receiving.
-> This is one-way derived from the master private key.
-
+A `master public key` is a non-secret number, one-way derived from the master private key, allowing receiving.
 > Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
 > Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
@@ -59,6 +60,8 @@ For this reason we have implemented Libbitcoin mnemonics without a hard dependen
 For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a dictionary-based word selector, making this unnecessary. If WITH_ICU is undefined then word normalizations are ASCII-limited, though pre-normalized non-ASCII words will match the dictionary.
 
 ### String Functions
+Mnemonics are often represented as "sentences" of words.
+
 ### Language Differences
 
 ## Dictionaries
