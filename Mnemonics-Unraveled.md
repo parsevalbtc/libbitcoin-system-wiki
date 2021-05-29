@@ -26,7 +26,7 @@ A `mnemonic` is an ordered set of words from a single dictionary, conforming to 
 A `sentence` is a mnemonic represented by a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [delimiters](https://en.wikipedia.org/wiki/Delimiter).
 > Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
 ### Encoding
-An `encoding` is a standard transform between mnemonics and a numeric representation.
+An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
 ### Entropy
 The numeric representation of a mnemonic is its `entropy`.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
