@@ -60,7 +60,7 @@ For this reason we have implemented Libbitcoin mnemonics without a hard dependen
 For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a dictionary-based word selector, making this unnecessary. If WITH_ICU is undefined then word normalizations are ASCII-limited, though pre-normalized non-ASCII words will match the dictionary.
 
 ### String Functions
-A mnemonic sentences must be parsed into a  list of words for dictionary matching. Similarly a mnemonic is often emitted in a serialized form
+A mnemonic sentence must be parsed into a list of words for dictionary matching and seed generation. Similarly a mnemonic is often emitted in sentence form for portability.
 
 ### Language Differences
 
