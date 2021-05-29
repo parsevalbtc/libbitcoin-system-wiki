@@ -56,7 +56,7 @@ Implementations must rely and sprawling external dependencies, and those in turn
 
 For this reason we have implemented Libbitcoin mnemonics without a hard dependency on Unicode. The Electrum v1, Electrum, and BIP39 classes do not require Unicode unless a non-ASCII passphrase is provided. If the library is compiled with WITH_ICU undefined all features remain available with the exception that seed passphrases are ASCII-limited.
 
-For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a word-selection list, making this unnecessary. If WITH_ICU is undefined then word normalizations are ASCII-limited, though pre-normalized non-ASCII words will match the dictionary.
+For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a dictionary-based word selector, making this unnecessary. If WITH_ICU is undefined then word normalizations are ASCII-limited, though pre-normalized non-ASCII words will match the dictionary.
 
 ### String Functions
 ### Language Differences
