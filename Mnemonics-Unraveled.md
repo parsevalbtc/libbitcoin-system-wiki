@@ -9,14 +9,14 @@ I will state for the record that I truly appreciate both Electrum and Trezor. Ot
 ### Language
 A [natural language](https://en.wikipedia.org/wiki/Natural_language).
 > Libbitcoin refers to a languages by [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), each considered globally-unique.
+### Token
+In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
+> Electrum allows seed generation from tokens (i.e. non-dictionary words).
 ### Dictionary
 A `dictionary` is a standard set of reference tokens of a single language.
-> Token (linguistics) : an individual occurrence of a linguistic unit in speech or writing.
-
 > There may be more than one dictionary per language.
 ### Word
 A `word` is a dictionary token.
-> Non-dictionary word encoding is possible in Electrum.
 ### Mnemonic
 A `mnemonic` is an ordered set of words from a single dictionary, conforming to standard size and checksum constraints.
 > Electrum v1 does not implement checksum constraints.
@@ -47,7 +47,17 @@ A `master public key` is a non-secret number, allowing receiving.
 
 > Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
 ## Hazards
-### Unicode!
+### Unicode
+The reliance of Electrum and BIP39 on [Unicode](https://en.wikipedia.org/wiki/Unicode) word [normalization](https://en.wikipedia.org/wiki/Unicode_equivalence#Normalization) is an inherent risk. Unicode implementations are large and complex. Trivial conversions in [ASCII](https://en.wikipedia.org/wiki/ASCII), such as [lower-casing](https://en.wikipedia.org/wiki/Letter_case), become mind-boggling in Unicode. 
+
+> "When two applications share Unicode data, but normalize them differently, errors and data loss can result. In one specific instance, OS X normalized Unicode filenames sent from the Samba file and printer sharing software. Samba did not recognize the altered filenames as equivalent to the original, leading to data loss. Resolving such an issue is non-trivial, as normalization is not losslessly invertible."
+
+Implementations must rely and sprawling external dependencies, and those in turn depend on an evolving standard. Changes to the Unicode "database" of code points and mappings can and do happen, which can lead to loss of a wallet.
+
+For this reason we have implemented Libbitcoin mnemonics without a hard dependency on Unicode. The Electrum v1, Electrum, BIP39 classes do not require Unicode unless a non-ASCII passphrase is provided. If the library is compiled with WITH_ICU undefined all features remain available with the exception that seeding will fail if a non-ascii passphrase is provided.
+
+For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a word-selection list, making this unnecessary. If WITH_ICU is undefined then word and passphrase normalization are ascii-limited.
+
 ### String Functions
 ### Language Differences
 
