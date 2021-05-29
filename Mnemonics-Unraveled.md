@@ -17,6 +17,8 @@ A `dictionary` is a standard set of distinct reference tokens of a single langua
 > There may be more than one dictionary per language.
 
 > Dictionaries of the same or distinct languages may intersect.
+
+> A dictionary defines its word order, which may or may not be a [lexicographic sort](https://en.wikipedia.org/wiki/Lexicographic_order).
 ### Interpreter
 An `interpreter` is a set of same length (word-count) dictionaries of distinct languages, each identified by language.
 > An interpreter maps between entropy and mnemonic forms, given a specified or detected language.
@@ -28,7 +30,10 @@ A `word` is a dictionary token.
 A `mnemonic` is an ordered set of words from a single dictionary, conforming to standard size and [checksum](https://en.wikipedia.org/wiki/Checksum) constraints.
 > Electrum v1 does not implement checksum constraints.
 
+> A mnemonic may be fully contained by multiple dictionaries.
+
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
+
 ### Sentence
 A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [delimiters](https://en.wikipedia.org/wiki/Delimiter).
 > Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
