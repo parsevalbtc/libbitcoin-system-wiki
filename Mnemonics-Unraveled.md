@@ -8,7 +8,7 @@ I will state for the record that I truly appreciate both Electrum and Trezor. Ot
 ## Terminology
 ### Language
 A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_language).
-> Libbitcoin refers to a languages by [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+> Libbitcoin refers to a languages by the [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry) standard.
 ### Token
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
 > Electrum allows seed generation from tokens (i.e. non-dictionary words).
@@ -37,22 +37,23 @@ Its `entropy` is the numeric representation of a mnemonic.
 A `passphrase` is arbitrary text that may be combined with a mnemonic in the formation of a seed.
 > Electrum v1 does not implement a passphrase.
 ### Seed
-A `seed` is a [one-way hash](https://en.wikipedia.org/wiki/Cryptographic_hash_function) of a mnemonic or its entropy.
+A `seed` is a secret number, derived using a standard [one-way hash](https://en.wikipedia.org/wiki/Cryptographic_hash_function) from a mnemonic.
 ### Master Private Key
-A `master private key` is a secret number that defines a Bitcoin wallet, allowing spending.
-> This is either the seed or [one-way](https://en.wikipedia.org/wiki/One-way_function) derived from it, depending on implementation.
-
+A `master private key` is a secret number, derived from a seed in a standard manner, allowing spending.
 > Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
 > Electrum v1 represents this as a base16-encoded 32 byte number (elliptic curve private key).
 ### Master Public Key
-A `master public key` is a non-secret number, one-way derived from the master private key, allowing receiving.
+A `master public key` is a non-secret number, derived in a standard one-way manner from the master private key, allowing receiving.
 > Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
 > Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
+### Standard
+A `standard` is a set of defined 
+
 ## Hazards
 ### Unicode
-The reliance of Electrum and BIP39 on [Unicode](https://en.wikipedia.org/wiki/Unicode) word [normalization](https://en.wikipedia.org/wiki/Unicode_equivalence#Normalization) is an inherent risk. Unicode implementations are large and complex. Trivial conversions in [ASCII](https://en.wikipedia.org/wiki/ASCII), such as [lower-casing](https://en.wikipedia.org/wiki/Letter_case), become mind-boggling in Unicode. 
+The reliance of Electrum and BIP39 on [Unicode](https://en.wikipedia.org/wiki/Unicode) word and passphrase [normalization](https://en.wikipedia.org/wiki/Unicode_equivalence#Normalization) is an inherent risk. Unicode implementations are large and complex. Trivial conversions in [ASCII](https://en.wikipedia.org/wiki/ASCII), such as [lower-casing](https://en.wikipedia.org/wiki/Letter_case), become mind-boggling in Unicode. 
 
 > "When two applications share Unicode data, but normalize them differently, errors and data loss can result. In one specific instance, OS X normalized Unicode filenames sent from the Samba file and printer sharing software. Samba did not recognize the altered filenames as equivalent to the original, leading to data loss. Resolving such an issue is non-trivial, as normalization is not losslessly invertible."
 
