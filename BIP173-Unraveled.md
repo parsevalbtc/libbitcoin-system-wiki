@@ -26,7 +26,9 @@ Constraints on the witness version and program are provided by BIP141. All valid
 
 > Libbitcoin provides a "strict" parsing option which rejects addresses with unknown witness programs.
 
-Prefixes other than "bc" and "tb" are considered invalid.
+Prefixes other than "bc" (for mainnet) and "tb" (for testnet) are considered invalid.
+
+> BIP173 is seems to imply that these are the only valid prefixes. Presumably the intent is that a BTC mainnet wallet should accept only "bc" addresses. However it is not at all clear why any "software interpreting a segwit address MUST verify that the human-readable part is 'bc' for mainnet and 'tb' for testnet." It is quite possible that the software is attempting to determine the network *from* the address.
 
 > There are many other prefixes in widespread use. Libbitcoin supports construction with any otherwise valid prefix and provides a "strict" parsing option which limits prefix validation to "bc" and "tb". Given that the prefix maximum length is not otherwise limited, addresses may be a full 90 characters, and given treatment of the minimum prefix length as one character, the minimum address length is 13. Strict parsing limits addresses to between 14 and 74 characters by adding the two character prefix constraint.
 
