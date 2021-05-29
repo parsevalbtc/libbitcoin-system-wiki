@@ -150,4 +150,4 @@
   * [Altcoin Version Mappings](Altcoin-Version-Mappings)
   * [Altchain Encrypted Keys](Altchain-Encrypted-Private-Keys)
   * [BIP38 Security Considerations](BIP38-Security-Considerations)
-  * [BIP173 For Humans](BIP173-For-Humans)
+  * [BIP173 Unraveled](BIP173-Unraveled)
