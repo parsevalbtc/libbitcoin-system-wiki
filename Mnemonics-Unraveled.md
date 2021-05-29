@@ -40,6 +40,9 @@ A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serializat
 ### Encoding
 An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
 > The Electrum v1 encoding is (inadvertently) not fully bidirectional.
+### Normal Form
+A `normal form` is a standard word, sentence or passphrase [characters](https://en.wikipedia.org/wiki/Character_encoding) representation.
+> There are multiple distinct [code point](https://en.wikipedia.org/wiki/Code_point) representations of many Unicode characters, appearing similar or identical.
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
