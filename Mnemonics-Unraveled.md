@@ -27,7 +27,7 @@ An `interpreter` is a set of same length (word-count) dictionaries of distinct l
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
-A `mnemonic` is an ordered set of words from a single dictionary, conforming to standard size and [checksum](https://en.wikipedia.org/wiki/Checksum) constraints.
+A `mnemonic` is an ordered set of words from a common dictionary, conforming to standard size and [checksum](https://en.wikipedia.org/wiki/Checksum) constraints.
 > Electrum v1 does not implement checksum constraints.
 
 > A mnemonic may be fully contained by multiple dictionaries.
@@ -46,8 +46,6 @@ A `normal form` is a standard word, sentence or passphrase [character](https://e
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
-
-> Mapping between mnemonic and entropy requires a dictionary of a standard number of words (length).
 ### Passphrase
 A `passphrase` is arbitrary text that may be combined with a mnemonic in the formation of a seed.
 > Electrum v1 does not implement a passphrase.
