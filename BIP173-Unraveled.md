@@ -51,6 +51,10 @@ letters   => {'a', 29}, {'c', 24}, {'d', 13}, {'e', 25}, {'f',  9}, {'g',  8}, {
 > Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides `base32` functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, `bech32` functions for checksum computation, and the `witness_address` class for address manipulation.
 
 ```cpp
+using boost::multiprecision;
+typedef number<cpp_int_backend<5, 5, unsigned_magnitude, unchecked, void>> uint5_t;
+typedef std::vector<uint5_t> base32_chunk;
+
 constexpr char encode[] = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
 constexpr uint8_t decode[] =
 {
@@ -78,7 +82,7 @@ std::string encode_base32(const base32_chunk& data)
     out.reserve(data.size());
 
     for (auto value: data)
-        out.push_back(encode[value]);
+        out.push_back(encode[value.convert_to<uint8_t>()]);
 
     return out;
 }
@@ -89,7 +93,7 @@ bool decode_base32(base32_chunk& out, const std::string& in)
 
     for (auto character: in)
     {
-        const auto value = decode[character];
+        const auto value = decode[static_cast<uint8_t>(character)];
 
         if (value == 0xff)
             return false;
@@ -142,12 +146,6 @@ The input to creating or validating a checksum is `(prefix)(version)(program)`. 
 > BIP173 test vector checksums fail under BIP350 where their versions are non-zero.
 
 ```cpp
-typedef boost::multiprecision::number<
-    boost::multiprecision::cpp_int_backend<5, 5,
-    boost::multiprecision::unsigned_magnitude,
-    boost::multiprecision::unchecked, void>> uint5_t;
-typedef std::vector<uint5_t> base32_chunk;
-
 const size_t bech32_checksum_size = 6;
 
 base32_chunk bech32_expand_prefix(const std::string& prefix)
