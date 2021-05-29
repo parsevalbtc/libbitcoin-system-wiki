@@ -23,7 +23,7 @@ A `mnemonic` is an ordered set of words from a single dictionary, conforming to 
 
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
 ### Sentence
-A `sentence` is a mnemonic represented by a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [delimiters](https://en.wikipedia.org/wiki/Delimiter).
+A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [delimiters](https://en.wikipedia.org/wiki/Delimiter).
 > Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
 ### Encoding
 An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
@@ -60,7 +60,7 @@ For this reason we have implemented Libbitcoin mnemonics without a hard dependen
 For the same reason Libbitcoin does not support Electrum token-based seeding. All words must correspond to a dictionary. When WITH_ICU is defined, words are Unicode normalized before comparison, to improve the chance of matching. Ideally an implementation provides a dictionary-based word selector, making this unnecessary. If WITH_ICU is undefined then word normalizations are ASCII-limited, though pre-normalized non-ASCII words will match the dictionary.
 
 ### String Functions
-Mnemonics are often represented as "sentences" of words.
+A mnemonic sentences must be parsed into a  list of words for dictionary matching. Similarly a mnemonic is often emitted in a serialized form
 
 ### Language Differences
 
