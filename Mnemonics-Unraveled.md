@@ -16,10 +16,10 @@ In linguistics a `token` is an "individual occurrence of a linguistic unit in sp
 A `dictionary` is a standard set of reference tokens of a single language.
 > There may be more than one dictionary per language.
 ### Interpreter
-An `interpreter` is a set of dictionaries of distinct languages, each identified by language.
+An `interpreter` is a set of same-length dictionaries of distinct languages, each identified by language.
 > An interpreter maps between entropy and mnemonic forms, given a specified or detected language.
 
-> There is no necessary standard for the set of dictionaries of an interpreter.
+> There is no necessary standard defining the set of interpreter dictionaries.
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
