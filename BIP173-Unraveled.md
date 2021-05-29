@@ -51,7 +51,7 @@ letters   => {'a', 29}, {'c', 24}, {'d', 13}, {'e', 25}, {'f',  9}, {'g',  8}, {
 > Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides `base32` functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, `bech32` functions for checksum computation, and the `witness_address` class for address manipulation.
 
 ```cpp
-using boost::multiprecision;
+using namespace boost::multiprecision;
 typedef number<cpp_int_backend<5, 5, unsigned_magnitude, unchecked, void>> uint5_t;
 typedef std::vector<uint5_t> base32_chunk;
 
