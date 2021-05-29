@@ -137,7 +137,7 @@ The checksum is computed over base32 values and compared with `bech32_constant(v
 
 The input to creating or validating a checksum is `(prefix)(version)(program)`. Utilities for expanding the string prefix (for checksum computation) and the integer checksum to base32 (for address incorporation) are also shown below.
 
-> BIP173 test vector checksums fail under BIP350 where their version is non-zero.
+> BIP173 test vector checksums fail under BIP350 where their versions are non-zero.
 
 ```cpp
 typedef boost::multiprecision::number<
