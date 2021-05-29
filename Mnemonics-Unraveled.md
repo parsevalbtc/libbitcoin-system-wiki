@@ -13,7 +13,7 @@ A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_la
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
 > Electrum allows seed generation from tokens (i.e. non-dictionary words).
 ### Dictionary
-A `dictionary` is a standard set of distinct reference tokens of a single language.
+A `dictionary` is a standard ordered set of distinct reference tokens of a single language.
 > There may be more than one dictionary per language.
 
 > Dictionaries of the same or distinct languages may intersect.
@@ -33,16 +33,17 @@ A `mnemonic` is an ordered set of words from a common dictionary, conforming to 
 > A mnemonic may be fully contained by multiple dictionaries.
 
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
-
+### Whitespace
+A `whitespace` [character](https://en.wikipedia.org/wiki/Whitespace_character) is a standard character with a [glyph](https://en.wikipedia.org/wiki/Glyph) of no visible pixels.
 ### Sentence
-A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [delimiters](https://en.wikipedia.org/wiki/Delimiter).
+A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with whitespace [delimiters](https://en.wikipedia.org/wiki/Delimiter).
 > Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
 ### Encoding
 An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
 > The Electrum v1 encoding is (inadvertently) not fully bidirectional.
 ### Normal Form
 A `normal form` is a standard word, sentence or passphrase [character](https://en.wikipedia.org/wiki/Character_encoding) representation.
-> A single [glyph](https://en.wikipedia.org/wiki/Glyph) may have multiple distinct Unicode [code points](https://en.wikipedia.org/wiki/Code_point), and many distinct glyphs may be rendered similarly or identically.
+> A single glyph may have multiple distinct [code points](https://en.wikipedia.org/wiki/Code_point), and many distinct glyphs may be rendered similarly or identically.
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
@@ -61,8 +62,17 @@ A `master public key` is a non-secret number, derived in a standard one-way mann
 > Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
 > Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
-### Standard
-A `standard` is a set of defined 
+
+## Standards
+* Language (identification)
+* Dictionary (words and order)
+* Mnemonic (length and checksum)
+* Whitespace (delimiters)
+* Normal Form (word, sentence, and passphrase)
+* Encoding (entropy mapping)
+* Seed (derivation)
+* Master Private Key (derivation)
+* Master Public Key (derivation)
 
 ## Hazards
 ### Unicode
