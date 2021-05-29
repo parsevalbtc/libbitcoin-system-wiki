@@ -13,7 +13,7 @@ A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_la
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
 > Electrum allows seed generation from tokens (i.e. non-dictionary words).
 ### Dictionary
-A `dictionary` is a standard set of unique reference tokens of a single language.
+A `dictionary` is a standard set of distinct reference tokens of a single language.
 > There may be more than one dictionary per language.
 ### Interpreter
 An `interpreter` is a set of same length (word-count) dictionaries of distinct languages, each identified by language.
