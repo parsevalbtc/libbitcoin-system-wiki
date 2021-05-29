@@ -64,6 +64,7 @@ A `master public key` is a non-secret number, derived in a standard one-way mann
 > Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
 
 ## Standards
+The following standards are implied by the above terminology.
 * Language (identification)
 * Dictionary (words and order)
 * Mnemonic (length and checksum)
@@ -76,11 +77,9 @@ A `master public key` is a non-secret number, derived in a standard one-way mann
 
 ## Hazards
 ### Unicode
-The reliance of Electrum and BIP39 on [Unicode](https://en.wikipedia.org/wiki/Unicode) word and passphrase [normalization](https://en.wikipedia.org/wiki/Unicode_equivalence#Normalization) is an inherent risk. Unicode implementations are large and complex. Trivial conversions in [ASCII](https://en.wikipedia.org/wiki/ASCII), such as [lower-casing](https://en.wikipedia.org/wiki/Letter_case), become mind-boggling in Unicode. 
+The reliance of Electrum and BIP39 on [Unicode](https://en.wikipedia.org/wiki/Unicode) word and passphrase [normalization](https://en.wikipedia.org/wiki/Unicode_equivalence#Normalization) is an inherent risk. Unicode implementations are large and complex. Trivial conversions in [ASCII](https://en.wikipedia.org/wiki/ASCII), such as [lower-casing](https://en.wikipedia.org/wiki/Letter_case), become treacherous in Unicode. 
 
 > "When two applications share Unicode data, but normalize them differently, errors and data loss can result. In one specific instance, OS X normalized Unicode filenames sent from the Samba file and printer sharing software. Samba did not recognize the altered filenames as equivalent to the original, leading to data loss. Resolving such an issue is non-trivial, as normalization is not losslessly invertible."
-
-Implementations must rely and sprawling external dependencies, and those in turn depend on an evolving standard. Changes to the Unicode "database" of code points and mappings can and do happen, which can lead to loss of a wallet.
 
 For this reason we have implemented Libbitcoin mnemonics without a hard dependency on Unicode. The Electrum v1, Electrum, and BIP39 classes do not require Unicode unless a non-ASCII passphrase is provided. If the library is compiled with WITH_ICU undefined all features remain available with the exception that seed passphrases are ASCII-limited.
 
