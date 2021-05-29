@@ -13,10 +13,10 @@ A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_la
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
 > Electrum allows seed generation from tokens (i.e. non-dictionary words).
 ### Dictionary
-A `dictionary` is a standard set of reference tokens of a single language.
+A `dictionary` is a standard set of unique reference tokens of a single language.
 > There may be more than one dictionary per language.
 ### Interpreter
-An `interpreter` is a set of same-length dictionaries of distinct languages, each identified by language.
+An `interpreter` is a set of same length (word-count) dictionaries of distinct languages, each identified by language.
 > An interpreter maps between entropy and mnemonic forms, given a specified or detected language.
 
 > There is no necessary standard defining the set of interpreter dictionaries.
@@ -35,6 +35,8 @@ An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bi
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
+
+> Mapping between mnemonic and entropy requires a dictionary of a standard number of words (length).
 ### Passphrase
 A `passphrase` is arbitrary text that may be combined with a mnemonic in the formation of a seed.
 > Electrum v1 does not implement a passphrase.
