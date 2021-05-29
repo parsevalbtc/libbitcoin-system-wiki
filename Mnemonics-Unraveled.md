@@ -17,7 +17,7 @@ A `dictionary` is a standard set of reference tokens of a single language.
 > There may be more than one dictionary per language.
 ### Interpreter
 An `interpreter` is a set of dictionaries of distinct languages, each identified by language.
-> The purposes of an interpreter are to determine or validate the dictionary of a mnemonic and to translate entropy to a specified dictionary.
+> An interpreter maps between entropy and mnemonic forms, given a specified or detected language.
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
