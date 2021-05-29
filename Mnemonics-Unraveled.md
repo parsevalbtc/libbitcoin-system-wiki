@@ -7,14 +7,17 @@ I will state for the record that I truly appreciate both Electrum and Trezor. Ot
 
 ## Terminology
 ### Language
-A [natural language](https://en.wikipedia.org/wiki/Natural_language).
-> Libbitcoin refers to a languages by [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), each considered universally unique.
+A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_language).
+> Libbitcoin refers to a languages by [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
 ### Token
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
 > Electrum allows seed generation from tokens (i.e. non-dictionary words).
 ### Dictionary
 A `dictionary` is a standard set of reference tokens of a single language.
 > There may be more than one dictionary per language.
+### Interpreter
+An `interpreter` is a set of dictionaries of distinct languages, each identified by language.
+> The purposes of an interpreter are to determine or validate the dictionary of a mnemonic and to translate entropy to a specified dictionary.
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
