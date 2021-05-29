@@ -18,6 +18,8 @@ A `dictionary` is a standard set of reference tokens of a single language.
 ### Interpreter
 An `interpreter` is a set of dictionaries of distinct languages, each identified by language.
 > An interpreter maps between entropy and mnemonic forms, given a specified or detected language.
+
+> There is no necessary standard for the set of dictionaries of an interpreter.
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
