@@ -76,12 +76,12 @@ constexpr uint8_t decode[] =
     6,    4,    2,    0xff, 0xff, 0xff, 0xff, 0xff
 };
 
-std::string encode_base32(const base32_chunk& data)
+std::string encode_base32(const base32_chunk& in)
 {
     std::string out;
-    out.reserve(data.size());
+    out.reserve(in.size());
 
-    for (auto value: data)
+    for (auto value: in)
         out.push_back(encode[value.convert_to<uint8_t>()]);
 
     return out;
