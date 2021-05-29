@@ -48,7 +48,7 @@ letters   => {'a', 29}, {'c', 24}, {'d', 13}, {'e', 25}, {'f',  9}, {'g',  8}, {
              {'v', 12}, {'w', 14}, {'x',  6}, {'y',  4}, {'z',  2}
 ```
 
-> Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides base32 functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, "bech32" functions for checksum computation, and the `witness_address` class for address manipulation.
+> Base32 is a simple generic mapping which Libbitcoin isolates from address manipulation and checksum computation. Libbitcoin provides `base32` functions for encoding/decoding base32 values to/from characters, with overloads for byte encoding/decoding, `bech32` functions for checksum computation, and the `witness_address` class for address manipulation.
 
 ```cpp
 constexpr char encode[] = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
