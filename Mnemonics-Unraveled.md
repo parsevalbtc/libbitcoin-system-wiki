@@ -31,7 +31,7 @@ A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serializat
 ### Encoding
 An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
 ### Entropy
-The numeric representation of a mnemonic is its `entropy`.
+Tts `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
 ### Passphrase
 A `passphrase` is arbitrary text that may be combined with a mnemonic in the formation of a seed.
