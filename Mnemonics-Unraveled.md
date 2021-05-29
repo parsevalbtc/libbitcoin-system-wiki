@@ -18,7 +18,7 @@ A `dictionary` is a standard set of reference tokens of a single language.
 ### Word
 A `word` is a dictionary token.
 ### Mnemonic
-A `mnemonic` is an ordered set of words from a single dictionary, conforming to standard size and checksum constraints.
+A `mnemonic` is an ordered set of words from a single dictionary, conforming to standard size and [checksum](https://en.wikipedia.org/wiki/Checksum) constraints.
 > Electrum v1 does not implement checksum constraints.
 
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
