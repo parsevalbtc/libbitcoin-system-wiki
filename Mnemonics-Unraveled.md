@@ -59,15 +59,17 @@ A `passphrase` is arbitrary text that may be combined with a mnemonic in the for
 ### Seed
 A `seed` is a secret number, derived using a standard [one-way hash](https://en.wikipedia.org/wiki/Cryptographic_hash_function) from a mnemonic.
 ### Master Private Key
-A `master private key` is a secret number, derived from a seed in a standard manner, allowing spending.
-> Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
+A `master private key` is an [secp256k1](https://www.secg.org/sec2-v2.pdf) private key, obtained from a seed in a standard manner, allowing spending.
+> BIP39 wallets typically derive this (and a seed-derived chain code) in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
-> Electrum v1 represents this as a base16-encoded 32 byte number (elliptic curve private key).
+> Electrum encodes this (and a seed-derived chain code) in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format), performing a similar derivation step internally.
+
+> Electrum v1 maintains this internally.
 ### Master Public Key
-A `master public key` is a non-secret number, derived in a standard one-way manner from the master private key, allowing receiving.
+A `master public key` is a secp256k1 public key, derived in the standard one-way manner from the master private key, allowing receiving.
 > Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
-> Electrum v1 represents this as base16-encoded 64 byte number (uncompressed elliptic curve public key without a sign prefix).
+> Electrum v1 exposes this as a base16-encoded 128 character string (uncompressed, without sign prefix).
 
 ## Standards
 The following standards are implied by the above terminology.
