@@ -64,12 +64,12 @@ A `master private key` is an [secp256k1](https://www.secg.org/sec2-v2.pdf) priva
 
 > Electrum serializes the seed as a secret and chain code in accordance with [BIP32 serialization](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
-> Electrum v1 maintains this internally.
+> Electrum v1 maintains this as a 32 byte value.
 ### Master Public Key
 A `master public key` is a secp256k1 public key, derived in the standard one-way manner from the master private key, allowing receiving.
-> Electrum and typical BIP39 wallets encode this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
+> Electrum and typical BIP39 wallets derive this in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
 
-> Electrum v1 exposes this as a base16-encoded 128 character string (uncompressed, without sign prefix).
+> Electrum v1 maintains this as a 64 byte value (uncompressed, without sign prefix).
 
 ## Standards
 The following standards are implied by the above terminology.
