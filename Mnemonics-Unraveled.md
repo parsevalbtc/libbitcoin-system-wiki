@@ -42,7 +42,6 @@ A `mnemonic` is an ordered set of words from a common dictionary, conforming to 
 A `whitespace` character is a standard character with a [glyph](https://en.wikipedia.org/wiki/Glyph) of no visible pixels.
 ### Sentence
 A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with whitespace [delimiters](https://en.wikipedia.org/wiki/Delimiter).
-> Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
 ### Encoding
 An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bidirectional_map) between any mnemonic and its numeric representation.
 > The Electrum v1 encoding is (inadvertently) not fully bidirectional.
