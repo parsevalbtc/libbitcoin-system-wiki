@@ -11,7 +11,12 @@ A universally-unique [natural language](https://en.wikipedia.org/wiki/Natural_la
 > Libbitcoin refers to a languages by the [IANA subtag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry) standard.
 ### Token
 In linguistics a `token` is an "individual occurrence of a linguistic unit in speech or writing".
-> Electrum allows seed generation from tokens (i.e. non-dictionary words).
+> Tokens contain no [whitespace](https://en.wikipedia.org/wiki/Whitespace_character) [code points](https://en.wikipedia.org/wiki/Code_point).
+
+> Tokens may or may not be normal form.
+
+> Electrum allows seed generation from tokens (i.e. non-dictionary words) in normal form.
+
 ### Dictionary
 A `dictionary` is a standard ordered set of distinct reference tokens of a single language.
 > There may be more than one dictionary per language.
@@ -34,7 +39,7 @@ A `mnemonic` is an ordered set of words from a common dictionary, conforming to 
 
 > A mnemonic may be [referred to](https://wiki.trezor.io/Developers_guide:Cryptography) as `recovery seed` by some implementations. 
 ### Whitespace
-A `whitespace` [character](https://en.wikipedia.org/wiki/Whitespace_character) is a standard character with a [glyph](https://en.wikipedia.org/wiki/Glyph) of no visible pixels.
+A `whitespace` character is a standard character with a [glyph](https://en.wikipedia.org/wiki/Glyph) of no visible pixels.
 ### Sentence
 A `sentence` is a mnemonic [serialized](https://en.wikipedia.org/wiki/Serialization) as a [sinistrodextral](https://en.wiktionary.org/wiki/sinistrodextral) string of its words with whitespace [delimiters](https://en.wikipedia.org/wiki/Delimiter).
 > Even the seemingly-trivial concept of whitespace is a potential implementation pitfall.
@@ -43,7 +48,9 @@ An `encoding` is a standard [bidirectional map](https://en.wikipedia.org/wiki/Bi
 > The Electrum v1 encoding is (inadvertently) not fully bidirectional.
 ### Normal Form
 A `normal form` is a standard word, sentence or passphrase [character](https://en.wikipedia.org/wiki/Character_encoding) representation.
-> A single glyph may have multiple distinct [code points](https://en.wikipedia.org/wiki/Code_point), and many distinct glyphs may be rendered similarly or identically.
+> A single glyph may have multiple distinct code points, and many distinct glyphs may be rendered similarly or identically.
+
+> Word containment by a dictionary is determined by normal form equality.
 ### Entropy
 Its `entropy` is the numeric representation of a mnemonic.
 > Both a mnemonic and its entropy represent the same [entropic](https://en.wikipedia.org/wiki/Entropy) value.
