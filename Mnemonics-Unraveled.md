@@ -60,9 +60,9 @@ A `passphrase` is arbitrary text that may be combined with a mnemonic in the for
 A `seed` is a secret number, derived using a standard [one-way hash](https://en.wikipedia.org/wiki/Cryptographic_hash_function) from a mnemonic.
 ### Master Private Key
 A `master private key` is an [secp256k1](https://www.secg.org/sec2-v2.pdf) private key, obtained from a seed in a standard manner, allowing spending.
-> BIP39 wallets typically derive this (and a seed-derived chain code) in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
+> BIP39 wallets typically derive this (and a chain code) from the seed in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
 
-> Electrum encodes this (and a seed-derived chain code) in accordance with [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format), performing a similar derivation step internally.
+> Electrum serializes the seed as a secret and chain code in accordance with [BIP32 serialization](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format).
 
 > Electrum v1 maintains this internally.
 ### Master Public Key
