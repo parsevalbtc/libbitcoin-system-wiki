@@ -25,7 +25,7 @@ auto q = (x + (y - 1)) / y;
 auto q = (x / y) + !!(x % y);
 ```
 
-The key is to understand the behavior of the native operator. There is no distinction unless there is a remainder, all methods return the same result. But in integer division the remainder must be discarded. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
+There is no distinction unless there is a remainder - all rounding methods return the same result. But in integer division the remainder must be discarded. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
 
 Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know whether there is a remainder (and its magnitude when implementing `%`) and the sign of the quotient. The quotient is positive if both operands have the same sign, otherwise it is negative.
 
