@@ -189,8 +189,8 @@ The compiler is expected to reduce the redundant `truncated_divide` calls in `ce
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Conclusion
-* The `remainder(...)` call compiles away for `constexpr` operators.
-* The overridden `negative(...)` calls compile away for `unsigned` operands.
+* The `negative` calls compile away for `unsigned` operands.
+* The `remainder` and `negative` calls compile away for `constexpr` operators.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
 * The functions *do* fail as native operators with a zero-valued divisor.
 * The functions cannot *cause* overflows.
