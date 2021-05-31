@@ -115,22 +115,16 @@ The only thing that may not be obvious is that the `floored_modulo` function neg
 The above simplified templates will result in warnings for unsigned operators, as they all invoke `factor < 0`, which is always `false`. The full implementation type-constrains each template and specializes the `negative(...)` calls for operator unsigned types.
 
 ## Optimization
-The above `floored_modulo` and `floored_divide` templates can be optimized by specializing for unsigned operators as these reduce to the truncated (native) forms.
-
-The `%` operator may be invoked twice in `floored_modulo` (with signed operators) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases we are simply relying on CPU cache and compiler optimization to avoid remainder recomputation (which should be the case).
-
-The `inline` keyword is used to advise the compiler that we would prefer inlining of the functions. This removes call stack overhead, assuming the compiler respects the request.
-
-The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide` and `truncated_modulo` calls in `ceilinged_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance optimization.
-
-Generally I prefer to let the compiler make these decisions, preserving code readability. Despite the verbosity of the templates, their type constraints, function and variable names.
-
-### Performance
 * The `negative(...)` calls compile away for `unsigned` types.
 * The `remainder(...)` call compiles away for `constexpr` values.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
 
-### Conclusion
+The above `floored_modulo` and `floored_divide` templates can be optimized by specializing for unsigned operators as these reduce to the truncated (native) forms.
 
+The `%` operator may be invoked twice in `floored_modulo` (with signed operators) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases we are simply relying on CPU cache and compiler optimization to avoid remainder recomputation (which should be the case).
 
+The `inline` keyword is used to advise the compiler that we would prefer inlining of the functions. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
+The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide` and `truncated_modulo` calls in `ceilinged_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance optimization.
+
+Despite the verbosity of the templates, their type constraints, function and variable names, the implementation should be as optimal as manually inlining the minimal *necessary* operations.
