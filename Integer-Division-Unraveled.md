@@ -27,7 +27,7 @@ auto q = (x / y) + !!(x % y);
 
 There is no distinction unless there is a remainder - all rounding methods return the same result. But integer division must discard the remainder. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
 
-Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know whether there is a remainder (and its magnitude when implementing `%`) and the sign of the quotient. The quotient is positive if both operands have the same sign, otherwise it is negative.
+Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know `whether there is a remainder` (and its magnitude when implementing `%`) and `the sign of the quotient`. The quotient is positive if both operands have the same sign, otherwise it is negative.
 
 ## Implementation
 
@@ -37,7 +37,6 @@ These templates answer the above two questions.
 // These eliminate (unsigned < 0) warnings (always false) and compile away the
 // conditions entirely when unsigned (optimization).
 // ----------------------------------------------------------------------------
-
 template <typename Integer,
     IS_UNSIGNED_INTEGER(Integer)=true>
 inline bool negative(Integer value)
@@ -59,7 +58,6 @@ inline bool negative(Factor1 factor1, Factor2 factor2)
 {
     return negative(factor1) != negative(factor2);
 }
-
 // ----------------------------------------------------------------------------
 
 template <typename Dividend, typename Divisor,
@@ -108,7 +106,19 @@ inline Dividend ceilinged_modulo(Dividend dividend, Divisor divisor)
         divisor + truncated_modulo(dividend, divisor);
 }
 
-// Override for unsigned floor (native/optimization).
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
+inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
+{
+    // truncated_divide is 1 low if not ceilinged. 
+    return ceilinged(dividend, divisor) ?
+        truncated_divide(dividend, divisor) :
+        truncated_divide(dividend, divisor) + 1;
+}
+```
+```cpp
+// Override for unsigned floor (native operation).
+// ----------------------------------------------------------------------------
 template <typename Dividend, typename Divisor,
     IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
 inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
@@ -116,6 +126,7 @@ inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
     // truncated_modulo is already floored for positive quotient.
     return truncated_modulo(dividend, divisor);
 }
+// ----------------------------------------------------------------------------
 
 template <typename Dividend, typename Divisor,
     IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
@@ -127,17 +138,8 @@ inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
         divisor + truncated_modulo(dividend, divisor);
 }
 
-template <typename Dividend, typename Divisor,
-    IS_INTEGERS(Dividend, Divisor)=true>
-inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
-{
-    // truncated_divide is 1 low if not ceilinged. 
-    return ceilinged(dividend, divisor) ?
-        truncated_divide(dividend, divisor) :
-        truncated_divide(dividend, divisor) + 1;
-}
-
-// Override for unsigned floor (native/optimization).
+// Override for unsigned floor (native operation).
+// ----------------------------------------------------------------------------
 template <typename Dividend, typename Divisor,
     IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
 inline Dividend floored_divide(Dividend dividend, Divisor divisor)
@@ -145,6 +147,7 @@ inline Dividend floored_divide(Dividend dividend, Divisor divisor)
     // truncated_modulo is already floored for positive quotient.
     return truncated_divide(dividend, divisor);
 }
+// ----------------------------------------------------------------------------
 
 template <typename Dividend, typename Divisor,
     IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
@@ -155,7 +158,8 @@ inline Dividend floored_divide(Dividend dividend, Divisor divisor)
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) - 1;
 }
-
+```
+```cpp
 template <typename Dividend, typename Divisor,
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Dividend truncated_modulo(Dividend dividend, Divisor divisor)
@@ -177,11 +181,6 @@ inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
 
-## Template Type Constraints and Overrides
-The above (simplified) templates produce compiler warnings for unsigned operands, as they all invoke `factor < 0`, which is always `false`. The full implementation implements overrides for each and `negative(...)` by applying operand signed-ness type constraints.
-
-These template overrides are a bit obtuse, but they are necessary to achieve the objective of supporting full operand signed-ness. By fanning out the templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation is achieved.
-
 ## Optimization
 The `%` operator may be invoked twice in `floored_modulo` (with signed operands) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
@@ -196,10 +195,14 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * The overridden `negative(...)` calls compile away for `unsigned` operands.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
 
-This implies that what remains is *necessary*.
+This implies that what remains is *necessary*. By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
 
-## Supporting Code
-These are the type constraint macros used above. As a rule I make very limited use of macros, but these significantly improve readability and reduce repetition without impacting debugging. These will work on any C++11 or later compiler.
+## Template Type Constraints
+Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false`. These and the overrides for `floored_modulo` and `floored_divide` bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
+
+The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the `=true` default template parameter values in the implementation.
+
+These are the type constraint macros used above. As a rule I make very limited use of macros. But these significantly improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
 ```cpp
 #include <limits>
 #include <type_traits>
