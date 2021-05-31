@@ -174,7 +174,7 @@ inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
     return dividend / divisor;
 }
 ```
-Return values are typed by the dividend, which is consistent with native operators.
+Return values are typed by the dividend.
 
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
