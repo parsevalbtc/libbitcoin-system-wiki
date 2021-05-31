@@ -151,3 +151,4 @@
   * [Altchain Encrypted Keys](Altchain-Encrypted-Private-Keys)
   * [BIP38 Security Considerations](BIP38-Security-Considerations)
   * [BIP173 Unraveled](BIP173-Unraveled)
+  * [Integer Division Unraveled](Integer-Division-Unraveled)
