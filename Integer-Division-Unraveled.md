@@ -92,9 +92,9 @@ inline bool floored(Dividend dividend, Divisor divisor)
 ```
 These templates implement the three common rounding approaches.
 ```cpp
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, Remainder=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Quotient ceilinged_modulo(Dividend dividend, Divisor divisor)
+inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is positive if not ceilinged.
     return ceilinged(dividend, divisor) ?
@@ -115,18 +115,18 @@ inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 ```cpp
 // Override for unsigned floor (native operation).
 // ----------------------------------------------------------------------------
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, Remainder=Dividend
     IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
-inline Quotient floored_modulo(Dividend dividend, Divisor divisor)
+inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is already floored for positive quotient.
     return truncated_modulo(dividend, divisor);
 }
 // ----------------------------------------------------------------------------
 
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, Remainder=Dividend
     IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
-inline Quotient floored_modulo(Dividend dividend, Divisor divisor)
+inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is negative if not floored.
     return floored(dividend, divisor) ?
@@ -156,9 +156,9 @@ inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 }
 ```
 ```cpp
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, Remainder=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Quotient truncated_modulo(Dividend dividend, Divisor divisor)
+inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 {
     // C++ applies "toward zero" integer division rounding (and remainder).
     // Floored for positive quotient, ceilinged for negative quotient.
