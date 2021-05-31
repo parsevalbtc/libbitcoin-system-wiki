@@ -1,6 +1,6 @@
 Sometimes the most trivial coding tasks can be unexpectedly challenging. In working with Python equivalence I found it necessary to implement floored signed integer modulo in C++.
 
-A quick stop at Stack Overflow shows how confounding this can be. There are several different approaches, most of which either do not support signed operators, cause overflows, throw exceptions, or just don't work. Even the "accepted" answers are flawed in such ways, with large numbers of upvotes. So I decided to just figure it out myself.
+A quick stop at Stack Overflow shows how confounding this can be. There are several different approaches, most of which either do not support signed operands, cause overflows, throw exceptions, or just don't work. Even the "accepted" answers are flawed in such ways, with large numbers of upvotes. So I decided to just figure it out myself.
 
 ## Objectives
 
