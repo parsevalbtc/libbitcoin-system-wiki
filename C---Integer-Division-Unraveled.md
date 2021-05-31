@@ -111,5 +111,20 @@ inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
 ```
 The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude.
 
-## Performance
+## Unsigned Operators
 The above simplified templates will result in warnings for unsigned operators, as they all invoke `factor < 0`, which is always `false`. The full implementation type-constrains each template and specializes the `negative(...)` calls for operator unsigned types.
+
+## Optimization
+The above `floored_modulo` and `floored_divide` templates can be optimized by specializing for unsigned operators as these reduce to the truncated (native) forms.
+
+The `%` operator may be invoked twice in `floored_modulo` (with signed operators) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases we are simply relying on CPU cache and compiler optimization to avoid remainder recomputation (which should be the case).
+
+### Performance
+* The `negative(...)` calls compile away for `unsigned` types.
+* The `remainder(...)` call compiles away for `constexpr` values.
+* The `||` conditions compile away when the above render the result always `true` or `false`.
+
+### Conclusion
+
+
+
