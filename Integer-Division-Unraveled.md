@@ -39,7 +39,7 @@ These templates answer the above two questions.
 // ----------------------------------------------------------------------------
 template <typename Integer,
     IS_UNSIGNED_INTEGER(Integer)=true>
-inline bool negative(Integer value)
+inline bool negative(Integer)
 {
     return false;
 }
