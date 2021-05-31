@@ -109,7 +109,7 @@ inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
     return dividend / divisor;
 }
 ```
-The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude. These functions cannot *cause* overflows and will fail as native operators do with a zero-valued divisor.
+The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude. These functions cannot *cause* overflows and *do* fail as native operators with a zero-valued divisor.
 
 ## Template Type Constraints and Specialization
 The above (simplified) templates will result in compiler warnings for unsigned operators, as they all invoke `factor < 0`, which is always `false`. The full implementation type-constrains each template and specializes the `negative(...)` calls for operator unsigned types.
