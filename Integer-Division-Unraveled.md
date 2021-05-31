@@ -50,13 +50,13 @@ These two templates combine them into single answer.
 ```cpp
 
 template <typename Dividend, typename Divisor>
-inline Dividend ceilinged(Dividend dividend, Divisor divisor)
+inline bool ceilinged(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || negative(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor>
-inline Dividend floored(Dividend dividend, Divisor divisor)
+inline bool floored(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
