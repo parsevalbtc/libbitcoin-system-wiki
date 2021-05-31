@@ -92,9 +92,9 @@ inline bool floored(Dividend dividend, Divisor divisor)
 ```
 These templates implement the three common rounding approaches.
 ```cpp
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Dividend ceilinged_modulo(Dividend dividend, Divisor divisor)
+inline Quotient ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is positive if not ceilinged.
     return ceilinged(dividend, divisor) ?
@@ -102,9 +102,9 @@ inline Dividend ceilinged_modulo(Dividend dividend, Divisor divisor)
         divisor + truncated_modulo(dividend, divisor);
 }
 
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
+inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     // truncated_divide is 1 low if not ceilinged. 
     return ceilinged(dividend, divisor) ?
@@ -115,18 +115,18 @@ inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
 ```cpp
 // Override for unsigned floor (native operation).
 // ----------------------------------------------------------------------------
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
-inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
+inline Quotient floored_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is already floored for positive quotient.
     return truncated_modulo(dividend, divisor);
 }
 // ----------------------------------------------------------------------------
 
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
-inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
+inline Quotient floored_modulo(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is negative if not floored.
     return floored(dividend, divisor) ?
@@ -136,18 +136,18 @@ inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
 
 // Override for unsigned floor (native operation).
 // ----------------------------------------------------------------------------
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
-inline Dividend floored_divide(Dividend dividend, Divisor divisor)
+inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     // truncated_modulo is already floored for positive quotient.
     return truncated_divide(dividend, divisor);
 }
 // ----------------------------------------------------------------------------
 
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
-inline Dividend floored_divide(Dividend dividend, Divisor divisor)
+inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     // truncated_divide is 1 high if not floored. 
     return floored(dividend, divisor) ?
@@ -156,25 +156,25 @@ inline Dividend floored_divide(Dividend dividend, Divisor divisor)
 }
 ```
 ```cpp
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Dividend truncated_modulo(Dividend dividend, Divisor divisor)
+inline Quotient truncated_modulo(Dividend dividend, Divisor divisor)
 {
     // C++ applies "toward zero" integer division rounding (and remainder).
     // Floored for positive quotient, ceilinged for negative quotient.
     return dividend % divisor;
 }
 
-template <typename Dividend, typename Divisor,
+template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
-inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
+inline Quotient truncated_divide(Dividend dividend, Divisor divisor)
 {
     // C++ applies "toward zero" integer division rounding (and remainder).
     // Floored for positive quotient, ceilinged for negative quotient.
     return dividend / divisor;
 }
 ```
-Return values are typed by the dividend.
+Return value types default to the dividend type and can be specified by explicit template parameter.
 
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
