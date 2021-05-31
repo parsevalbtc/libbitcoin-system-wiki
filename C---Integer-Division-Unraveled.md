@@ -105,4 +105,4 @@ inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
     return dividend / divisor;
 }
 ```
-The only thing that may not be obvious is that the `floored_modulo` function negates the negative remainder in order to obtain its magnitude.
+The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude.
