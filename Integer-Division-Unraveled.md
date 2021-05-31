@@ -35,13 +35,13 @@ These two templates answer the above two questions.
 
 ```cpp
 template <typename Dividend, typename Divisor>
-inline bool remainder(const Dividend dividend, const Divisor divisor)
+inline bool remainder(Dividend dividend, Divisor divisor)
 {
     return (dividend % divisor) != 0;
 }
 
 template <typename Factor1, typename Factor2>
-inline bool negative(const Factor1 factor1, const Factor2 factor2)
+inline bool negative(Factor1 factor1, Factor2 factor2)
 {
     return (factor1 < 0) != (factor2 < 0);
 }
@@ -50,13 +50,13 @@ These two templates combine them into single answer.
 ```cpp
 
 template <typename Dividend, typename Divisor>
-inline Dividend ceilinged(const Dividend dividend, const Divisor divisor)
+inline Dividend ceilinged(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || negative(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor>
-inline Dividend floored(const Dividend dividend, const Divisor divisor)
+inline Dividend floored(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
@@ -64,7 +64,7 @@ inline Dividend floored(const Dividend dividend, const Divisor divisor)
 These six templates implement the three common rounding approaches.
 ```cpp
 template <typename Dividend, typename Divisor>
-inline Dividend ceilinged_modulo(const Dividend dividend, const Divisor divisor)
+inline Dividend ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return ceilinged(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
@@ -72,7 +72,7 @@ inline Dividend ceilinged_modulo(const Dividend dividend, const Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor>
-inline Dividend ceilinged_divide(const Dividend dividend, const Divisor divisor)
+inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return ceilinged(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
@@ -81,7 +81,7 @@ inline Dividend ceilinged_divide(const Dividend dividend, const Divisor divisor)
 ```
 ```cpp
 template <typename Dividend, typename Divisor>
-inline Dividend floored_modulo(const Dividend dividend, const Divisor divisor)
+inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
 {
     return floored(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
@@ -89,7 +89,7 @@ inline Dividend floored_modulo(const Dividend dividend, const Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor>
-inline Dividend floored_divide(const Dividend dividend, const Divisor divisor)
+inline Dividend floored_divide( Dividend dividend, Divisor divisor)
 {
     return floored(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
@@ -98,13 +98,13 @@ inline Dividend floored_divide(const Dividend dividend, const Divisor divisor)
 ```
 ```cpp
 template <typename Dividend, typename Divisor>
-inline Dividend truncated_modulo(const Dividend dividend, const Divisor divisor)
+inline Dividend truncated_modulo(Dividend dividend, Divisor divisor)
 {
     return dividend % divisor;
 }
 
 template <typename Dividend, typename Divisor>
-inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
+inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
 {
     return dividend / divisor;
 }
