@@ -25,7 +25,9 @@ auto q = (x / y) + !!(x % y);
 
 The key is to understand the behavior of the native operator. There is no distinction unless there is a remainder, all methods return the same result. But in integer division the remainder must be discarded. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
 
-Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. So in changing the rounding behavior, one must know the magnitude of the remainder and the sign of the quotient.
+Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know whether there is a remainder (and its magnitude when implementing `%`) and the sign of the quotient. The quotient is positive if both operands have the same sign, otherwise it is negative.
+
+These two templates answer those questions:
 
 ```cpp
 template <typename Dividend, typename Divisor>
@@ -39,6 +41,9 @@ inline bool negative(const Factor1 factor1, const Factor2 factor2)
 {
     return (factor1 < 0) != (factor2 < 0);
 }
+```
+These two templates combine them into single answer.
+```cpp
 
 template <typename Dividend, typename Divisor>
 inline Dividend ceilinged(const Dividend dividend, const Divisor divisor)
@@ -51,7 +56,9 @@ inline Dividend floored(const Dividend dividend, const Divisor divisor)
 {
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
-
+```
+These six templates implement the three common rounding approaches.
+```cpp
 template <typename Dividend, typename Divisor>
 inline Dividend ceilinged_modulo(const Dividend dividend, const Divisor divisor)
 {
@@ -67,7 +74,8 @@ inline Dividend ceilinged_divide(const Dividend dividend, const Divisor divisor)
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) + 1;
 }
-
+```
+```cpp
 template <typename Dividend, typename Divisor>
 inline Dividend floored_modulo(const Dividend dividend, const Divisor divisor)
 {
@@ -83,7 +91,8 @@ inline Dividend floored_divide(const Dividend dividend, const Divisor divisor)
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) - 1;
 }
-
+```
+```cpp
 template <typename Dividend, typename Divisor>
 inline Dividend truncated_modulo(const Dividend dividend, const Divisor divisor)
 {
@@ -96,3 +105,4 @@ inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
     return dividend / divisor;
 }
 ```
+The only thing that may not be obvious is that the `floored_modulo` function negates the negative remainder in order to obtain its magnitude.
