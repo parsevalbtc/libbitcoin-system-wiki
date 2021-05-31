@@ -111,13 +111,17 @@ inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
 ```
 The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude. These functions cannot *cause* overflows and *do* fail as native operators with a zero-valued divisor.
 
-## Template Type Constraints and Specialization
-The above (simplified) templates will result in compiler warnings for unsigned operators, as they all invoke `factor < 0`, which is always `false`. The full implementation type-constrains each template and specializes the `negative(...)` calls for operator unsigned types.
+## Template Type Constraints and Overrides
+The above (simplified) templates produce compiler warnings for unsigned operands, as they all invoke `factor < 0`, which is always `false`. The full implementation implements overrides for each and `negative(...)` by applying operand signed-ness type constraints.
 
-The above `floored_modulo` and `floored_divide` templates can be optimized by specializing for unsigned operators as these reduce to the truncated (native) forms.
+The above `floored_modulo` and `floored_divide` templates can be optimized by overriding for both operands unsigned, as this reduces to the truncated (native) form. This is also required for resolving the next issue.
+
+The above `floored_modulo` template warns (and fails) with an unsigned *dividend*, as it cannot be negated. It also cannot be cast, as that would result in an overflow condition. But in this case (the signed operands override) the *divisor* is signed and therefore can be negated. So the full implementation also overrides the `floored_modulo` signed operands template so that the signed-ness of the dividend and divisor are isolated.
+
+These template overrides are a bit obtuse, but they are necessary to achieve the objective of supporting full operand signed-ness. By fanning out the templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation is achieved.
 
 ## Optimization
-The `%` operator may be invoked twice in `floored_modulo` (with signed operators) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation (which should be the case).
+The `%` operator may be invoked twice in `floored_modulo` (with signed operands) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation (which should be the case).
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
@@ -127,7 +131,9 @@ Despite the relative verbosity of the templates, their type constraints, functio
 
 ## Conclusion
 * The `remainder(...)` call compiles away for `constexpr` operators.
-* The specialized `negative(...)` calls compile away for `unsigned` types.
+* The overridden `negative(...)` calls compile away for `unsigned` operands.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
 
 This implies that what remains is *necessary*.
+
+## Full Implementation
