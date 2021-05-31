@@ -1,13 +1,15 @@
 Sometimes the most trivial coding tasks can be unexpectedly challenging. In working with Python equivalence I found it necessary to implement floored signed integer modulo in C++.
 
-A quick stop at Stack Overflow shows how confounding this can be. There are several different approaches, most of which either do not support signed operators, cause overflows, throw exceptions, or just don't work. Even the "accepted" answers are flawed in such ways, with large numbers of upvotes.
+A quick stop at Stack Overflow shows how confounding this can be. There are several different approaches, most of which either do not support signed operators, cause overflows, throw exceptions, or just don't work. Even the "accepted" answers are flawed in such ways, with large numbers of upvotes. So I decided to just figure it out myself.
 
-So I decided to just figure it out myself. The objectives are:
+## Objectives
 
 * Provide ceilinged `\` and `%` functions, for all integer types.
 * Maintain the failure behavior of native operators ( `x / 0` and `x % 0`)
 * Maintain overflow behavior of native operators.
 * Avoid all unnecessary computation.
+
+## Analysis
 
 The key is to understand the nature of the native operators. Division is actually a challenging subject. Programming languages implement it in [different ways](https://en.wikipedia.org/wiki/Modulo_operation). Python actually [changed the behavior](https://www.python.org/dev/peps/pep-0238/) of `\` and `%` in a minor version release! This of course led to additional scrutiny in the original Python equivalence task.
 
@@ -27,7 +29,9 @@ The key is to understand the behavior of the native operator. There is no distin
 
 Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know whether there is a remainder (and its magnitude when implementing `%`) and the sign of the quotient. The quotient is positive if both operands have the same sign, otherwise it is negative.
 
-These two templates answer those questions:
+## Implementation
+
+These two templates answer the above two questions.
 
 ```cpp
 template <typename Dividend, typename Divisor>
@@ -106,3 +110,6 @@ inline Dividend truncated_divide(const Dividend dividend, const Divisor divisor)
 }
 ```
 The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude.
+
+## Performance
+The above simplified templates will result in warnings for unsigned operators, as they all invoke `factor < 0`, which is always `false`. The full implementation type-constrains each template and specializes the `negative(...)` calls for operator unsigned types.
