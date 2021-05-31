@@ -31,103 +31,165 @@ Truncated division simply drops the remainder. So in the case of a positive quot
 
 ## Implementation
 
-These two templates answer the above two questions.
+These templates answer the above two questions.
 
 ```cpp
-template <typename Dividend, typename Divisor>
-inline bool remainder(Dividend dividend, Divisor divisor)
+// These eliminate (unsigned < 0) warnings (always false) and compile away the
+// conditions entirely when unsigned (optimization).
+// ----------------------------------------------------------------------------
+
+template <typename Integer,
+    IS_UNSIGNED_INTEGER(Integer)=true>
+inline bool negative(Integer value)
 {
-    return (dividend % divisor) != 0;
+    return false;
 }
 
-template <typename Factor1, typename Factor2>
+template <typename Integer,
+    IS_SIGNED_INTEGER(Integer)=true>
+inline bool negative(Integer value)
+{
+    // The comparison compiles away for constexpr values.
+    return value < 0;
+}
+
+template <typename Factor1, typename Factor2,
+    IS_INTEGERS(Factor1, Factor2)=true>
 inline bool negative(Factor1 factor1, Factor2 factor2)
 {
-    return (factor1 < 0) != (factor2 < 0);
+    return negative(factor1) != negative(factor2);
+}
+
+// ----------------------------------------------------------------------------
+
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
+inline bool remainder(Dividend dividend, Divisor divisor)
+{
+    // The modulo compiles away for constexpr values.
+    return (dividend % divisor) != 0;
 }
 ```
 These two templates combine them into single answer.
 ```cpp
-
-template <typename Dividend, typename Divisor>
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline bool ceilinged(Dividend dividend, Divisor divisor)
 {
+    // These checks compile away for constexpr values.
+    // The negative template type constraints eliminate one or two compares.
+    // No change unless remainder, and c++ mod ceilinged for negative quotient.
     return !remainder(dividend, divisor) || negative(dividend, divisor);
 }
 
-template <typename Dividend, typename Divisor>
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline bool floored(Dividend dividend, Divisor divisor)
 {
+    // These checks compile away for constexpr values.
+    // The negative template type constraints eliminate one or two compares.
+    // No change unless remainder, and c++ mod floored for positive quotient.
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
 ```
 These six templates implement the three common rounding approaches.
+
+Return values are typed by the dividend, which is consistent with native operators.
+
+These functions cannot *cause* overflows and *do* fail as native operators with a zero-valued divisor.
 ```cpp
-template <typename Dividend, typename Divisor>
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Dividend ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
+    // truncated_modulo is positive if not ceilinged.
     return ceilinged(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
         divisor + truncated_modulo(dividend, divisor);
 }
 
-template <typename Dividend, typename Divisor>
+// Override for unsigned floor (native/optimization).
+template <typename Dividend, typename Divisor,
+    IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
+inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
+{
+    // truncated_modulo is already floored for positive quotient.
+    return truncated_modulo(dividend, divisor);
+}
+
+template <typename Dividend, typename Divisor,
+    IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
+inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
+{
+    // truncated_modulo is negative if not floored.
+    return floored(dividend, divisor) ?
+        truncated_modulo(dividend, divisor) :
+        divisor + truncated_modulo(dividend, divisor);
+}
+
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Dividend ceilinged_divide(Dividend dividend, Divisor divisor)
 {
+    // truncated_divide is 1 low if not ceilinged. 
     return ceilinged(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) + 1;
 }
-```
-```cpp
-template <typename Dividend, typename Divisor>
-inline Dividend floored_modulo(Dividend dividend, Divisor divisor)
+
+// Override for unsigned floor (native/optimization).
+template <typename Dividend, typename Divisor,
+    IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
+inline Dividend floored_divide(Dividend dividend, Divisor divisor)
 {
-    return floored(dividend, divisor) ?
-        truncated_modulo(dividend, divisor) :
-        divisor - truncated_modulo(-dividend, divisor);
+    // truncated_modulo is already floored for positive quotient.
+    return truncated_divide(dividend, divisor);
 }
 
-template <typename Dividend, typename Divisor>
-inline Dividend floored_divide( Dividend dividend, Divisor divisor)
+template <typename Dividend, typename Divisor,
+    IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
+inline Dividend floored_divide(Dividend dividend, Divisor divisor)
 {
+    // truncated_divide is 1 high if not floored. 
     return floored(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) - 1;
 }
-```
-```cpp
-template <typename Dividend, typename Divisor>
+
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Dividend truncated_modulo(Dividend dividend, Divisor divisor)
 {
+    // C++ applies "toward zero" integer division rounding (and remainder).
+    // Floored for positive quotient, ceilinged for negative quotient.
     return dividend % divisor;
 }
 
-template <typename Dividend, typename Divisor>
+template <typename Dividend, typename Divisor,
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
 {
+    // C++ applies "toward zero" integer division rounding (and remainder).
+    // Floored for positive quotient, ceilinged for negative quotient.
     return dividend / divisor;
 }
 ```
-The only thing that may not be obvious is that the `floored_modulo` function negates the dividend of the negative remainder in order to obtain its magnitude. These functions cannot *cause* overflows and *do* fail as native operators with a zero-valued divisor.
+## Mixing Unsigned and Signed Operands
+It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
 
 ## Template Type Constraints and Overrides
 The above (simplified) templates produce compiler warnings for unsigned operands, as they all invoke `factor < 0`, which is always `false`. The full implementation implements overrides for each and `negative(...)` by applying operand signed-ness type constraints.
 
-The above `floored_modulo` and `floored_divide` templates can be optimized by overriding for both operands unsigned, as this reduces to the truncated (native) form. This is also required for resolving the next issue.
-
-The above `floored_modulo` template warns (and fails) with an unsigned *dividend*, as it cannot be negated. It also cannot be cast, as that would result in an overflow condition. But in this case (the signed operands override) the *divisor* is signed and therefore can be negated. So the full implementation also overrides the `floored_modulo` signed operands template so that the signed-ness of the dividend and divisor are isolated.
-
 These template overrides are a bit obtuse, but they are necessary to achieve the objective of supporting full operand signed-ness. By fanning out the templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation is achieved.
 
 ## Optimization
-The `%` operator may be invoked twice in `floored_modulo` (with signed operands) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. This would also require dividend negation in `floored_modulo` where it may not be necessary (i.e. zero remainder), probably a break-even. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation (which should be the case).
+The `%` operator may be invoked twice in `floored_modulo` (with signed operands) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
-The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide` and `truncated_modulo` calls in `ceilinged_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance (computation) optimization.
+The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide`, and `truncated_modulo` calls in `ceilinged_modulo` and `floored_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance (computation) optimization.
 
-Despite the relative verbosity of the templates, their type constraints, function and variable names, the result should be as optimal as manually inlining the minimal *necessary* operations.
+Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Conclusion
 * The `remainder(...)` call compiles away for `constexpr` operators.
@@ -136,4 +198,43 @@ Despite the relative verbosity of the templates, their type constraints, functio
 
 This implies that what remains is *necessary*.
 
-## Full Implementation
+## Supporting Code
+These are the type constraint macros used above. As a rule I make very limited use of macros, but these significantly improve readability and reduce repetition without impacting debugging. These will work on any C++11 or later compiler.
+```cpp
+#include <limits>
+#include <type_traits>
+
+// Borrowing enable_if_t from c++14.
+// en.cppreference.com/w/cpp/types/enable_if
+template<bool Bool, class Type=void>
+using enable_if_type = typename std::enable_if<Bool, Type>::type;
+
+#define IS_UNSIGNED_INTEGER(Type) \
+enable_if_type< \
+    std::numeric_limits<Type>::is_integer && \
+    !std::numeric_limits<Type>::is_signed, bool>
+
+#define IS_SIGNED_INTEGER(Type) \
+enable_if_type< \
+    std::numeric_limits<Type>::is_integer && \
+    std::numeric_limits<Type>::is_signed, bool>
+
+#define IS_INTEGERS(Left, Right) \
+enable_if_type< \
+    std::numeric_limits<Left>::is_integer && \
+    std::numeric_limits<Right>::is_integer, bool>
+
+#define IS_UNSIGNED_INTEGERS(Left, Right) \
+enable_if_type< \
+    std::numeric_limits<Left>::is_integer && \
+    !std::numeric_limits<Left>::is_signed && \
+    std::numeric_limits<Right>::is_integer && \
+    !std::numeric_limits<Right>::is_signed, bool>
+
+#define IS_EITHER_INTEGER_SIGNED(Left, Right) \
+enable_if_type< \
+    (std::numeric_limits<Left>::is_integer && \
+        std::numeric_limits<Left>::is_signed) || \
+    (std::numeric_limits<Right>::is_integer && \
+        std::numeric_limits<Right>::is_signed), bool>
+```
