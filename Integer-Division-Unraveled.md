@@ -90,11 +90,7 @@ inline bool floored(Dividend dividend, Divisor divisor)
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
 ```
-These six templates implement the three common rounding approaches.
-
-Return values are typed by the dividend, which is consistent with native operators.
-
-These functions cannot *cause* overflows and *do* fail as native operators with a zero-valued divisor.
+These templates implement the three common rounding approaches.
 ```cpp
 template <typename Dividend, typename Divisor,
     IS_INTEGERS(Dividend, Divisor)=true>
@@ -178,6 +174,8 @@ inline Dividend truncated_divide(Dividend dividend, Divisor divisor)
     return dividend / divisor;
 }
 ```
+Return values are typed by the dividend, which is consistent with native operators.
+
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
 
@@ -194,8 +192,12 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * The `remainder(...)` call compiles away for `constexpr` operators.
 * The overridden `negative(...)` calls compile away for `unsigned` operands.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
+* The functions *do* fail as native operators with a zero-valued divisor.
+* The functions cannot *cause* overflows.
+* The stack calls are removed by inlining.
+* All that remains is *necessary*.
 
-This implies that what remains is *necessary*. By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
+By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
 
 ## Template Type Constraints
 Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false`. These and the overrides for `floored_modulo` and `floored_divide` bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
