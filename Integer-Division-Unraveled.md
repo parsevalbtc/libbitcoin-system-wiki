@@ -5,7 +5,7 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 ## Objectives
 
 * Provide ceilinged `\` and `%` functions, for all integer types.
-* Maintain the failure behavior of native operators ( `x / 0` and `x % 0`)
+* Maintain the failure behavior of native operators (i.e. `x / 0` and `x % 0`)
 * Maintain overflow behavior of native operators.
 * Avoid all unnecessary computation.
 
