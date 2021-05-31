@@ -123,7 +123,7 @@ The `inline` keyword advises the compiler that inlining of the functions is pref
 
 The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide` and `truncated_modulo` calls in `ceilinged_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance optimization.
 
-Despite the source code verbosity of the templates, their type constraints, function and variable names, the result should be as optimal as manually inlining the minimal *necessary* operations.
+Despite the relative verbosity of the templates, their type constraints, function and variable names, the result should be as optimal as manually inlining the minimal *necessary* operations.
 
 ## Conclusion
 * The `remainder(...)` call compiles away for `constexpr` operators.
