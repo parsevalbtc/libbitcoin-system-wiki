@@ -95,60 +95,50 @@ inline bool floored(Dividend dividend, Divisor divisor)
 ```
 These templates implement the three common rounding approaches.
 ```cpp
-template <typename Dividend, typename Divisor, Remainder=Dividend
-    IS_INTEGERS(Dividend, Divisor)=true>
-inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
-{
-    return ceilinged(dividend, divisor) ?
-        truncated_modulo(dividend, divisor) :
-        truncated_modulo(dividend, divisor) - divisor;
-}
-
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
-    return ceilinged(dividend, divisor) ?
-        truncated_divide(dividend, divisor) :
-        truncated_divide(dividend, divisor) + 1;
-}
-```
-```cpp
-template <typename Dividend, typename Divisor, Remainder=Dividend
-    IS_INTEGERS(Dividend, Divisor)=true>
-inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
-{
-    return floored(dividend, divisor) ?
-        truncated_modulo(dividend, divisor) :
-        truncated_modulo(dividend, divisor) + divisor;
+    return truncated_divide(dividend, divisor) + 
+        ceilinged(dividend, divisor) ? 0 : 1;
 }
 
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, typename Remainder,
+    IS_INTEGERS(Dividend, Divisor)=true>
+inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
+{
+    return truncated_modulo(dividend, divisor) -
+        ceilinged(dividend, divisor) ? 0 : divisor;
+}
+
+template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
-    return floored(dividend, divisor) ?
-        truncated_divide(dividend, divisor) :
-        truncated_divide(dividend, divisor) - 1;
-}
-```
-```cpp
-template <typename Dividend, typename Divisor, Remainder=Dividend
-    IS_INTEGERS(Dividend, Divisor)=true>
-inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
-{
-    // C++ applies "toward zero" integer division rounding (and remainder).
-    // Floored for positive quotient, ceilinged for negative quotient.
-    return dividend % divisor;
+    return truncated_divide(dividend, divisor) -
+        floored(dividend, divisor) ? 0 : 1;
 }
 
-template <typename Dividend, typename Divisor, Quotient=Dividend
+template <typename Dividend, typename Divisor, typename Remainder,
+    IS_INTEGERS(Dividend, Divisor)=true>
+inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
+{
+    return truncated_modulo(dividend, divisor) +
+        floored(dividend, divisor) ? 0 : divisor;
+}
+
+template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Quotient truncated_divide(Dividend dividend, Divisor divisor)
 {
-    // C++ applies "toward zero" integer division rounding (and remainder).
-    // Floored for positive quotient, ceilinged for negative quotient.
     return dividend / divisor;
+}
+
+template <typename Dividend, typename Divisor, typename Remainder,
+    IS_INTEGERS(Dividend, Divisor)=true>
+inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
+{
+    return dividend % divisor;
 }
 ```
 Return value types default to the dividend type and can be specified by explicit template parameter.
