@@ -163,15 +163,20 @@ The compiler is expected to reduce the redundant `truncated_divide` calls in `ce
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
+Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
+
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Conclusion
+* Behavior satisfies the identity function for all sign combinations.
+* Behavior is consistent with native operators.
+* The functions cannot *cause* overflows.
+* There can be no warnings due to use of unsigned parameters.
+* The functions *do* fail as native operators with a zero-valued divisor.
+* The stack calls are removed by inlining.
 * The `negative` calls compile away for `unsigned` operands.
 * The `remainder` and `negative` calls compile away for `constexpr` operators.
 * The `||` conditions compile away when the above render the result always `true` or `false`.
-* The functions *do* fail as native operators with a zero-valued divisor.
-* The functions cannot *cause* overflows.
-* The stack calls are removed by inlining.
 * All that remains is *necessary*.
 
 By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
