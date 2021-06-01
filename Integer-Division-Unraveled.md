@@ -25,7 +25,7 @@ auto q = (x + (y - 1)) / y;
 auto q = (x / y) + !!(x % y);
 
 // This warns on unsigned types (dividend in this example).
-auto q = x / y + (((x < 0) ^ (y > 0)) && (x % y);
+auto q = x / y + (((x < 0) != (y < 0)) && (x % y);
 ```
 
 There is no distinction unless there is a remainder - all rounding methods return the same result. But integer division must discard the remainder. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
