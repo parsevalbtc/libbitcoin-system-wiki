@@ -246,3 +246,81 @@ enable_if_type< \
     (std::numeric_limits<Right>::is_integer && \
         std::numeric_limits<Right>::is_signed), bool>
 ```
+## Math
+```cpp
+// C++11: if the quotient x/y is representable in the type of the result:
+// Identity: (x / y) * y + (x % y) = x
+
+// Divide increment magnitude.
+constexpr auto i = 1;
+
+// Operand magnitudes.
+constexpr auto x = 4;
+constexpr auto y = 3;
+
+// Zero to zero.
+static_assert(0 / -y == 0, "0");
+static_assert(0 / +y == 0, "0");
+static_assert(0 % -y == 0, "0");
+static_assert(0 % +y == 0, "0");
+
+// ----------------------------------------------------------------------------
+
+// Truncated divide:
+static_assert(+x / +y == +1, "+");
+static_assert(-x / -y == +1, "+");
+static_assert(-x / +y == -1, "-");
+static_assert(+x / -y == -1, "-");
+
+// Truncated modulo:
+static_assert(+x % +y == +1, "+");
+static_assert(-x % -y == -1, "+");
+static_assert(-x % +y == -1, "-");
+static_assert(+x % -y == +1, "-");
+
+// Truncated identity:
+static_assert((+x / +y) * (+y) + (+x % +y) == +x, "+");
+static_assert((-x / -y) * (-y) + (-x % -y) == -x, "+");
+static_assert((-x / +y) * (+y) + (-x % +y) == -x, "-");
+static_assert((+x / -y) * (-y) + (+x % -y) == +x, "-");
+
+// ----------------------------------------------------------------------------
+
+// Ceilinged divide: (increment magnitude of quotient if remainder)
+static_assert((+x / +y) + (((+x < 0) == (+y < 0)) ? ((+x % +y) != 0 ? +i : 0) : 0) == +1 + i, "+");
+static_assert((-x / -y) + (((-x < 0) == (-y < 0)) ? ((-x % -y) != 0 ? +i : 0) : 0) == +1 + i, "+");
+static_assert((-x / +y) + (((-x < 0) == (+y < 0)) ? ((-x % +y) != 0 ? +i : 0) : 0) == -1 + 0, "-");
+static_assert((+x / -y) + (((+x < 0) == (-y < 0)) ? ((+x % -y) != 0 ? +i : 0) : 0) == -1 + 0, "-");
+
+// Ceilinged modulo: (decrease magnitude of modulo by divisor if remainder)
+static_assert((+x % +y) - (((+x < 0) == (+y < 0)) ? +y : 0) == +1 - +y, "+");
+static_assert((-x % -y) - (((-x < 0) == (-y < 0)) ? -y : 0) == -1 - -y, "+");
+static_assert((-x % +y) - (((-x < 0) == (+y < 0)) ? +y : 0) == -1 - +0, "-");
+static_assert((+x % -y) - (((+x < 0) == (-y < 0)) ? -y : 0) == +1 - -0, "-");
+
+// Ceilinged identity
+static_assert((+1 + i) * (+y) + (+1 - +y) == +x, "+");
+static_assert((+1 + i) * (-y) + (-1 - -y) == -x, "+");
+static_assert((-1 + 0) * (+y) + (-1 - +0) == -x, "-");
+static_assert((-1 + 0) * (-y) + (+1 - -0) == +x, "-");
+
+// ----------------------------------------------------------------------------
+
+// Floored divide: (increment magnitude of quotient if remainder)
+static_assert((+x / +y) - (((+x < 0) != (+y < 0)) ? ((+x % +y) != 0 ? +i : 0) : 0) == +1 - 0, "+");
+static_assert((-x / -y) - (((-x < 0) != (-y < 0)) ? ((-x % -y) != 0 ? +i : 0) : 0) == +1 - 0, "+");
+static_assert((-x / +y) - (((-x < 0) != (+y < 0)) ? ((-x % +y) != 0 ? +i : 0) : 0) == -1 - i, "-");
+static_assert((+x / -y) - (((+x < 0) != (-y < 0)) ? ((+x % -y) != 0 ? +i : 0) : 0) == -1 - i, "-");
+
+// Floored modulo: (increase magnitude of modulo by divisor if remainder)
+static_assert((+x % +y) + (((+x < 0) != (+y < 0)) ? +y : 0) == +1 + +0, "+");
+static_assert((-x % -y) + (((-x < 0) != (-y < 0)) ? -y : 0) == -1 + +0, "+");
+static_assert((-x % +y) + (((-x < 0) != (+y < 0)) ? +y : 0) == -1 + +y, "-");
+static_assert((+x % -y) + (((+x < 0) != (-y < 0)) ? -y : 0) == +1 + -y, "-");
+
+// Floored identity:
+static_assert((+1 - 0) * (+y) + (+1 + +0) == +x, "+");
+static_assert((+1 - 0) * (-y) + (-1 + +0) == -x, "+");
+static_assert((-1 - i) * (+y) + (-1 + +y) == -x, "-");
+static_assert((-1 - i) * (-y) + (+1 + -y) == +x, "-");
+```
