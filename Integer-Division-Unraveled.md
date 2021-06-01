@@ -147,7 +147,7 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * Behavior is consistent with native operators.
 * The functions cannot *cause* overflows.
 * There can be no warnings due to use of unsigned parameters.
-* The functions *do* fail as native operators with a zero-valued divisor.
+* The functions fail as native operators with a zero-valued divisor.
 * The stack calls are removed by inlining.
 * The `negative` calls compile away for `unsigned` operands.
 * The `remainder` and `negative` calls compile away for `constexpr` operators.
