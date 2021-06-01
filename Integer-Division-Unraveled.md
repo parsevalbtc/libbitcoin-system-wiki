@@ -24,7 +24,7 @@ auto q = (x + (y - 1)) / y;
 // This is limited to positive integers.
 auto q = (x / y) + !!(x % y);
 
-// This is limited to unsigned types.
+// This is limited to unsigned types (dividend in this example).
 auto q = x / y + (((x < 0) ^ (y > 0)) && (x % y);
 ```
 
