@@ -99,7 +99,6 @@ template <typename Dividend, typename Divisor, Remainder=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
-    // truncated_modulo is positive if not ceilinged.
     return ceilinged(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
         truncated_modulo(dividend, divisor) - divisor;
@@ -109,50 +108,25 @@ template <typename Dividend, typename Divisor, Quotient=Dividend
     IS_INTEGERS(Dividend, Divisor)=true>
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
-    // truncated_divide is 1 low if not ceilinged. 
     return ceilinged(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) + 1;
 }
 ```
 ```cpp
-// Override for unsigned floor (native operation).
-// ----------------------------------------------------------------------------
 template <typename Dividend, typename Divisor, Remainder=Dividend
-    IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
-    // truncated_modulo is already floored for positive quotient.
-    return truncated_modulo(dividend, divisor);
-}
-// ----------------------------------------------------------------------------
-
-template <typename Dividend, typename Divisor, Remainder=Dividend
-    IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
-inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
-{
-    // truncated_modulo is negative if not floored.
     return floored(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
         truncated_modulo(dividend, divisor) + divisor;
 }
 
-// Override for unsigned floor (native operation).
-// ----------------------------------------------------------------------------
 template <typename Dividend, typename Divisor, Quotient=Dividend
-    IS_UNSIGNED_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGERS(Dividend, Divisor)=true>
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
-    // truncated_modulo is already floored for positive quotient.
-    return truncated_divide(dividend, divisor);
-}
-// ----------------------------------------------------------------------------
-
-template <typename Dividend, typename Divisor, Quotient=Dividend
-    IS_EITHER_INTEGER_SIGNED(Dividend, Divisor)=true>
-inline Quotient floored_divide(Dividend dividend, Divisor divisor)
-{
-    // truncated_divide is 1 high if not floored. 
     return floored(dividend, divisor) ?
         truncated_divide(dividend, divisor) :
         truncated_divide(dividend, divisor) - 1;
@@ -183,11 +157,11 @@ Return value types default to the dividend type and can be specified by explicit
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
 
 ## Optimization
-The `%` operator may be invoked twice in `floored_modulo` (with signed operands) and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
-
-The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
+The `%` operator may be invoked twice in `floored_modulo` and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
 The compiler is expected to reduce the redundant `truncated_divide` calls in `ceilinged_divide` and `floored_divide`, and `truncated_modulo` calls in `ceilinged_modulo` and `floored_modulo`. However doing it explicitly is at best an object code *size* optimization, not a performance (computation) optimization.
+
+The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
@@ -203,11 +177,11 @@ Despite the relative verbosity of the templates the result should be as optimal 
 By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
 
 ## Template Type Constraints
-Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false`. These and the overrides for `floored_modulo` and `floored_divide` bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
+Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false`. These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the `=true` default template parameter values in the implementation.
 
-These are the type constraint macros used above. As a rule I make very limited use of macros. But these significantly improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
+These are the type constraint macros used above. As a rule I make very limited use of macros. But these improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
 ```cpp
 #include <limits>
 #include <type_traits>
@@ -231,22 +205,9 @@ enable_if_type< \
 enable_if_type< \
     std::numeric_limits<Left>::is_integer && \
     std::numeric_limits<Right>::is_integer, bool>
-
-#define IS_UNSIGNED_INTEGERS(Left, Right) \
-enable_if_type< \
-    std::numeric_limits<Left>::is_integer && \
-    !std::numeric_limits<Left>::is_signed && \
-    std::numeric_limits<Right>::is_integer && \
-    !std::numeric_limits<Right>::is_signed, bool>
-
-#define IS_EITHER_INTEGER_SIGNED(Left, Right) \
-enable_if_type< \
-    (std::numeric_limits<Left>::is_integer && \
-        std::numeric_limits<Left>::is_signed) || \
-    (std::numeric_limits<Right>::is_integer && \
-        std::numeric_limits<Right>::is_signed), bool>
 ```
 ## Math
+These expressions demonstrate and prove the correctness of the algorithm above. They may be useful in generating a test matrix.
 ```cpp
 // C++11: if the quotient x/y is representable in the type of the result:
 // Identity: (x / y) * y + (x % y) = x
