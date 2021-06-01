@@ -32,9 +32,13 @@ There is no distinction unless there is a remainder - all rounding methods retur
 
 Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know `whether there is a remainder` (and its magnitude when implementing `%`) and `the sign of the quotient`. The quotient is positive if both operands have the same sign, otherwise it is negative.
 
+## Math
+
+TODO
+
 ## Implementation
 
-These templates answer the above two questions.
+These templates determine rounding direction.
 
 ```cpp
 template <typename Integer,
