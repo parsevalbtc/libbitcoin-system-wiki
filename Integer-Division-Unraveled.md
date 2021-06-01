@@ -206,7 +206,7 @@ enable_if_type< \
     std::numeric_limits<Left>::is_integer && \
     std::numeric_limits<Right>::is_integer, bool>
 ```
-## Math
+## Test Vectors
 These expressions demonstrate and prove the correctness of the algorithm above. They may be useful in generating a test matrix.
 ```cpp
 // C++11: if the quotient x/y is representable in the type of the result:
