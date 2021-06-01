@@ -88,7 +88,7 @@ template <typename Dividend, typename Divisor, typename Quotient,
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) + 
-        ceilinged(dividend, divisor) ? 0 : 1;
+        (ceilinged(dividend, divisor) ? 0 : 1);
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
@@ -96,7 +96,7 @@ template <typename Dividend, typename Divisor, typename Remainder,
 inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) -
-        ceilinged(dividend, divisor) ? 0 : divisor;
+        (ceilinged(dividend, divisor) ? 0 : divisor);
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
@@ -104,7 +104,7 @@ template <typename Dividend, typename Divisor, typename Quotient,
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) -
-        floored(dividend, divisor) ? 0 : 1;
+        (floored(dividend, divisor) ? 0 : 1);
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
@@ -112,7 +112,7 @@ template <typename Dividend, typename Divisor, typename Remainder,
 inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) +
-        floored(dividend, divisor) ? 0 : divisor;
+        (floored(dividend, divisor) ? 0 : divisor);
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
