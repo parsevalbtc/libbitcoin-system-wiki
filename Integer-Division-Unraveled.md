@@ -131,9 +131,6 @@ inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 ```
 Return value types default to the dividend type and can be specified by explicit template parameter.
 
-## Mixing Unsigned and Signed Operands
-It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
-
 ## Optimization
 The `%` operator may be invoked twice in `floored_modulo` and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
@@ -187,6 +184,9 @@ enable_if_type< \
     std::numeric_limits<Left>::is_integer && \
     std::numeric_limits<Right>::is_integer, bool>
 ```
+## Mixing Unsigned and Signed Operands
+It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
+
 ## Test Vectors
 These expressions demonstrate and prove the correctness of the algorithm above. They may be useful in generating a test matrix.
 ```cpp
