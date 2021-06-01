@@ -102,7 +102,7 @@ inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
     // truncated_modulo is positive if not ceilinged.
     return ceilinged(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
-        divisor + truncated_modulo(dividend, divisor);
+        truncated_modulo(dividend, divisor) - divisor;
 }
 
 template <typename Dividend, typename Divisor, Quotient=Dividend
@@ -134,7 +134,7 @@ inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
     // truncated_modulo is negative if not floored.
     return floored(dividend, divisor) ?
         truncated_modulo(dividend, divisor) :
-        divisor + truncated_modulo(dividend, divisor);
+        truncated_modulo(dividend, divisor) + divisor;
 }
 
 // Override for unsigned floor (native operation).
