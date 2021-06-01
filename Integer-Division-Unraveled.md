@@ -247,13 +247,13 @@ static_assert((+x / -y) * (-y) + (+x % -y) == +x, "-");
 
 // ----------------------------------------------------------------------------
 
-// Ceilinged divide: (increment magnitude of quotient if remainder)
+// Ceilinged divide: (increment truncated quotient if positive and remainder)
 static_assert((+x / +y) + (((+x < 0) == (+y < 0)) ? ((+x % +y) != 0 ? +i : 0) : 0) == +1 + i, "+");
 static_assert((-x / -y) + (((-x < 0) == (-y < 0)) ? ((-x % -y) != 0 ? +i : 0) : 0) == +1 + i, "+");
 static_assert((-x / +y) + (((-x < 0) == (+y < 0)) ? ((-x % +y) != 0 ? +i : 0) : 0) == -1 + 0, "-");
 static_assert((+x / -y) + (((+x < 0) == (-y < 0)) ? ((+x % -y) != 0 ? +i : 0) : 0) == -1 + 0, "-");
 
-// Ceilinged modulo: (decrease magnitude of modulo by divisor if remainder)
+// Ceilinged modulo: (decrease truncated modulo by divisor if positive and remainder)
 static_assert((+x % +y) - (((+x < 0) == (+y < 0)) ? +y : 0) == +1 - +y, "+");
 static_assert((-x % -y) - (((-x < 0) == (-y < 0)) ? -y : 0) == -1 - -y, "+");
 static_assert((-x % +y) - (((-x < 0) == (+y < 0)) ? +y : 0) == -1 - +0, "-");
@@ -267,13 +267,13 @@ static_assert((-1 + 0) * (-y) + (+1 - -0) == +x, "-");
 
 // ----------------------------------------------------------------------------
 
-// Floored divide: (increment magnitude of quotient if remainder)
+// Floored divide: (decrement truncated quotient if negative and remainder)
 static_assert((+x / +y) - (((+x < 0) != (+y < 0)) ? ((+x % +y) != 0 ? +i : 0) : 0) == +1 - 0, "+");
 static_assert((-x / -y) - (((-x < 0) != (-y < 0)) ? ((-x % -y) != 0 ? +i : 0) : 0) == +1 - 0, "+");
 static_assert((-x / +y) - (((-x < 0) != (+y < 0)) ? ((-x % +y) != 0 ? +i : 0) : 0) == -1 - i, "-");
 static_assert((+x / -y) - (((+x < 0) != (-y < 0)) ? ((+x % -y) != 0 ? +i : 0) : 0) == -1 - i, "-");
 
-// Floored modulo: (increase magnitude of modulo by divisor if remainder)
+// Floored modulo: (increase truncated modulo by divisor if negative and remainder
 static_assert((+x % +y) + (((+x < 0) != (+y < 0)) ? +y : 0) == +1 + +0, "+");
 static_assert((-x % -y) + (((-x < 0) != (-y < 0)) ? -y : 0) == -1 + +0, "+");
 static_assert((-x % +y) + (((-x < 0) != (+y < 0)) ? +y : 0) == -1 + +y, "-");
