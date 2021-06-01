@@ -18,11 +18,14 @@ The key is in understanding the nature of the native operators. Integer division
 C++ implements `truncated` integer division. Python implements `floored` integer division. The other common form (`ceilinged`) is quite useful as well. Common hacks for ceilinged division are:
 
 ```cpp
-// This overflows and is limited to signed integers.
+// This overflows and is limited to positive integers.
 auto q = (x + (y - 1)) / y;
 
-// This is limited to signed integers.
+// This is limited to positive integers.
 auto q = (x / y) + !!(x % y);
+
+// This is limited to unsigned types.
+auto q = x / y + (((x < 0) ^ (y > 0)) && (x % y);
 ```
 
 There is no distinction unless there is a remainder - all rounding methods return the same result. But integer division must discard the remainder. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
