@@ -141,7 +141,7 @@ inline bool remainder(Dividend dividend, Divisor divisor)
     return (dividend % divisor) != 0;
 }
 ```
-These two templates combine them into single answer.
+These templates combine them into a single answer for a given rounding method.
 ```cpp
 template <typename Dividend, typename Divisor,
     IS_INTEGERS(Dividend, Divisor)=true>
