@@ -24,7 +24,7 @@ auto q = (x + (y - 1)) / y;
 // This is limited to positive integers.
 auto q = (x / y) + !!(x % y);
 
-// This warns on unsigned types.
+// This warns on unsigned types (tautological compare).
 auto q = (x / y) + (((x < 0) != (y < 0)) && (x % y);
 ```
 
@@ -220,7 +220,7 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * Behavior satisfies the identity function for all sign combinations.
 * Behavior is consistent with native operators.
 * The functions cannot *cause* overflows.
-* There can be no warnings due to use of unsigned parameters.
+* There can be no "tautological compare" warnings from unsigned parameters.
 * The functions fail as native operators with a zero-valued divisor.
 * The stack calls are removed by inlining.
 * The `negative` calls compile away for `unsigned` operands.
