@@ -228,8 +228,6 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * The `||` conditions compile away when the above render the result always `true` or `false`.
 * All that remains is *necessary*.
 
-By fanning out templates based on signed-ness type constraints, the objective of a "single" function that supports all integers without limitation or overhead is achieved.
-
 ## Template Type Constraints
 Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false`. These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
 
