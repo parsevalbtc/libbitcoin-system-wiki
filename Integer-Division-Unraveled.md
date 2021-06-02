@@ -6,8 +6,8 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 
 * Provide ceilinged and floored `\` and `%` functions, for all integer types.
 * Maintain the failure behavior of native operators (i.e. `x / 0` and `x % 0`)
+* Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
-* Maintain return type inference of native operators.
 * Avoid unnecessary computation.
 
 ## Hacks
@@ -232,18 +232,6 @@ The `inline` keyword advises the compiler that inlining of the functions is pref
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
-## Conclusion
-* Behavior satisfies the identity function for all sign combinations.
-* Behavior is consistent with native operators.
-* The functions cannot *cause* overflows.
-* There can be no "tautological compare" warnings from unsigned parameters.
-* The functions fail as native operators with a zero-valued divisor.
-* The stack calls are removed by inlining.
-* The `negative` calls compile away for `unsigned` operands.
-* The `remainder` and `negative` calls compile away for `constexpr` operators.
-* The `||` conditions compile away when the above render the result always `true` or `false`.
-* All that remains is *necessary*.
-
 ## Template Type Constraints
 
 Given that the C++ operators determine the result type (based on the operand types) the return type must so determined. This is achieved by using the C++14 `decltype` keyword.
@@ -290,7 +278,20 @@ enable_if_type< \
     std::numeric_limits<Right>::is_integer, bool>
 ```
 ## Mixing Unsigned and Signed Operands
-It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers will warn that the signed operand will be converted to unsigned. The warning is limited to literals, so I was unable to reproduce that aspect. However the execution behavior is identical, as all division and modulo operations are executed in the original sign type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values will produce different results based on the type alone. The behavior is certainly not intuitive, so I spent hours making sure that the test cases were valid.
+It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. The warning is reproduced with the C++14 `decltype` keyword, and in C++11 the execution behavior is identical given the same return type, though without the warning. In either case, all division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result is certainly not intuitive, so I spent hours making sure that the test cases were valid.
+
+## Conclusion
+* Behavior satisfies the identity function for all sign combinations.
+* Return type is deduced in C++14 and in C++11 can be specified.
+* Behavior is consistent with native operators.
+* The functions cannot *cause* overflows.
+* There can be no "tautological compare" warnings from unsigned parameters.
+* The functions fail as native operators with a zero-valued divisor.
+* The stack calls are removed by inlining.
+* The `negative` calls compile away for `unsigned` operands.
+* The `remainder` and `negative` calls compile away for `constexpr` operators.
+* The `||` conditions compile away when the above render the result always `true` or `false`.
+* All that remains is *necessary*.
 
 ## Test Vectors
 These expressions demonstrate and prove the correctness of the algorithm above. They may be useful in generating a test matrix.
