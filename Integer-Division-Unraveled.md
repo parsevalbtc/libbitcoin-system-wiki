@@ -44,7 +44,7 @@ ISO standards are copyrighted. A working draft is available [here](http://www.op
 * `(x / 0)`and `(x % 0)` by zero are undefined operations.
 * for both operands integer, the operators determine and yield an integer result type.
 * result is undefined for both if the quotient is not representable in the result type.
-* the following identity relation otherwise always holds: `(x / y) * y + (x % y) == y`.
+* the following identity relation otherwise always holds: `(x / y) * y + (x % y) == x`.
 
 ## Rounding
 Integer division cannot retain a remainder. There are several rounding approaches. The common ones are called:
@@ -90,6 +90,21 @@ CQ = TQ
 ## Adjusting the Remainder
 
 The sum of the truncated remainder and adjusted remainder is the +/- the divisor. The floored quotient adjustment from truncated is `-1` (more negative). Therefore the remainder adjustment is `+ divisor`. The floored adjustment rounded down, so the remainder is the positive complement. The ceilinged quotient adjustment from truncated is `+1` (more positive). Therefore the remainder adjustment is `- divisor`. The ceilinged adjustment rounded up, so the remainder is the negative complement. So in the floored adjustment of truncated modulo, the divisor is added and in ceilinged adjustment, the divisor is subtracted.
+
+The remainder adjustment is derived from the identity relation after applying the division adjustment (+/-1). The following expressions demonstrate the correctness of adjusting the remainder by the product of `-1` and the division adjustment in all cases (-/+y). The signs (and values) of `x` and `y` can be modified to cover the cases not shown.
+
+```cpp
+constexpr auto x = 4;
+constexpr auto y = 3;
+static_assert(((+x / +y) + 1) * +y + ((+x % +y) - y) == +x, "+1++");
+static_assert(((+x / +y) - 1) * +y + ((+x % +y) + y) == +x, "-1++");
+static_assert(((-x / -y) + 1) * -y + ((-x % -y) - y) == -x, "+1--");
+static_assert(((-x / -y) - 1) * -y + ((-x % -y) + y) == -x, "-1--");
+static_assert(((-x / +y) + 1) * +y + ((-x % +y) - y) == -x, "+1-+");
+static_assert(((-x / +y) - 1) * +y + ((-x % +y) + y) == -x, "-1-+");
+static_assert(((+x / -y) + 1) * -y + ((+x % -y) - y) == +x, "+1+-");
+static_assert(((+x / -y) - 1) * -y + ((+x % -y) + y) == +x, "-1+-");
+```
 
 ```
 Where: TR == 0
