@@ -66,15 +66,55 @@ To satisfy the identity relation, both division and modulo will be adjusted if t
 * Floored adjusts truncation when there is a remainder of a negative quotient truncated division.
 * Ceilinged adjusts truncation when there is a remainder of a positive quotient truncated division.
 
-The quotient adjustment is always magnitude 1. A division truncation (not the remainder) is by definition fractional (magnitude less than 1). Therefore the quotient resulting from any rounding method varies by 0 or 1 from any other method. When adjusting from truncated to floored (negative quotients), the adjustment is always `-1` (more negative), and from truncated to ceilinged (positive quotients) is always `+1` (more positive).
+## Adjusting the Quotient
+
+The quotient adjustment is always magnitude 1. A division truncation (not the remainder) is by definition fractional (magnitude less than 1). Therefore the quotient resulting from any rounding method varies by 0, +1, or -1 from any other method. When adjusting quotients from truncated (TQ) to floored (FQ), the adjustment is always `-1` (more negative), and from truncated to ceilinged (CQ) is always `+1` (more positive). Therefore `CQ > FQ` and `CQ - FQ = 1`. With truncated remainder (TR) the following relations hold:
+
+```
+Where: TR == 0
+TQ = TQ
+FQ = TQ
+CQ = TQ
+
+Where: TR != 0 && TQ > 0
+TQ = TQ
+FQ = TQ
+CQ = TQ + 1
+
+Where: TR != 0 && TQ < 0
+TQ = TQ
+FQ = TQ - 1
+CQ = TQ
+```
+
+## Adjusting the Remainder
 
 The remainder adjustment magnitude is the difference between the divisor magnitude and the truncated remainder magnitude. The remainder itself is "between" the two quotients. The sum of the truncated remainder and adjusted remainder is therefore the +/- the divisor. The floored quotient adjustment from truncated is `-1` (more negative). Therefore the remainder adjustment is `+ divisor`. The floored adjustment rounds down, so the remainder is "above" the quotient (more positive).  The ceilinged quotient adjustment from truncated is `+1` (more positive). Therefore the remainder adjustment is `- divisor`. The ceilinged adjustment rounded up, so the remainder is "below" the quotient. So in the floored adjustment of truncated modulo, the divisor is added and in ceilinged adjustment, the divisor is subtracted.
 
 Even though, beyond the point of bifurcation (quotient sign) these are continuous integer operations, it's worth considering how the sign of the remainder and the sign of the divisor might affect the above remainder adjustment. In a truncated-to-floored adjustment the quotient is negative. In this case either the dividend or the divisor is negative, but not both. In all cases it is only the divisor that determines the sign of the remainder.
 
-> This may seem counterintuitive but it is in fact the case. Both dividend and divisor contribute to the quotient sign, but the remainder sign is determined by the dividend. Division of a positive by a negative is really just division of a negative by a positive. And division of a negative by a positive is the same. A number cannot be divided into negative parts. But when dividing by a negative, in both cases the remainder is negative because it implies "more negative", just as a positive remainder implies "more positive".
+> This may seem counterintuitive but it is in fact the case. Both dividend and divisor contribute to the quotient sign, but the remainder sign is determined by the dividend. Division of a positive by a negative is really just division of a negative by a positive. And division of a negative by a positive is the same. A number cannot be divided into negative parts, a negative or positive number is divided into parts. But when dividing by a negative, in both cases the remainder is negative because it implies "more negative", just as a positive remainder implies "more positive".
 
-...
+In the case of the floored adjustment: with a negative quotient, remainder, and therefore divisor, adding the divisor to the remainder makes the remainder "more negative". With a negative quotient, positive remainder, and therefore positive divisor, adding the divisor to the remainder makes the remainder "more positive". The quotient is adjusted "down" and therefore the remainder is adjusted "up".
+
+In the case of the floored adjustment: with a negative quotient, remainder, and therefore divisor, adding the divisor to the remainder makes the remainder "more negative". With a negative quotient, positive remainder, and therefore positive divisor, adding the divisor to the remainder makes the remainder "more positive". The quotient is adjusted "down" and therefore the remainder is increased in magnitude.
+
+```
+Where: TR == 0
+TR = 0
+FR = 0
+CR = 0
+
+Where: TR != 0 && TQ > 0
+TR = TR
+FR = TR
+CR = TR - Divisor
+
+Where: TR != 0 && TQ < 0
+TR = TR
+FR = TR + Divisor
+CR = TR
+```
 
 ## Implementation
 
