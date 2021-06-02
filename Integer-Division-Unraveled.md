@@ -55,7 +55,7 @@ Integer division cannot retain a remainder. There are several rounding approache
 
 All rounding methods return the same result if there is no remainder. The distinction is in rounding direction. C++ specifies "truncated" (also called "toward zero") division. So in the case of a positive quotient, the quotient is floored (less positive), and in the case of a negative quotient, the quotient is ceilinged (less negative).
 
-The near-universal approach to changing rounding method is to rely on native operations and to adjust the quotient and remainder accordingly. In changing rounding behavior from native C++ (truncated) to either floored or ceilinged, one must know whether there is a truncation (and its value when implementing `%`) and the sign of the quotient. If there is no truncation, there is nothing to adjust. And because truncation is a non-continuous method, with a bifurcation based on quotient sign, the adjustment must be conditioned on quotient sign. These are the necessary conditions for adjustment.
+The near-universal approach to changing rounding method is to rely on native operations and to adjust the quotient and remainder accordingly. In changing rounding behavior from native C++ (truncated) to either floored or ceilinged, one must know whether there is a truncation (and its value when implementing `%`) and the sign of the quotient. If there is no truncation, there is nothing to adjust. And because truncated is a non-continuous method, with a bifurcation based on quotient sign, the adjustment must be conditioned on quotient sign. These are the necessary conditions for adjustment.
 
 * if `(x % y) != 0` then a remainder is truncated by `(x / y)`.
 * if `(x < 0) != (y < 0)` then the sign of `(x / y)` is `-`.
