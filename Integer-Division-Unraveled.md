@@ -15,7 +15,7 @@ Integer division is actually a challenging subject. Programming languages implem
 
 > We propose to fix this by introducing different operators for different operations: x/y to return a reasonable approximation of the mathematical result of the division ("true division"), x//y to return the floor ("floor division"). We call the current, mixed meaning of x/y "classic division".
 
-Common hacks for ceilinged division in c/c++ include:
+Common hacks for "ceilinged" division in c/c++ include:
 
 ```cpp
 // This overflows and is limited to positive integers.
@@ -44,11 +44,37 @@ ISO standards are copyrighted. A working draft is available [here](http://www.op
 * `(x / 0)`and `(x % 0)` by zero are undefined operations.
 * for both operands integer, the operators determine and yield an integer result type.
 * result is undefined for both if the quotient is not representable in the result type.
-* the following relation otherwise always holds: `(x / y) * y + (x % y) == y`.
+* the following identity relation otherwise always holds: `(x / y) * y + (x % y) == y`.
 
-There is no distinction unless there is a remainder - all rounding methods return the same result. But integer division must discard the remainder. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
+## Rounding
+Integer division cannot retain a remainder. There are several rounding approaches. The common ones are called:
 
-Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know `whether there is a remainder` (and its magnitude when implementing `%`) and `the sign of the quotient`. The quotient is positive if both operands have the same sign, otherwise it is negative.
+* "floored" (rounded down - becomes more negative)
+* "ceilinged" (rounded up - becomes more positive)
+* "truncated" (dropped remainder - becomes closer to zero)
+
+All rounding methods return the same result if there is no remainder. The distinction is in consistently rounding (i.e. with a non-zero quotient). C++ specifies "truncated" (also called "toward zero") division. So in the case of a positive quotient, the quotient is floored (less positive), and in the case of a negative quotient, the quotient is ceilinged (less negative).
+
+The near-universal approach to changing rounding method is to rely on native operations and to adjust the quotient and remainder accordingly. In changing rounding behavior from native C++ (truncated) to either floored or ceilinged, one must know whether there is a truncation (and its value when implementing `%`) and the sign of the quotient. If there is no truncation, there is nothing to adjust. And because truncation is a non-continuous method, with a bifurcation based on quotient sign, the adjustment must be conditioned on quotient sign. These are the necessary conditions for adjustment.
+
+* if `(x % y) != 0` then a remainder is truncated by `(x / y)`.
+* if `(x < 0) != (y < 0)` then the sign of `(x / y)' is `-`.
+* if `(x < 0) == (y < 0)` then the sign of `(x / y)' is `+`.
+
+To satisfy the identity relation, both division and modulo will be adjusted if there is an adjustment required. There is an adjustment required in any case of a non-zero remainder when the truncation is not already ceilinged (when implementing ceilinged) or not already floored (when implementing floored). Positive quotient truncation is floored (less positive) and negative quotient truncation is ceilinged (less negative).
+
+* Floored adjusts truncation when there is a remainder of a negative quotient truncated division.
+* Ceilinged adjusts truncation when there is a remainder of a positive quotient truncated division.
+
+The quotient adjustment is always magnitude 1. A division truncation (not the remainder) is by definition fractional (magnitude less than 1). Therefore the quotient resulting from any rounding method varies by 0 or 1 from any other method. When adjusting from truncated to floored (negative quotients), the adjustment is always `-1` (more negative), and from truncated to ceilinged (positive quotients) is always `+1` (more positive).
+
+The remainder adjustment magnitude is the difference between the divisor magnitude and the truncated remainder magnitude. The remainder itself is "between" the two quotients. The sum of the truncated remainder and adjusted remainder is therefore the +/- the divisor. The floored quotient adjustment from truncated is `-1` (more negative). Therefore the remainder adjustment is `+ divisor`. The floored adjustment rounds down, so the remainder is "above" the quotient (more positive).  The ceilinged quotient adjustment from truncated is `+1` (more positive). Therefore the remainder adjustment is `- divisor`. The ceilinged adjustment rounded up, so the remainder is "below" the quotient. So in the floored adjustment of truncated modulo, the divisor is added and in ceilinged adjustment, the divisor is subtracted.
+
+Even though, beyond the point of bifurcation (quotient sign) these are continuous integer operations, it's worth considering how the sign of the remainder and the sign of the divisor might affect the above remainder adjustment. In a truncated-to-floored adjustment the quotient is negative. In this case either the dividend or the divisor is negative, but not both. In all cases it is only the divisor that determines the sign of the remainder.
+
+> This may seem counterintuitive but it is in fact the case. Both dividend and divisor contribute to the quotient sign, but the remainder sign is determined by the dividend. Division of a positive by a negative is really just division of a negative by a positive. And division of a negative by a positive is the same. A number cannot be divided into negative parts. But when dividing by a negative, in both cases the remainder is negative because it implies "more negative", just as a positive remainder implies "more positive".
+
+...
 
 ## Implementation
 
@@ -150,6 +176,8 @@ inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 Return value types default to the dividend type and can be specified by explicit template parameter.
 
 ## Optimization
+The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
+
 The `%` operator may be invoked twice in `floored_modulo` and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
