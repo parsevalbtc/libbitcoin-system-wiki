@@ -9,13 +9,13 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 * Maintain overflow behavior of native operators.
 * Avoid all unnecessary computation.
 
-## Analysis
+## Hacks
 
-The key is in understanding the nature of the native operators. Integer division is actually a challenging subject. Programming languages implement it in [different ways](https://en.wikipedia.org/wiki/Modulo_operation). Python actually [changed the behavior](https://www.python.org/dev/peps/pep-0238/) of `\` and `%` in a minor version release! This of course led to additional scrutiny in the original Python equivalence task.
+Integer division is actually a challenging subject. Programming languages implement it in [different ways](https://en.wikipedia.org/wiki/Modulo_operation). Python actually [changed the behavior](https://www.python.org/dev/peps/pep-0238/) of `\` and `%` in a minor version release! This of course led to additional scrutiny in the original Python equivalence task.
 
 > We propose to fix this by introducing different operators for different operations: x/y to return a reasonable approximation of the mathematical result of the division ("true division"), x//y to return the floor ("floor division"). We call the current, mixed meaning of x/y "classic division".
 
-C++ implements `truncated` integer division. Python implements `floored` integer division. The other common form (`ceilinged`) is quite useful as well. Common hacks for ceilinged division are:
+Common hacks for ceilinged division in c/c++ include:
 
 ```cpp
 // This overflows and is limited to positive integers.
@@ -28,13 +28,27 @@ auto q = (x / y) + !!(x % y);
 auto q = (x / y) + (((x < 0) != (y < 0)) && (x % y);
 ```
 
+## C++ Standard
+ISO standards are copyrighted. A working draft is available [here](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3690.pdf). The relevant sections are listed below.
+
+#### 5.6 Multiplicative operators
+2) The operands of * and / shall have arithmetic or unscoped enumeration type; the operands of % shall have integral or unscoped enumeration type. The usual arithmetic conversions are performed on the operands and determine the type of the result.
+4) The binary / operator yields the quotient, and the binary % operator yields the remainder from the division of the first expression by the second. If the second operand of / or % is zero the behavior is undefined. For integral operands the / operator yields the algebraic quotient with any fractional part discarded; if the quotient a/b is representable in the type of the result, (a/b)*b + a%b is equal to a; otherwise, the behavior of both a/b and a%b is undefined.
+
+## Key Concepts
+
+* `/` supports integer operands.
+* `%` supports (only) integer operands.
+* integer `/` yields the quotient with the fractional part discarded.
+* `(x % y)` yields as a remainder the fractional part discarded by `(x / y)`.
+* `(x / 0)`and `(x % 0)` by zero are undefined operations.
+* for both operands integer, the operators determine and yield an integer result type.
+* result is undefined for both if the quotient is not representable in the result type.
+* the following relation otherwise always holds: `(x / y) * y + (x % y) == y`.
+
 There is no distinction unless there is a remainder - all rounding methods return the same result. But integer division must discard the remainder. So the question becomes how to consistently round the quotient. All modulo operations will necessarily be consistent with this choice of quotient rounding, which means that they vary as well.
 
 Truncated division simply drops the remainder. So in the case of a positive quotient, the quotient is floored (less positive) and in the case of a negative quotient, the quotient is ceilinged (less negative). This is also called "toward zero" rounding. In changing rounding behavior, one must know `whether there is a remainder` (and its magnitude when implementing `%`) and `the sign of the quotient`. The quotient is positive if both operands have the same sign, otherwise it is negative.
-
-## Math
-
-TODO
 
 ## Implementation
 
