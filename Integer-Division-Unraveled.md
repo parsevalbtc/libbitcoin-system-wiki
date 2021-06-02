@@ -7,6 +7,7 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 * Provide ceilinged and floored `\` and `%` functions, for all integer types.
 * Maintain the failure behavior of native operators (i.e. `x / 0` and `x % 0`)
 * Maintain overflow behavior of native operators.
+* Maintain return type inference of native operators.
 * Avoid unnecessary computation.
 
 ## Hacks
@@ -105,7 +106,6 @@ static_assert(((-x / +y) - 1) * +y + ((-x % +y) + +y) == -x, "-1-+");
 static_assert(((+x / -y) + 1) * -y + ((+x % -y) - -y) == +x, "+1+-");
 static_assert(((+x / -y) - 1) * -y + ((+x % -y) + -y) == +x, "-1+-");
 ```
-
 ```
 Where: TR == 0
 TR = 0
@@ -173,6 +173,7 @@ inline bool floored(Dividend dividend, Divisor divisor)
 }
 ```
 These templates implement the three common rounding methods.
+
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGERS(Dividend, Divisor)=true>
@@ -244,11 +245,24 @@ Despite the relative verbosity of the templates the result should be as optimal 
 * All that remains is *necessary*.
 
 ## Template Type Constraints
+
+Given that the C++ operators determine the result type (based on the operand types) the return type must so determined. This is achieved by using the C++14 `decltype` keyword.
+
+#### C++14
+* `typename Quotient=decltype(Dividend / Divisor)`
+* `typename Remainder=decltype(Dividend % Divisor)`
+
+In C++11 the return type can be explicitly specified by template parameter, and is defaulted in the above templates to the dividend type.
+
+#### C++11
+* `typename Quotient=Dividend`
+* `typename Remainder=Dividend`
+
 Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
 
 Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
-The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the `=true` default template parameter values in the implementation.
+The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
 
 These are the type constraint macros used above. As a rule I make very limited use of macros. But these improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
 ```cpp
