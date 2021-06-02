@@ -157,7 +157,7 @@ inline bool floored(Dividend dividend, Divisor divisor)
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
 }
 ```
-These templates implement the three common rounding approaches.
+These templates implement the three common rounding methods.
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGERS(Dividend, Divisor)=true>
