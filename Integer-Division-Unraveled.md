@@ -96,14 +96,14 @@ The remainder adjustment is derived from the identity relation after applying th
 ```cpp
 constexpr auto x = 4;
 constexpr auto y = 3;
-static_assert(((+x / +y) + 1) * +y + ((+x % +y) - y) == +x, "+1++");
-static_assert(((+x / +y) - 1) * +y + ((+x % +y) + y) == +x, "-1++");
-static_assert(((-x / -y) + 1) * -y + ((-x % -y) - y) == -x, "+1--");
-static_assert(((-x / -y) - 1) * -y + ((-x % -y) + y) == -x, "-1--");
-static_assert(((-x / +y) + 1) * +y + ((-x % +y) - y) == -x, "+1-+");
-static_assert(((-x / +y) - 1) * +y + ((-x % +y) + y) == -x, "-1-+");
-static_assert(((+x / -y) + 1) * -y + ((+x % -y) - y) == +x, "+1+-");
-static_assert(((+x / -y) - 1) * -y + ((+x % -y) + y) == +x, "-1+-");
+static_assert(((+x / +y) + 1) * +y + ((+x % +y) - +y) == +x, "+1++");
+static_assert(((+x / +y) - 1) * +y + ((+x % +y) + +y) == +x, "-1++");
+static_assert(((-x / -y) + 1) * -y + ((-x % -y) - -y) == -x, "+1--");
+static_assert(((-x / -y) - 1) * -y + ((-x % -y) + -y) == -x, "-1--");
+static_assert(((-x / +y) + 1) * +y + ((-x % +y) - +y) == -x, "+1-+");
+static_assert(((-x / +y) - 1) * +y + ((-x % +y) + +y) == -x, "-1-+");
+static_assert(((+x / -y) + 1) * -y + ((+x % -y) - -y) == +x, "+1+-");
+static_assert(((+x / -y) - 1) * -y + ((+x % -y) + -y) == +x, "-1+-");
 ```
 
 ```
