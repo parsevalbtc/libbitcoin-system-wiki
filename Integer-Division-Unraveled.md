@@ -15,7 +15,7 @@ Integer division is actually a challenging subject. Programming languages implem
 
 > We propose to fix this by introducing different operators for different operations: x/y to return a reasonable approximation of the mathematical result of the division ("true division"), x//y to return the floor ("floor division"). We call the current, mixed meaning of x/y "classic division".
 
-Common hacks for "ceilinged" division in c/c++ include:
+Common hacks for "ceilinged" division in C/C++ include:
 
 ```cpp
 // This overflows and is limited to positive integers.
