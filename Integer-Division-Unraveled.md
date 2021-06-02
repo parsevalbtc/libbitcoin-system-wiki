@@ -91,7 +91,7 @@ CQ = TQ
 
 The sum of the truncated remainder and adjusted remainder is the +/- the divisor. The floored quotient adjustment from truncated is `-1` (more negative). Therefore the remainder adjustment is `+ divisor`. The floored adjustment rounded down, so the remainder is the positive complement. The ceilinged quotient adjustment from truncated is `+1` (more positive). Therefore the remainder adjustment is `- divisor`. The ceilinged adjustment rounded up, so the remainder is the negative complement. So in the floored adjustment of truncated modulo, the divisor is added and in ceilinged adjustment, the divisor is subtracted.
 
-The remainder adjustment is derived from the identity relation after applying the division adjustment (+/-1). The following expressions demonstrate the correctness of adjusting the remainder by the product of the division adjustment and the divisor in all cases (-/+y). The signs (and values) of `x` and `y` can be modified to cover the cases not shown.
+The remainder adjustment is derived from the identity relation after applying the division adjustment (+/-1). The following expressions demonstrate the correctness, in all cases, of adjusting the remainder by the product of `-1`, the division adjustment, and the divisor. The signs (and values) of `x` and `y` can be modified to cover the cases not shown.
 
 ```cpp
 constexpr auto x = 4;
