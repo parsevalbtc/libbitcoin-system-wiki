@@ -58,8 +58,8 @@ All rounding methods return the same result if there is no remainder. The distin
 The near-universal approach to changing rounding method is to rely on native operations and to adjust the quotient and remainder accordingly. In changing rounding behavior from native C++ (truncated) to either floored or ceilinged, one must know whether there is a truncation (and its value when implementing `%`) and the sign of the quotient. If there is no truncation, there is nothing to adjust. And because truncation is a non-continuous method, with a bifurcation based on quotient sign, the adjustment must be conditioned on quotient sign. These are the necessary conditions for adjustment.
 
 * if `(x % y) != 0` then a remainder is truncated by `(x / y)`.
-* if `(x < 0) != (y < 0)` then the sign of `(x / y)' is `-`.
-* if `(x < 0) == (y < 0)` then the sign of `(x / y)' is `+`.
+* if `(x < 0) != (y < 0)` then the sign of `(x / y)` is `-`.
+* if `(x < 0) == (y < 0)` then the sign of `(x / y)` is `+`.
 
 To satisfy the identity relation, both division and modulo will be adjusted if there is an adjustment required. There is an adjustment required in any case of a non-zero remainder when the truncation is not already ceilinged (when implementing ceilinged) or not already floored (when implementing floored). Positive quotient truncation is floored (less positive) and negative quotient truncation is ceilinged (less negative).
 
