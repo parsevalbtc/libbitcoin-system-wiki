@@ -129,28 +129,28 @@ These templates determine rounding direction.
 
 ```cpp
 template <typename Integer,
-    IS_UNSIGNED_INTEGER(Integer)=true>
-inline bool negative(Integer)
-{
-    return false;
-}
-
-template <typename Integer,
     IS_SIGNED_INTEGER(Integer)=true>
 inline bool negative(Integer value)
 {
     return value < 0;
 }
 
+template <typename Integer,
+    IS_UNSIGNED_INTEGER(Integer)=true>
+inline bool negative(Integer)
+{
+    return false;
+}
+
 template <typename Factor1, typename Factor2,
-    IS_INTEGERS(Factor1, Factor2)=true>
+    IS_INTEGER(Factor1)=true, IS_INTEGER(Factor2)=true>
 inline bool negative(Factor1 factor1, Factor2 factor2)
 {
     return negative(factor1) != negative(factor2);
 }
 
 template <typename Dividend, typename Divisor,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline bool remainder(Dividend dividend, Divisor divisor)
 {
     return (dividend % divisor) != 0;
@@ -159,14 +159,14 @@ inline bool remainder(Dividend dividend, Divisor divisor)
 These templates combine those preceding into a single answer for a given rounding method.
 ```cpp
 template <typename Dividend, typename Divisor,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline bool ceilinged(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || negative(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline bool floored(Dividend dividend, Divisor divisor)
 {
     return !remainder(dividend, divisor) || !negative(dividend, divisor);
@@ -176,7 +176,7 @@ These templates implement the three common rounding methods.
 
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) + 
@@ -184,7 +184,7 @@ inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) -
@@ -192,7 +192,7 @@ inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) -
@@ -200,7 +200,7 @@ inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) +
@@ -208,14 +208,14 @@ inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Quotient truncated_divide(Dividend dividend, Divisor divisor)
 {
     return dividend / divisor;
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    IS_INTEGERS(Dividend, Divisor)=true>
+    IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
 inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 {
     return dividend % divisor;
@@ -262,20 +262,19 @@ These are the type constraint macros used above. As a rule I make very limited u
 template<bool Bool, class Type=void>
 using enable_if_type = typename std::enable_if<Bool, Type>::type;
 
-#define IS_UNSIGNED_INTEGER(Type) \
+#define IS_INTEGER(Type) \
 enable_if_type< \
-    std::numeric_limits<Type>::is_integer && \
-    !std::numeric_limits<Type>::is_signed, bool>
+    std::numeric_limits<Type>::is_integer, bool>
 
 #define IS_SIGNED_INTEGER(Type) \
 enable_if_type< \
     std::numeric_limits<Type>::is_integer && \
     std::numeric_limits<Type>::is_signed, bool>
 
-#define IS_INTEGERS(Left, Right) \
+#define IS_UNSIGNED_INTEGER(Type) \
 enable_if_type< \
-    std::numeric_limits<Left>::is_integer && \
-    std::numeric_limits<Right>::is_integer, bool>
+    std::numeric_limits<Type>::is_integer && \
+    !std::numeric_limits<Type>::is_signed, bool>
 ```
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. The warning is reproduced with the C++14 `decltype` keyword, and in C++11 the execution behavior is identical given the same return type, though without the warning. In either case, all division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result is certainly not intuitive, so I spent hours making sure that the test cases were valid.
