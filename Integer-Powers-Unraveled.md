@@ -237,5 +237,5 @@ Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/I
 * Stack calls may be fully removed by inlining.
 * The `is_negative` and `absolute` calls compile away for `unsigned` operators.
 * The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
-* The dependent conditions compile away when the above render a condition tautological.
+* All conditions compile away when the above render them tautological.
 * All that remains is *necessary*.
