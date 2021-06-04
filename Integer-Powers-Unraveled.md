@@ -11,7 +11,7 @@ Natural logs are not an objective as they are inherently floating point (base *e
 * Provide ceilinged_log and floored_log variants.
 * Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
-* Return zero for invalid parameterization.
+* Return zero for undefined operations.
 * Avoid unnecessary computation.
 
 ## Log
