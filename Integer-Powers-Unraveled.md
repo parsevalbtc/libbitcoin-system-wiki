@@ -7,7 +7,7 @@
 * Provide simplified base 2 variants of power and log.
   * log2(n) identical in behavior to log(2, n).
   * power2(n) identical in behavior to power(2, n).
-* Provide ceilinged_log and floored_log variants.
+* Provide both ceilinged and floored logarithm variants.
 * Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
 * Return a common sentinel for undefined operations.
@@ -18,7 +18,7 @@ Integer logarithms are implemented as repeated division of the value by the base
 
 Base 2 logarithm is repeated division by 2, so the right shift operator (`>>`) may be used as a performance optimization. While the compiler may optimize for division by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
 
-Log of a base less than 2 or a value less than 1 is undefined. Apart from an overflow, there is no valid 0 result. So 0 is used as the invalid parameter sentinel. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
+The logarithm of a base less than 2 or a value less than 1 is undefined. Apart from an overflow, there is no valid 0 result. So 0 is used as the invalid parameter sentinel. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
 
 Division implies that the native division operator (`/`) determines the result type, based on its operand types.
 
@@ -27,7 +27,7 @@ Integer powers are implemented as repeated multiplication of the base by itself.
 
 Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) may be used as a performance optimization. While the compiler may optimize for multiplication by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
 
-All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the log functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
+All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the logarithm functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
 
 The value type is the result type as the value is multiplied by itself.
 ## Implementation
@@ -152,7 +152,7 @@ The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
-> A compiler may warn (incorrectly) of division by zero "possibility" in a log base `const` 0 test case, given that it is inlining an (unreachable) division by literal 0. Removal of the `inline` keyword can prevent this if desired, but the warning is beneficial for production (vs. test) code. A better alternative may be to use a non-const, zero-valued base variable in the logarithm test cases.
+> A compiler may warn (incorrectly) of division by zero "possibility" in a logarithm base `const` 0 test case, given that it is inlining an (unreachable) division by literal 0. Removal of the `inline` keyword can prevent this if desired, but the warning is beneficial for production (vs. test) code. A better alternative may be to use a non-const, zero-valued base variable in the logarithm test cases.
 
 The following section of `power`, and the corresponding but reduced section of `power2`, implement three short-circuits that also serve as necessary guards for the `while` loops.
 ```cpp
@@ -176,7 +176,7 @@ Both `power2(n)` and `floored_log2(n)` could simply call `power(2, n)` and `floo
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Template Type Constraints
-Given that the C++ division operator determines the log result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
+Given that the C++ division operator determines the logarithm result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
 * `typename Log=decltype(Integer / Base)`
@@ -217,7 +217,7 @@ enable_if_type< \
 There are no interesting consequences to the use of mixed sign operands.
 
 ## Test Vectors
-Power and log are [inverse functions](https://en.wikipedia.org/wiki/Inverse_function), so these relations must hold for all defined { b, n }, excepting overflows.
+Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/Inverse_function), so these relations must hold for all defined { b, n }, excepting overflows.
 
 * `floored_log(b, power(b, n)) == n`.
 * `ceilinged_log(b, power(b, n)) == n`.
