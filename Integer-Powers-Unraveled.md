@@ -6,9 +6,9 @@ Natural logs are not an objective as they are inherently floating point (base *e
 
 * Provide power and log, for all integer types.
 * Provide simplified base 2 variants of power and log.
-* log2(n) is identical in behavior to log(2, n).
-* power2(n) is identical in behavior to power(2, n).
-* Provide support for ceilinged and floored log results.
+  * log2(n) identical in behavior to log(2, n).
+  * power2(n) identical in behavior to power(2, n).
+* Provide ceilinged_log and floored_log variants.
 * Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
 * Return zero for invalid parameterization.
