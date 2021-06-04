@@ -233,7 +233,7 @@ Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/I
 * Behavior is consistent with native operators.
 * The functions cannot *cause* overflows.
 * There can be no "tautological compare" warnings from unsigned parameters.
-* The functions fail with a common sentinel for undefined operations.
+* The functions return a common sentinel for undefined operations.
 * Stack calls may be fully removed by inlining.
 * The `is_negative` and `absolute` calls compile away for `unsigned` operators.
 * The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
