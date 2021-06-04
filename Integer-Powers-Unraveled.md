@@ -187,7 +187,7 @@ The templates can be factored into header (.hpp) and implementation (.ipp) files
 
 These are the type constraint macros used above. As a rule I make very limited use of macros. But these improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
 ```cpp
-// Borrowing enable_if_t from c++14.
+// Borrowing enable_if_t from C++14.
 // en.cppreference.com/w/cpp/types/enable_if
 template<bool Bool, class Type=void>
 using enable_if_type = typename std::enable_if<Bool, Type>::type;
