@@ -19,7 +19,7 @@ Integer division is actually a challenging subject. Programming languages implem
 Common hacks for "ceilinged" division in C/C++ include:
 
 ```cpp
-// This overflows and is limited to positive integers.
+// This causes (non-inherent) overflows and is limited to positive integers.
 auto q = (x + (y - 1)) / y;
 
 // This is limited to positive integers.
