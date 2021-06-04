@@ -122,15 +122,13 @@ CR = TR
 These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
-template <typename Integer,
-    IS_SIGNED_INTEGER(Integer)=true>
+template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
 inline bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-template <typename Integer,
-    IS_UNSIGNED_INTEGER(Integer)=true>
+template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
 inline bool is_negative(Integer)
 {
     return false;
