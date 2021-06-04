@@ -3,7 +3,6 @@ Sometimes the most trivial coding tasks can be unexpectedly challenging. In work
 A quick stop at Stack Overflow shows how confounding this can be. There are several different approaches, most of which either do not support signed operands, cause overflows, throw exceptions, and/or just don't work. Even the "accepted" answers are flawed in such ways, with large numbers of upvotes. So I decided to just figure it out myself.
 
 ## Objectives
-
 * Provide ceilinged and floored `\` and `%` functions, for all integer types.
 * Maintain the failure behavior of native operators (i.e. `x / 0` and `x % 0`)
 * Maintain the return type deduction of native operators.
@@ -11,7 +10,6 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 * Avoid unnecessary computation.
 
 ## Hacks
-
 Integer division is actually a challenging subject. Programming languages implement it in [different ways](https://en.wikipedia.org/wiki/Modulo_operation). Python actually [changed the behavior](https://www.python.org/dev/peps/pep-0238/) of `\` and `%` in a minor version release! This of course led to additional scrutiny in the original Python equivalence task.
 
 > We propose to fix this by introducing different operators for different operations: x/y to return a reasonable approximation of the mathematical result of the division ("true division"), x//y to return the floor ("floor division"). We call the current, mixed meaning of x/y "classic division".
@@ -37,7 +35,6 @@ ISO standards are copyrighted. A working draft is available [here](http://www.op
 4) The binary / operator yields the quotient, and the binary % operator yields the remainder from the division of the first expression by the second. If the second operand of / or % is zero the behavior is undefined. For integral operands the / operator yields the algebraic quotient with any fractional part discarded; if the quotient a/b is representable in the type of the result, (a/b)*b + a%b is equal to a; otherwise, the behavior of both a/b and a%b is undefined.
 
 ## Key Concepts
-
 * `/` supports integer operands.
 * `%` supports (only) integer operands.
 * integer `/` yields the quotient with the fractional part discarded.
@@ -68,7 +65,6 @@ To satisfy the identity relation, both division and modulo will be adjusted if t
 * Ceilinged adjusts truncation when there is a remainder of a positive quotient truncated division.
 
 ## Adjusting the Quotient
-
 The quotient adjustment is always magnitude 1. A division truncation (not the remainder) is by definition fractional (magnitude less than 1). Therefore the quotient resulting from any rounding method varies by 0, +1, or -1 from any other method. When adjusting quotients from truncated (TQ) to floored (FQ), the adjustment is always `-1` (more negative), and from truncated to ceilinged (CQ) is always `+1` (more positive). Therefore `CQ > FQ` and `CQ - FQ = 1`. With truncated remainder (TR) the following relations hold:
 
 ```
@@ -89,7 +85,6 @@ CQ = TQ
 ```
 
 ## Adjusting the Remainder
-
 The sum of the truncated remainder and adjusted remainder is the +/- the divisor. The floored quotient adjustment from truncated is `-1` (more negative). Therefore the remainder adjustment is `+ divisor`. The floored adjustment rounded down, so the remainder is the positive complement. The ceilinged quotient adjustment from truncated is `+1` (more positive). Therefore the remainder adjustment is `- divisor`. The ceilinged adjustment rounded up, so the remainder is the negative complement. So in the floored adjustment of truncated modulo, the divisor is added and in ceilinged adjustment, the divisor is subtracted.
 
 The remainder adjustment is derived from the identity relation after applying the division adjustment (+/-1). The following expressions demonstrate the correctness, in all cases, of adjusting the remainder by the product of `-1`, the division adjustment, and the divisor. The signs (and values) of `x` and `y` can be modified to cover the cases not shown.
@@ -124,7 +119,6 @@ CR = TR
 ```
 
 ## Implementation
-
 These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
@@ -175,7 +169,6 @@ inline bool is_floored(Dividend dividend, Divisor divisor)
 }
 ```
 These templates implement the three common rounding methods.
-
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
     IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
@@ -235,7 +228,6 @@ The `inline` keyword advises the compiler that inlining of the functions is pref
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Template Type Constraints
-
 Given that the C++ operators determine the result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
