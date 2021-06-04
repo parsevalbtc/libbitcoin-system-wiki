@@ -281,7 +281,7 @@ It is an objective is to reproduce native operand behavior, changing only the ro
 * The stack calls are removed by inlining.
 * The `is_negative` calls compile away for `unsigned` operands.
 * The `no_remainder` and `is_negative` calls compile away for `constexpr` operands.
-* The `||` conditions compile away when the above render the result tautological.
+* The `||` conditions compile away when the above render them tautological.
 * All that remains is *necessary*.
 
 ## Test Vectors
