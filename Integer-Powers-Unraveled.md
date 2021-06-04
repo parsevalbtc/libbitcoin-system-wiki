@@ -10,7 +10,7 @@ Logarithms and powers (exponents) are occasionally useful in Bitcoin work, espec
 * Provide ceilinged_log and floored_log variants.
 * Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
-* Return a consistent sentinel for undefined operations.
+* Return a common sentinel for undefined operations.
 * Avoid unnecessary computation.
 
 ## Log
@@ -214,19 +214,6 @@ enable_if_type< \
 ## Mixing Unsigned and Signed Operands
 There are no interesting consequences to the use of mixed sign operands.
 
-## Conclusion
-* Behavior satisfies the identity function for all sign combinations.
-* Return type is deduced in C++14 and in C++11 can be specified.
-* Behavior is consistent with native operators.
-* The functions cannot *cause* overflows.
-* There can be no "tautological compare" warnings from unsigned parameters.
-* The functions fail with a common sentinel for undefined operations.
-* Stack calls may be fully removed by inlining.
-* The `is_negative` and `absolute` calls compile away for `unsigned` operators.
-* The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
-* The dependent conditions compile away when the above render a condition tautological.
-* All that remains is *necessary*.
-
 ## Test Vectors
 Power and log are inverse functions, so these relations must hold for all defined { b, n }, excepting overflows.
 
@@ -237,3 +224,16 @@ Power and log are inverse functions, so these relations must hold for all define
 * where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
 * where `(n % b) == 0`, `ceilinged_log == floored_log`.
 * where `(n % b) != 0`, `ceilinged_log == floored_log + 1`.
+
+## Conclusion
+* Behavior satisfies the inverse relation for all sign combinations.
+* Return type is deduced in C++14 and in C++11 can be specified.
+* Behavior is consistent with native operators.
+* The functions cannot *cause* overflows.
+* There can be no "tautological compare" warnings from unsigned parameters.
+* The functions fail with a common sentinel for undefined operations.
+* Stack calls may be fully removed by inlining.
+* The `is_negative` and `absolute` calls compile away for `unsigned` operators.
+* The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
+* The dependent conditions compile away when the above render a condition tautological.
+* All that remains is *necessary*.
