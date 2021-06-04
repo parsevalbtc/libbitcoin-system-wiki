@@ -68,7 +68,7 @@ These templates implement the logarithm functions.
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log=Integer,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
-Log ceilinged_log(Base base, Integer value)
+inline Log ceilinged_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
         return 0;
@@ -78,7 +78,7 @@ Log ceilinged_log(Base base, Integer value)
     
 // Returns 0 for undefined (value < 1).
 template <typename Integer, IS_INTEGER(Integer)=true>
-Integer ceilinged_log2(Integer value)
+inline Integer ceilinged_log2(Integer value)
 {
     if (value < 1)
         return 0;
@@ -89,7 +89,7 @@ Integer ceilinged_log2(Integer value)
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log=Integer,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
-Log floored_log(Base base, Integer value)
+inline Log floored_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
         return 0;
@@ -101,7 +101,7 @@ Log floored_log(Base base, Integer value)
 
 // Returns 0 for undefined (value < 1).
 template <typename Integer, IS_INTEGER(Integer)=true>
-Integer floored_log2(Integer value)
+inline Integer floored_log2(Integer value)
 {
     if (value < 1)
         return 0;
@@ -116,7 +116,7 @@ These templates implement the power functions.
 // Returns 0 for undefined (0, 0).
 template <typename Base, typename Integer, typename Power=Base,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
-Power power(Base base, Integer exponent)
+inline Power power(Base base, Integer exponent)
 {
     if (base == 0)
         return 0;
@@ -134,7 +134,7 @@ Power power(Base base, Integer exponent)
 }
 
 template <typename Integer, IS_INTEGER(Integer)=true>
-Integer power2(Integer exponent)
+inline Integer power2(Integer exponent)
 {
     if (exponent == 0)
         return 1;
@@ -150,9 +150,9 @@ Integer power2(Integer exponent)
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
 
-The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial, though they may certainly be inlined.
+The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
-> Also, a compiler may warn (incorrectly) of division by zero possibility in log base 0 test cases, given that it is inlining an (unreachable) literal division by 0.
+> A compiler may warn (incorrectly) of division by zero "possibility" in a log base literal 0 test case, given that it is inlining an (unreachable) division by literal 0. Removal of the inline keyword can prevent this if desired, but the warning is beneficial for production (vs. test) code.
 
 The following section of `power`, and the corresponding but reduced section of `power2`, implement three short-circuits that also serve as necessary guards for the `while` loops.
 ```cpp
@@ -211,6 +211,21 @@ enable_if_type< \
     std::numeric_limits<Type>::is_integer && \
     !std::numeric_limits<Type>::is_signed, bool>
 ```
+## Mixing Unsigned and Signed Operands
+There are no interesting consequences to the use of mixed sign operands.
+
+## Conclusion
+* Behavior satisfies the identity function for all sign combinations.
+* Return type is deduced in C++14 and in C++11 can be specified.
+* Behavior is consistent with native operators.
+* The functions cannot *cause* overflows.
+* There can be no "tautological compare" warnings from unsigned parameters.
+* The functions fail with a common sentinel for undefined operations.
+* Stack calls may be fully removed by inlining.
+* The `is_negative` and `absolute` calls compile away for `unsigned` operators.
+* The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
+* The dependent conditions compile away when the above render a condition tautological.
+* All that remains is *necessary*.
 
 ## Test Vectors
 Power and log are inverse functions, so these relations must hold for all defined { b, n }, excepting overflows.
