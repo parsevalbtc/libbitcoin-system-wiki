@@ -3,7 +3,6 @@ Logarithms and powers (exponents) are occasionally useful in Bitcoin work, espec
 Natural logs are not an objective as they are inherently floating point (base *e*). Logs of negative numbers are non-continuous functions, so that is also not an objective.
 
 ## Objectives
-
 * Provide power and log, for all integer types.
 * Provide simplified base 2 variants of power and log.
   * log2(n) identical in behavior to log(2, n).
@@ -15,7 +14,6 @@ Natural logs are not an objective as they are inherently floating point (base *e
 * Avoid unnecessary computation.
 
 ## Log
-
 Integer logarithms are implemented as repeated division of the value by the base (i.e. until a quotient of zero). Native C++ division is truncated. However logarithms allow only positive value and base. Truncation of a positive quotient is floored, so only floored and ceilinged functions are required to support the [three common rounding methods](Integer-Division-Unraveled).
 
 Base 2 logarithm is repeated division by 2, so the right shift operator (`>>`) may be used as a performance optimization. While the compiler may optimize for division by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
@@ -25,7 +23,6 @@ Log of a base less than 2 or a value less than 1 is undefined. Apart from an ove
 Division implies that the native division operator (`/`) should determine the result type, based on its operand types.
 
 ## Power
-
 Integer powers are implemented as repeated multiplication of the base by itself.
 
 Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) may be used as a performance optimization. While the compiler may optimize for multiplication by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
@@ -33,7 +30,7 @@ Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) 
 All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the log functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow not inherent in the parameterization.
 
 The value type is the result type as the value is multiplied by itself.
-
+## Implementation
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log,
@@ -118,8 +115,16 @@ Integer power2(Integer exponent)
     return value;
 }
 ```
-## Template Type Constraints
+## Optimization
+The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
 
+The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial.
+
+> Also, a compiler may warn (incorrectly) of division by zero possibility in `*_log(0, n)` test cases, given that it is inlining an (unreachable) literal division by 0.
+
+Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
+
+## Template Type Constraints
 Given that the C++ division operator determines the log result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
@@ -148,7 +153,6 @@ enable_if_type<std::numeric_limits<Type>::is_integer, bool>
 ```
 
 ## Test Vectors
-
 Power and log are inverse functions, so these relations must hold, for both `ceilinged_log` and `floored_log`, excepting overflows.
 
 * for all defined {b, n}, `log(b, power(b, n)) == n`.
