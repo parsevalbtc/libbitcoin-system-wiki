@@ -154,6 +154,18 @@ The `inline` keyword advises the compiler that inlining of the functions is pref
 
 > Also, a compiler may warn (incorrectly) of division by zero possibility in log base 0 test cases, given that it is inlining an (unreachable) literal division by 0.
 
+The following section of `power` (and the corresponding but reduced section of `power2`) implements two short-circuits that also serve as guards for the `while` loop.
+```cpp
+    if (exponent == 0)
+        return 1;
+
+    if (is_negative(exponent))
+        return absolute(base) > 1 ? 0 :
+            (is_odd(exponent) && is_negative(base) ? -1 : 1);
+
+```
+The `exponent == 0` guard takes advantage of the fact that any value to the power of 0 is 0. The `is_negative(exponent)` guard takes advantage of the fact that any value to a negative power is between -1 and +1 (inclusive). Given integer operations, this is limited to { -1, 0, +1 }.
+
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Template Type Constraints
@@ -167,9 +179,9 @@ In C++11 the return type can be explicitly specified by template parameter, and 
 #### C++11
 * `typename Log=Integer`
 
-Without the template overrides there would be warnings on power operands, as they all invoke `value < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
+Without the template overrides there would be warnings on `power` operands, as they all invoke `value < 0`, which is always `false` (tautological). It is trivial to replace all of these calls with `value < 1` calls, as in each case `0` has been excluded. However, this materially impacts readability and there is no performance benefit. In fact, the inlined templates compile away for unsigned types whereas a `< 1`condition would not, so there is a performance advantage. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
 
-Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
+Template specialization could be further employed to reduce a couple calls when parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
 
@@ -181,11 +193,22 @@ template<bool Bool, class Type=void>
 using enable_if_type = typename std::enable_if<Bool, Type>::type;
 
 #define IS_INTEGER(Type) \
-enable_if_type<std::numeric_limits<Type>::is_integer, bool>
+enable_if_type< \
+    std::numeric_limits<Type>::is_integer, bool>
+
+#define IS_SIGNED_INTEGER(Type) \
+enable_if_type< \
+    std::numeric_limits<Type>::is_integer && \
+    std::numeric_limits<Type>::is_signed, bool>
+
+#define IS_UNSIGNED_INTEGER(Type) \
+enable_if_type< \
+    std::numeric_limits<Type>::is_integer && \
+    !std::numeric_limits<Type>::is_signed, bool>
 ```
 
 ## Test Vectors
-Power and log are inverse functions, so these relations must hold for all defined {b, n}, excepting overflows.
+Power and log are inverse functions, so these relations must hold for all defined { b, n }, excepting overflows.
 
 * `floored_log(b, power(b, n)) == n`.
 * `ceilinged_log(b, power(b, n)) == n`.
@@ -194,5 +217,3 @@ Power and log are inverse functions, so these relations must hold for all define
 * where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
 * where `(n % b) == 0`, `ceilinged_log == floored_log`.
 * where `(n % b) != 0`, `ceilinged_log == floored_log + 1`.
-
-
