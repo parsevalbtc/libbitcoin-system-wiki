@@ -20,7 +20,7 @@ Base 2 logarithm is repeated division by 2, so the right shift operator (`>>`) m
 
 Log of a base less than 2 or a value less than 1 is undefined. Apart from an overflow, there is no valid 0 result. So 0 is used as the invalid parameter sentinel. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow not inherent in the parameterization.
 
-Division implies that the native division operator (`/`) should determine the result type, based on its operand types.
+Division implies that the native division operator (`/`) determines the result type, based on its operand types.
 
 ## Power
 Integer powers are implemented as repeated multiplication of the base by itself.
