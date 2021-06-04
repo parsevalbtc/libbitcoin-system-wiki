@@ -1,4 +1,4 @@
-Logarithms and powers (exponents) are occasionally useful in Bitcoin work, especially base 2. But C++ [log functions](https://en.cppreference.com/w/cpp/numeric/math/log) are all floating point. There is not much call for floating point calculation in Bitcoin, and I have a problem with using the wrong data types. It causes code bloat and warnings due to type casting, and can result in errors due to unexpected rounding behavior. Floating point operations may also be more CPU intensive than those necessary for integer operations. So I decided to clean up some code by implementing a proper suite of integer exponentiation functions.
+[Logarithms](https://en.wikipedia.org/wiki/Logarithm) and powers ([exponents](https://en.wikipedia.org/wiki/Exponentiation)) are occasionally useful in Bitcoin work, especially base 2. But C++ [log functions](https://en.cppreference.com/w/cpp/numeric/math/log) are all floating point. There is not much call for floating point calculation in Bitcoin, and I have a problem with using the wrong data types. It causes code bloat and warnings due to type casting, and can result in errors due to unexpected rounding behavior. Floating point operations may also be more CPU intensive than those necessary for integer operations. So I decided to clean up some code by implementing a proper suite of integer exponentiation functions.
 
 > Natural logs are not an objective as they are inherently floating point (base *e*). Logs of negative numbers are non-continuous functions, so that is also not an objective.
 
@@ -215,7 +215,7 @@ enable_if_type< \
 There are no interesting consequences to the use of mixed sign operands.
 
 ## Test Vectors
-Power and log are inverse functions, so these relations must hold for all defined { b, n }, excepting overflows.
+Power and log are [inverse functions](https://en.wikipedia.org/wiki/Inverse_function), so these relations must hold for all defined { b, n }, excepting overflows.
 
 * `floored_log(b, power(b, n)) == n`.
 * `ceilinged_log(b, power(b, n)) == n`.
