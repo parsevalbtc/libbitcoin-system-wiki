@@ -10,7 +10,7 @@ Logarithms and powers (exponents) are occasionally useful in Bitcoin work, espec
 * Provide ceilinged_log and floored_log variants.
 * Maintain the return type deduction of native operators.
 * Maintain overflow behavior of native operators.
-* Return zero for undefined operations.
+* Return a consistent sentinel for undefined operations.
 * Avoid unnecessary computation.
 
 ## Log
