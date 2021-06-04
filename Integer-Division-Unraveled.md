@@ -217,7 +217,7 @@ inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 Return value types default to the dividend type and can be specified by explicit template parameter.
 
 ## Optimization
-The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
+The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `is_negative<Integer>` templates.
 
 The `%` operator may be invoked twice in `floored_modulo` and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
@@ -279,9 +279,9 @@ It is an objective is to reproduce native operand behavior, changing only the ro
 * There can be no "tautological compare" warnings from unsigned parameters.
 * The functions fail as native operators with a zero-valued divisor.
 * The stack calls are removed by inlining.
-* The `negative` calls compile away for `unsigned` operands.
-* The `remainder` and `negative` calls compile away for `constexpr` operators.
-* The `||` conditions compile away when the above render the result always `true` or `false`.
+* The `is_negative` calls compile away for `unsigned` operands.
+* The `remainder` and `is_negative` calls compile away for `constexpr` operands.
+* The `||` conditions compile away when the above render the result tautological.
 * All that remains is *necessary*.
 
 ## Test Vectors
