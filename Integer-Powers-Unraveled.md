@@ -31,6 +31,39 @@ All integer power parameters are defined with the exception of `power(0, 0)`. Ap
 
 The value type is the result type as the value is multiplied by itself.
 ## Implementation
+These templates determine the sign, absolute value, and odd-ness of a signed or unsigned integer type.
+```cpp
+template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
+inline Integer absolute(Integer value)
+{
+    return is_negative(value) ? -value : value;
+}
+
+template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
+inline Integer absolute(Integer value)
+{
+    return value;
+}
+
+template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
+inline bool is_negative(Integer value)
+{
+    return value < 0;
+}
+
+template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
+inline bool is_negative(Integer value)
+{
+    return false;
+}
+
+template <typename Integer, IS_INTEGER(Integer)=true>
+inline bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log,
@@ -44,8 +77,7 @@ Log ceilinged_log(Base base, Integer value)
 }
     
 // Returns 0 for undefined (value < 1).
-template <typename Integer,
-    IS_INTEGER(Integer)=true>
+template <typename Integer, IS_INTEGER(Integer)=true>
 Integer ceilinged_log2(Integer value)
 {
     if (value < 1)
@@ -68,8 +100,7 @@ Log floored_log(Base base, Integer value)
 }
 
 // Returns 0 for undefined (value < 1).
-template <typename Integer,
-    IS_INTEGER(Integer)=true>
+template <typename Integer, IS_INTEGER(Integer)=true>
 Integer floored_log2(Integer value)
 {
     if (value < 1)
@@ -100,8 +131,7 @@ Power power(Base base, Integer exponent)
     return value;
 }
 
-template <typename Integer,
-    IS_INTEGER(Integer)=true>
+template <typename Integer, IS_INTEGER(Integer)=true>
 Integer power2(Integer exponent)
 {
     if (exponent == 0)
@@ -116,7 +146,7 @@ Integer power2(Integer exponent)
 }
 ```
 ## Optimization
-The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
+The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial, though they may certainly be inlined.
 
