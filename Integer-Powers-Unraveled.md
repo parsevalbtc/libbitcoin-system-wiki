@@ -69,7 +69,7 @@ Log floored_log(Base base, Integer value)
     return exponent;
 }
 
-// Returns 0 for undefined value < 1).
+// Returns 0 for undefined (value < 1).
 template <typename Integer, IS_INTEGER(Integer)>
 Integer floored_log2(Integer value)
 {
