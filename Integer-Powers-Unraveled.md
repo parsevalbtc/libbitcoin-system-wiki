@@ -83,7 +83,7 @@ Integer floored_log2(Integer value)
     return exponent;
 }
 
-// Returns 0 for undefined (0^0).
+// Returns 0 for undefined (0, 0).
 template <typename Base, typename Integer, typename Power,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Power power(Base base, Integer exponent)
