@@ -153,17 +153,14 @@ enable_if_type<std::numeric_limits<Type>::is_integer, bool>
 ```
 
 ## Test Vectors
-Power and log are inverse functions, so these relations must hold, excepting overflows.
+Power and log are inverse functions, so these relations must hold for all defined {b, n}, excepting overflows.
 
-* for all defined {b, n}, `floored_log(b, power(b, n)) == n`.
-* for all defined {b, n}, `ceilinged_log(b, power(b, n)) == n`.
-* for all defined {b, n}, `power(b, floored_log(b, n)) == (n - (n % b))`.
-* for all defined {b, n}, where `(n % b) == 0`, `power(b, ceilinged_log(b, n)) == n`.
-* for all defined {b, n}, where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
+* `floored_log(b, power(b, n)) == n`.
+* `ceilinged_log(b, power(b, n)) == n`.
+* `power(b, floored_log(b, n)) == (n - (n % b))`.
+* where `(n % b) == 0`, `power(b, ceilinged_log(b, n)) == n`.
+* where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
+* where `(n % b) == 0`, `ceilinged_log == floored_log`.
+* where `(n % b) != 0`, `ceilinged_log == floored_log + 1`.
 
-Additionally these relations must hold for the implementation.
-
-* for all defined {b, n} where `(n % b) == 0`, `ceilinged_log == floored_log`.
-* for all defined {b, n} where `(n % b) != 0`, `ceilinged_log == floored_log + 1`.
-* for all undefined {b, n}, log and power must return `0`.
 
