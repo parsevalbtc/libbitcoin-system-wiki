@@ -280,7 +280,7 @@ It is an objective is to reproduce native operand behavior, changing only the ro
 * The functions fail as native operators with a zero-valued divisor.
 * The stack calls are removed by inlining.
 * The `is_negative` calls compile away for `unsigned` operands.
-* The `remainder` and `is_negative` calls compile away for `constexpr` operands.
+* The `no_remainder` and `is_negative` calls compile away for `constexpr` operands.
 * The `||` conditions compile away when the above render the result tautological.
 * All that remains is *necessary*.
 
