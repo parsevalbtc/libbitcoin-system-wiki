@@ -1,6 +1,6 @@
 Logarithms and powers (exponents) are occasionally useful in Bitcoin work, especially base 2. But C++ [log functions](https://en.cppreference.com/w/cpp/numeric/math/log) are all floating point. There is not much call for floating point calculation in Bitcoin, and I have a problem with using the wrong data types. It causes code bloat and warnings due to type casting, and can result in errors due to unexpected rounding behavior. Floating point operations may also be more CPU intensive than those necessary for integer operations. So I decided to clean up some code by implementing a proper suite of integer exponentiation functions.
 
-Natural logs are not an objective as they are inherently floating point (base *e*). Logs of negative numbers are non-continuous functions, so that is also not an objective.
+> Natural logs are not an objective as they are inherently floating point (base *e*). Logs of negative numbers are non-continuous functions, so that is also not an objective.
 
 ## Objectives
 * Provide power and log, for all integer types.
