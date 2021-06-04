@@ -125,51 +125,53 @@ CR = TR
 
 ## Implementation
 
-These templates determine rounding direction.
+These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
 template <typename Integer,
     IS_SIGNED_INTEGER(Integer)=true>
-inline bool negative(Integer value)
+inline bool is_negative(Integer value)
 {
     return value < 0;
 }
 
 template <typename Integer,
     IS_UNSIGNED_INTEGER(Integer)=true>
-inline bool negative(Integer)
+inline bool is_negative(Integer)
 {
     return false;
 }
-
+```
+These templates are used to determine rounding direction.
+```cpp
 template <typename Factor1, typename Factor2,
     IS_INTEGER(Factor1)=true, IS_INTEGER(Factor2)=true>
-inline bool negative(Factor1 factor1, Factor2 factor2)
+inline bool is_negative(Factor1 factor1, Factor2 factor2)
 {
-    return negative(factor1) != negative(factor2);
+    return is_negative(factor1) != is_negative(factor2);
 }
 
 template <typename Dividend, typename Divisor,
     IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
-inline bool remainder(Dividend dividend, Divisor divisor)
+inline bool no_remainder(Dividend dividend, Divisor divisor)
 {
-    return (dividend % divisor) != 0;
+    return (dividend % divisor) == 0;
 }
 ```
 These templates combine those preceding into a single answer for a given rounding method.
 ```cpp
 template <typename Dividend, typename Divisor,
     IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
-inline bool ceilinged(Dividend dividend, Divisor divisor)
+inline bool is_ceilinged(Dividend dividend, Divisor divisor)
 {
-    return !remainder(dividend, divisor) || negative(dividend, divisor);
+    return is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor,
     IS_INTEGER(Dividend)=true, IS_INTEGER(Divisor)=true>
-inline bool floored(Dividend dividend, Divisor divisor)
+inline bool is_floored(Dividend dividend, Divisor divisor)
 {
-    return !remainder(dividend, divisor) || !negative(dividend, divisor);
+    return !is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 ```
 These templates implement the three common rounding methods.
@@ -180,7 +182,7 @@ template <typename Dividend, typename Divisor, typename Quotient,
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) + 
-        (ceilinged(dividend, divisor) ? 0 : 1);
+        (is_ceilinged(dividend, divisor) ? 0 : 1);
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
@@ -188,7 +190,7 @@ template <typename Dividend, typename Divisor, typename Remainder,
 inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) -
-        (ceilinged(dividend, divisor) ? 0 : divisor);
+        (is_ceilinged(dividend, divisor) ? 0 : divisor);
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
@@ -196,7 +198,7 @@ template <typename Dividend, typename Divisor, typename Quotient,
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) -
-        (floored(dividend, divisor) ? 0 : 1);
+        (is_floored(dividend, divisor) ? 0 : 1);
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
@@ -204,7 +206,7 @@ template <typename Dividend, typename Divisor, typename Remainder,
 inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) +
-        (floored(dividend, divisor) ? 0 : divisor);
+        (is_floored(dividend, divisor) ? 0 : divisor);
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
