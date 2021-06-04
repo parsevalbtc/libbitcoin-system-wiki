@@ -30,7 +30,7 @@ Integer powers are implemented as repeated multiplication of the base by itself.
 
 Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) may be used as a performance optimization. While the compiler may optimize for multiplication by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
 
-All integer power parameters are defined with the exception of `power(0, 0)`. While 0 is the valid result for any power of 0 (or an overflow), 0 is used as the invalid parameter sentinel for consistency with the log functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow not inherent in the parameterization.
+All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the log functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow not inherent in the parameterization.
 
 The value type is the result type as the value is multiplied by itself.
 
