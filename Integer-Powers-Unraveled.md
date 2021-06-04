@@ -118,7 +118,7 @@ Integer power2(Integer exponent)
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
 
-The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial.
+The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial, though they may certainly be inlined.
 
 > Also, a compiler may warn (incorrectly) of division by zero possibility in `*_log(0, n)` test cases, given that it is inlining an (unreachable) literal division by 0.
 
