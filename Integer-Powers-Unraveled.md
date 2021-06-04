@@ -31,18 +31,12 @@ All integer power parameters are defined with the exception of `power(0, 0)`. Ap
 
 The value type is the result type as the value is multiplied by itself.
 ## Implementation
-These templates determine the sign, absolute value, and odd-ness of a signed or unsigned integer type.
+These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
-template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
-inline Integer absolute(Integer value)
+template <typename Integer, IS_INTEGER(Integer)=true>
+inline bool is_odd(Integer value)
 {
-    return is_negative(value) ? -value : value;
-}
-
-template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
-inline Integer absolute(Integer value)
-{
-    return value;
+    return (value % 2) != 0;
 }
 
 template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
@@ -57,16 +51,22 @@ inline bool is_negative(Integer value)
     return false;
 }
 
-template <typename Integer, IS_INTEGER(Integer)=true>
-inline bool is_odd(Integer value)
+template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
+inline Integer absolute(Integer value)
 {
-    return (value % 2) != 0;
+    return is_negative(value) ? -value : value;
+}
+
+template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
+inline Integer absolute(Integer value)
+{
+    return value;
 }
 ```
-
+These templates implement the logarithm functions.
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Base, typename Integer, typename Log,
+template <typename Base, typename Integer, typename Log=Integer,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Log ceilinged_log(Base base, Integer value)
 {
@@ -87,7 +87,7 @@ Integer ceilinged_log2(Integer value)
 }
 
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Base, typename Integer, typename Log,
+template <typename Base, typename Integer, typename Log=Integer,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Log floored_log(Base base, Integer value)
 {
@@ -110,9 +110,11 @@ Integer floored_log2(Integer value)
     while (((value >>= 1)) > 0) { ++exponent; };
     return exponent;
 }
-
+```
+These templates implement the power functions.
+```cpp
 // Returns 0 for undefined (0, 0).
-template <typename Base, typename Integer, typename Power,
+template <typename Base, typename Integer, typename Power=Base,
     IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Power power(Base base, Integer exponent)
 {
@@ -146,11 +148,11 @@ Integer power2(Integer exponent)
 }
 ```
 ## Optimization
-The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
+The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `negative` templates.
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability. Inlining is avoided on the primary functions as they are non-trivial, though they may certainly be inlined.
 
-> Also, a compiler may warn (incorrectly) of division by zero possibility in `*_log(0, n)` test cases, given that it is inlining an (unreachable) literal division by 0.
+> Also, a compiler may warn (incorrectly) of division by zero possibility in log base 0 test cases, given that it is inlining an (unreachable) literal division by 0.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
@@ -165,7 +167,7 @@ In C++11 the return type can be explicitly specified by template parameter, and 
 #### C++11
 * `typename Log=Integer`
 
-Without the template overrides there would be warnings on power operands, as they all invoke `factor < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
+Without the template overrides there would be warnings on power operands, as they all invoke `value < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
 
 Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
