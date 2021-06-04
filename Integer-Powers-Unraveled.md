@@ -154,8 +154,11 @@ The `inline` keyword advises the compiler that inlining of the functions is pref
 
 > Also, a compiler may warn (incorrectly) of division by zero possibility in log base 0 test cases, given that it is inlining an (unreachable) literal division by 0.
 
-The following section of `power` (and the corresponding but reduced section of `power2`) implements two short-circuits that also serve as guards for the `while` loop.
+The following section of `power` (and the corresponding but reduced section of `power2`) implements three short-circuits that also serve as guards for the `while` loop.
 ```cpp
+    if (base == 0)
+        return 0;
+
     if (exponent == 0)
         return 1;
 
@@ -164,7 +167,7 @@ The following section of `power` (and the corresponding but reduced section of `
             (is_odd(exponent) && is_negative(base) ? -1 : 1);
 
 ```
-The `exponent == 0` guard takes advantage of the fact that any value to the power of 0 is 1. The `is_negative(exponent)` guard takes advantage of the fact that any value to a negative power is between -1 and +1 (inclusive). Given integer operations, this is limited to { -1, 0, +1 }.
+The `base == 0` guard takes advantage of the fact that 0 to any power is 0, while also serving up the sentinel value for the `power(0, 0)` undefined condition. `exponent == 0` guard takes advantage of the fact that any value to the power of 0 is 1. The `is_negative(exponent)` guard takes advantage of the fact that any value to a negative power is between -1 and +1 (inclusive). Given integer operations, this is limited to { -1, 0, +1 }.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
