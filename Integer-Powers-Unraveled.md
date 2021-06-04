@@ -120,7 +120,7 @@ Integer power2(Integer exponent)
 ```
 ## Template Type Constraints
 
-Given that the C++ division operator determines the log result type (based on the operand types) the return type must so determined. This is achieved by using the C++14 `decltype` keyword.
+Given that the C++ division operator determines the log result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
 * `typename Log=decltype(Integer / Base)`
