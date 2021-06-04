@@ -37,7 +37,7 @@ The value type is the result type as the value is multiplied by itself.
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log,
-    IS_INTEGER(Base), IS_INTEGER(Integer)>
+    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Log ceilinged_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
@@ -47,7 +47,8 @@ Log ceilinged_log(Base base, Integer value)
 }
     
 // Returns 0 for undefined (value < 1).
-template <typename Integer, IS_INTEGER(Integer)>
+template <typename Integer,
+    IS_INTEGER(Integer)=true>
 Integer ceilinged_log2(Integer value)
 {
     if (value < 1)
@@ -58,7 +59,7 @@ Integer ceilinged_log2(Integer value)
 
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log,
-    IS_INTEGER(Base), IS_INTEGER(Integer)>
+    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Log floored_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
@@ -70,7 +71,8 @@ Log floored_log(Base base, Integer value)
 }
 
 // Returns 0 for undefined (value < 1).
-template <typename Integer, IS_INTEGER(Integer)>
+template <typename Integer,
+    IS_INTEGER(Integer)=true>
 Integer floored_log2(Integer value)
 {
     if (value < 1)
@@ -83,7 +85,7 @@ Integer floored_log2(Integer value)
 
 // Returns 0 for undefined (0^0).
 template <typename Base, typename Integer, typename Power,
-    IS_INTEGER(Base), IS_INTEGER(Integer)>
+    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
 Power power(Base base, Integer exponent)
 {
     if (base == 0)
@@ -101,7 +103,8 @@ Power power(Base base, Integer exponent)
     return value;
 }
 
-template <typename Integer, IS_INTEGER(Integer)>
+template <typename Integer,
+    IS_INTEGER(Integer)=true>
 Integer power2(Integer exponent)
 {
     if (exponent == 0)
