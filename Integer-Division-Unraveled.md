@@ -236,7 +236,7 @@ Despite the relative verbosity of the templates the result should be as optimal 
 
 ## Template Type Constraints
 
-Given that the C++ operators determine the result type (based on the operand types) the return type must so determined. This is achieved by using the C++14 `decltype` keyword.
+Given that the C++ operators determine the result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
 * `typename Quotient=decltype(Dividend / Divisor)`
