@@ -169,7 +169,7 @@ The following section of `power`, and the corresponding but reduced section of `
 ```
 The `base == 0` guard takes advantage of the fact that 0 to any power is 0, while also serving up the sentinel value for the `power(0, 0)` undefined condition. The `exponent == 0` guard takes advantage of the fact that any value to the power of 0 is 1. The `is_negative(exponent)` guard takes advantage of the fact that any value to a negative power is between -1 and +1 (inclusive). Given integer operations, this is limited to { -1, 0, +1 }.
 
-In each of the logarithm functions, there is a `base < 2` (as applicable) and `value < 1` condition. These are not optimizations, as they oly determine validity, but they do also serve as necessary guards for the `while` loops.
+In each of the logarithm functions, there is a `base < 2` (as applicable) and `value < 1` condition. These are not optimizations, as they only determine parameter validity, but they do also serve as necessary guards for the `while` loops.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
