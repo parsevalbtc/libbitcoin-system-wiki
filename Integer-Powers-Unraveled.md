@@ -157,6 +157,8 @@ Power and log are inverse functions, so these relations must hold, for both `cei
 
 * for all defined {b, n}, `log(b, power(b, n)) == n`.
 * for all defined {b, n}, where `(n % b) == 0`, `power(b, log(b, n)) == n`.
+* for all defined {b, n}, where `(n % b) != 0`, `power(b, floored_log(b, n))  == (n - (n % b))`.
+* for all defined {b, n}, where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
 
 Additionally these relations must hold for the implementation.
 
