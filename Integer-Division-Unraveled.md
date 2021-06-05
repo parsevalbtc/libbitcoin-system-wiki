@@ -238,7 +238,7 @@ In C++11 the return type can be explicitly specified by template parameter, and 
 * `typename Quotient=Dividend`
 * `typename Remainder=Dividend`
 
-Without the template overrides there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
+Without the template overloads there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
 
 Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
