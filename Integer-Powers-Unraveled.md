@@ -171,7 +171,7 @@ The `base == 0` guard takes advantage of the fact that 0 to any power is 0, whil
 
 In each of the logarithm functions, there is a `base < 2` (as applicable) and `value < 1` condition. These are not optimizations, as they only determine parameter validity, but they do also serve as necessary guards for the `while` loops.
 
-Both `power2(n)` and `floored_log2(n)` could simply call `power(2, n)` and `floored_log(2, n)` respectively. The implementations are nearly identical, with the exception of shift left or shift right vs. multiply by 2 or divide by 2. However there are small optimizations in removing both unnecessary guards and the presumed run-time condition and branch to a shifted optimization.
+Both `power2(n)` and `floored_log2(n)` could simply call `power(2, n)` and `floored_log(2, n)` respectively. The implementations are nearly identical, with the exception of shift left or shift right vs. multiply by 2 or divide by 2. However there are optimizations in removing both unnecessary guards and the presumed run-time condition and branch to a shifted optimization.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
