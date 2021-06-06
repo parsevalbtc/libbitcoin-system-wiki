@@ -41,7 +41,7 @@ using if_unsigned_integer = enable_if_t<
 ```
 When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression (`struct enable_if{}::type`). The former is then defaulted, using `=true` (or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
 
-The following `is_negative` templates provide an example.
+The following `is_negative` overloads provide an example.
 ```cpp
 template <typename Integer, if_signed_integer<Integer>=true>
 inline bool is_negative(Integer value)
