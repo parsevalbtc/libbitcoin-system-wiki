@@ -37,7 +37,7 @@ using if_unsigned_integer = enable_if_t<
 ```
 When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression `(struct enable_if{})::type`. The former is then defaulted (i.e. using `=true` or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
 
-#### Using enable_if_t
+## Using enable_if_t
 
 The following `is_negative` overloads provide an example.
 ```cpp
@@ -53,7 +53,7 @@ bool is_negative(Integer value)
     return false;
 }
 ```
-The above `is_negative` templates reduce to the following.
+These reduce to the following.
 ```cpp
 // if (std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed)
 template <typename Integer, bool=true>
@@ -71,7 +71,7 @@ bool is_negative(Integer value)
 ```
 A side effect of this technique is that the signature of `is_negative` is actually `is_negative<Integer, bool>(Integer value)`, where a `bool` value is ignored if specified.
 
-#### Using enable_if
+## Using enable_if
 
 Another approach is to reply on `enable_if` alone.
 ```cpp
@@ -81,7 +81,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-The above example may also be written as the following, as the `Unused` type may be unnamed.
+As the `Unused` type may be unnamed, this may also be written follows. 
 ```cpp
 template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>>
 bool is_odd(Integer value)
@@ -89,7 +89,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-These resolve to the following.
+These reduce to the following.
 ```cpp
 // if (std::numeric_limits<Integer>::is_integer)
 template <typename Integer, typename = (struct enable_if{ typedef bool type; })::type>
