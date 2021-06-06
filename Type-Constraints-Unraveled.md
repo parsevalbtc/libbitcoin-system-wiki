@@ -18,6 +18,7 @@ using enable_if_t = typename enable_if<Bool, Type>::type;
 ```
 The following helpers combine signed-ness with integer-ness (i.e. floating point excluded).
 ```cpp
+// 'std::numeric_limits<long long>' and 'std::numeric_limits<unsigned long long>' require C++11.
 #include <limits>
 
 template <typename Type>
