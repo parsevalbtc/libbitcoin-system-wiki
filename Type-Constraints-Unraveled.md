@@ -1,4 +1,4 @@
-If one is not familiar with C++ template [overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution) the use of `enable_if` to constrain template parameters can be a little hard to follow.
+If one is not familiar with C++ template [overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution) the use of `enable_if` and `enable_if_t` to constrain template parameters can be a little hard to follow.
 ```cpp
 // C++11 implementation of std::enable_if.
 template<bool Bool, typename Type=void>
