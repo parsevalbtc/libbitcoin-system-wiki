@@ -216,6 +216,8 @@ inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 ```
 Return value types default to the dividend type and can be specified by explicit template parameter.
 
+See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
+
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `is_negative<Integer>` templates.
 
@@ -243,36 +245,6 @@ Without the template overloads there would be warnings on unsigned operands, as 
 Template specialization could be further employed to reduce a couple calls when both parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
-
-These are the type constraints used above.
-```cpp
-#include <limits>
-#include <type_traits>
-
-// C++14: use enable_if_t.
-template <bool Bool, typename Type=void>
-using enable_if_type = typename std::enable_if<Bool, Type>::type;
-
-template <typename Base, typename Type>
-using if_base_of = enable_if_type<
-    std::is_base_of<Base, Type>::value, bool>;
-
-template <typename Type>
-using if_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer, bool>;
-
-template <typename Type>
-using if_signed_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer &&
-    std::numeric_limits<Type>::is_signed, bool>;
-
-template <typename Type>
-using if_unsigned_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer &&
-    !std::numeric_limits<Type>::is_signed, bool>;
-```
-
-If one is not familiar with type constraints these can be a little hard to follow. `std::enable_if` is implemented as follows.
 
 ```cpp
 namespace std
