@@ -1,4 +1,4 @@
-See the "Unraveled Concepts" side menu for a full list of topics.
+See the "Bitcoin Unraveled" side menu for a full list of topics.
 
 ***
 
