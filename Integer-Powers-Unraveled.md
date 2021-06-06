@@ -213,6 +213,38 @@ enable_if_type< \
     std::numeric_limits<Type>::is_integer && \
     !std::numeric_limits<Type>::is_signed, bool>
 ```
+If one is not familiar with type constraints these can be a little hard to follow. `std::enable_if` is implemented as follows.
+```cpp
+namespace std
+{
+    template<bool Bool, typename Type=void>
+    struct enable_if
+    {
+    };
+ 
+    template<class Type>
+    struct enable_if<true, Type>
+    {
+        typedef Type type;
+    };
+}
+```
+When the `Bool` parameter of `enable_if_type<bool Bool, typename Type>` is true, `enable_if_type` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression (`struct enable_if{}::type`). The former is then defaulted, using `=true` (or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded. The `is_negative` templates become the following.
+```cpp
+// std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed
+template <typename Integer, bool=true>
+inline bool is_negative(Integer value)
+{
+    return value < 0;
+}
+
+// std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed
+template <typename Integer, bool=true>
+inline bool is_negative(Integer value)
+{
+    return false;
+}
+```
 ## Mixing Unsigned and Signed Operands
 There are no interesting consequences to the use of mixed sign operands.
 
