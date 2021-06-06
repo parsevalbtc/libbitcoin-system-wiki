@@ -192,65 +192,8 @@ Template specialization could be further employed to reduce a couple calls when 
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
 
-These are the type constraints used above.
-```cpp
-#include <limits>
-#include <type_traits>
+See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
-// C++14: use enable_if_t.
-template <bool Bool, typename Type=void>
-using enable_if_type = typename std::enable_if<Bool, Type>::type;
-
-template <typename Base, typename Type>
-using if_base_of = enable_if_type<
-    std::is_base_of<Base, Type>::value, bool>;
-
-template <typename Type>
-using if_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer, bool>;
-
-template <typename Type>
-using if_signed_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer &&
-    std::numeric_limits<Type>::is_signed, bool>;
-
-template <typename Type>
-using if_unsigned_integer = enable_if_type<
-    std::numeric_limits<Type>::is_integer &&
-    !std::numeric_limits<Type>::is_signed, bool>;
-```
-If one is not familiar with type constraints these can be a little hard to follow. `std::enable_if` is implemented as follows.
-```cpp
-namespace std
-{
-    template<bool Bool, typename Type=void>
-    struct enable_if
-    {
-    };
- 
-    template<class Type>
-    struct enable_if<true, Type>
-    {
-        typedef Type type;
-    };
-}
-```
-When the `Bool` parameter of `enable_if_type<bool Bool, typename Type>` is true, `enable_if_type` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression (`struct enable_if{}::type`). The former is then defaulted, using `=true` (or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded. The `is_negative` templates become the following.
-```cpp
-// std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed
-template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
-{
-    return value < 0;
-}
-
-// std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed
-template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
-{
-    return false;
-}
-```
 ## Mixing Unsigned and Signed Operands
 There are no interesting consequences to the use of mixed sign operands.
 
