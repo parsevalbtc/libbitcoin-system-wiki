@@ -41,13 +41,13 @@ When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `e
 
 The following `is_negative` overloads provide an example.
 ```cpp
-template <typename Integer, if_signed_integer<Integer>=true>
+template <typename Integer, if_signed_integer<Integer> = true>
 bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-template <typename Integer, if_unsigned_integer<Integer>=true>
+template <typename Integer, if_unsigned_integer<Integer> = true>
 bool is_negative(Integer value)
 {
     return false;
@@ -63,7 +63,7 @@ bool is_negative(Integer value)
 }
 
 // if (std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed)
-template <typename Integer, bool=true>
+template <typename Integer, bool = true>
 bool is_negative(Integer value)
 {
     return false;
@@ -124,3 +124,33 @@ bool is_odd(Integer value)
 The `bool` type is inferred from the expression `std::numeric_limits<Integer>::is_integer` which was passed to `enable_if`, exposed by `enable_if` via its `::type` declaration, and then dereferenced by `::type` in the template declaration.
 
 As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
+
+## Common Errors
+These compile but do not constrain the type.
+```cpp
+template <typename Integer, typename = enable_if_t<std::numeric_limits<Integer>::is_integer>::type>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+
+template <typename Integer, enable_if<std::numeric_limits<Integer>::is_integer>::type = true>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+These resolve respectively to the following, under all conditions.
+```cpp
+template <typename Integer, typename = bool>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+
+template <typename Integer, bool = true>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
