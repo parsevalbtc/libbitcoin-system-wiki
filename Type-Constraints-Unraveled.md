@@ -12,7 +12,7 @@ struct enable_if<true, Type>
     typedef Type type;
 };
 
-// C++14: use std::enable_if_t.
+// C++14 implementation of use std::enable_if_t.
 template <bool Bool, typename Type=void>
 using enable_if_t = typename std::enable_if<Bool, Type>::type;
 ```
