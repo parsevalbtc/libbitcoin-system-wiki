@@ -14,7 +14,7 @@ struct enable_if<true, Type>
 
 // C++14 implementation of use std::enable_if_t.
 template <bool Bool, typename Type=void>
-using enable_if_t = typename std::enable_if<Bool, Type>::type;
+using enable_if_t = typename enable_if<Bool, Type>::type;
 ```
 The following helpers combine signed-ness with integer-ness (i.e. floating point excluded).
 ```cpp
