@@ -21,10 +21,6 @@ The following helpers combine signed-ness with integer-ness (i.e. floating point
 #include <limits>
 #include <type_traits>
 
-template <typename Base, typename Type>
-using if_base_of = enable_if_t<
-    std::is_base_of<Base, Type>::value, bool>;
-
 template <typename Type>
 using if_integer = enable_if_t<
     std::numeric_limits<Type>::is_integer, bool>;
