@@ -53,14 +53,14 @@ inline bool is_negative(Integer value)
 ```
 The above `is_negative` templates reduce to the following.
 ```cpp
-// if (std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed) then ...
+// if (std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed)
 template <typename Integer, bool=true>
 inline bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-// if (std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed) then ...
+// if (std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed)
 template <typename Integer, bool=true>
 inline bool is_negative(Integer value)
 {
