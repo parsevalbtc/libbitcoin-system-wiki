@@ -71,3 +71,4 @@ inline bool is_negative(Integer value)
     return false;
 }
 ```
+A side effect of this technique is that the signatures of `is_negative` is actually `is_negative(Integer, bool=true)`.
