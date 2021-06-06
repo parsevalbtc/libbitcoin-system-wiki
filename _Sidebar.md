@@ -25,11 +25,11 @@
   * [Script Machine](Script-Machine)
   * [Fork Rules](Fork-Rules)
 * **[Tutorials (aaronjaramillo)](http://aaronjaramillo.org/category/libbitcoindocs)**
-* **[Unraveled Concepts](Unraveled-Concepts)**
-  * [Integer Division Unraveled](Integer-Division-Unraveled)
-  * [Integer Powers Unraveled](Integer-Powers-Unraveled)
+* **[Bitcoin Unraveled](Bitcoin-Unraveled)**
   * [BIP38 Security Unraveled](BIP38-Security-Unraveled)
   * [BIP173 Unraveled](BIP173-Unraveled)
+  * [Integer Powers Unraveled](Integer-Powers-Unraveled)
+  * [Integer Division Unraveled](Integer-Division-Unraveled)
 * **[Cryptoeconomics](Cryptoeconomics)**
   * [Foreword by Amir Taaki](Foreword-by-Amir-Taaki)
   * [Value Proposition](Value-Proposition)
