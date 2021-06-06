@@ -121,4 +121,6 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
+The `bool` type is inferred from the expression `std::numeric_limits<Integer>::is_integer` which was passed to `enable_if` and exposed by `enable_if` via its `::type` declaration.
+
 As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
