@@ -81,7 +81,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-As the `Unused` type may be unnamed, this may also be written follows. 
+As the `Unused` type may be unnamed, this may also be written as follows. 
 ```cpp
 template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>>
 bool is_odd(Integer value)
