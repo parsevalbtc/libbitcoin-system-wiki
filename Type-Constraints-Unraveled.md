@@ -154,3 +154,4 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
+Consequently, any type of value passed to `is_odd(Type value)` will compile if there is a `Type % 2` operator overload for the type. Natively this includes all [arithmetic types](https://en.cppreference.com/w/c/language/arithmetic_types) (including char and floating point) but may include others.
