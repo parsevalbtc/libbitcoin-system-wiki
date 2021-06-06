@@ -19,7 +19,6 @@ using enable_if_t = typename enable_if<Bool, Type>::type;
 The following helpers combine signed-ness with integer-ness (i.e. floating point excluded).
 ```cpp
 #include <limits>
-#include <type_traits>
 
 template <typename Type>
 using if_integer = enable_if_t<
