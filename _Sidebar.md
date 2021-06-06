@@ -25,6 +25,11 @@
   * [Script Machine](Script-Machine)
   * [Fork Rules](Fork-Rules)
 * **[Tutorials (aaronjaramillo)](http://aaronjaramillo.org/category/libbitcoindocs)**
+* **[Unraveled Concepts](Unraveled-Concepts)**
+  * [Integer Division Unraveled](Integer-Division-Unraveled)
+  * [Integer Powers Unraveled](Integer-Powers-Unraveled)
+  * [BIP38 Security Unraveled](BIP38-Security-Unraveled)
+  * [BIP173 Unraveled](BIP173-Unraveled)
 * **[Cryptoeconomics](Cryptoeconomics)**
   * [Foreword by Amir Taaki](Foreword-by-Amir-Taaki)
   * [Value Proposition](Value-Proposition)
@@ -149,7 +154,3 @@
   * [Skynet Friend or Foe](Skynet-Friend-or-Foe)
   * [Altcoin Version Mappings](Altcoin-Version-Mappings)
   * [Altchain Encrypted Keys](Altchain-Encrypted-Private-Keys)
-  * [BIP38 Security Considerations](BIP38-Security-Considerations)
-  * [BIP173 Unraveled](BIP173-Unraveled)
-  * [Integer Division Unraveled](Integer-Division-Unraveled)
-  * [Integer Powers Unraveled](Integer-Powers-Unraveled)
