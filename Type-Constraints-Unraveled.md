@@ -126,7 +126,7 @@ The `bool` type is inferred from the expression `std::numeric_limits<Integer>::i
 As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
 
 ## Common Mistakes
-These compile but *do not* constrain the type.
+These compile but **do not** constrain the type.
 ```cpp
 template <typename Integer, typename = enable_if_t<std::numeric_limits<Integer>::is_integer>::type>
 bool is_odd(Integer value)
