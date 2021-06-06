@@ -75,7 +75,7 @@ A side effect of this technique is that the signature of `is_negative` is actual
 
 Another approach is to reply on `enable_if` alone.
 ```cpp
-template <typename Integer, typename Unused = enable_if<std::numeric_limits<Integer>::is_integer>>
+template <typename Integer, typename Unused = enable_if<std::numeric_limits<Integer>::is_integer>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -83,7 +83,7 @@ bool is_odd(Integer value)
 ```
 As the `Unused` type may be unnamed, this may also be written as follows. 
 ```cpp
-template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>>
+template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -121,6 +121,6 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-The `bool` type is inferred from the expression `std::numeric_limits<Integer>::is_integer` which was passed to `enable_if` and exposed by `enable_if` via its `::type` declaration.
+The `bool` type is inferred from the expression `std::numeric_limits<Integer>::is_integer` which was passed to `enable_if`, exposed by `enable_if` via its `::type` declaration, and then dereferenced by `::type` in the first template.
 
 As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
