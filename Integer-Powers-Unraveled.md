@@ -33,31 +33,31 @@ The value type is the result type as the value is multiplied by itself.
 ## Implementation
 These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
-template <typename Integer, IS_INTEGER(Integer)=true>
+template <typename Integer, if_integer<Integer>=true>
 inline bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
-template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
+template <typename Integer, if_signed_integer<Integer>=true>
 inline bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
+template <typename Integer, if_unsigned_integer<Integer>=true>
 inline bool is_negative(Integer value)
 {
     return false;
 }
 
-template <typename Integer, IS_SIGNED_INTEGER(Integer)=true>
+template <typename Integer, if_signed_integer<Integer>=true>
 inline Integer absolute(Integer value)
 {
     return is_negative(value) ? -value : value;
 }
 
-template <typename Integer, IS_UNSIGNED_INTEGER(Integer)=true>
+template <typename Integer, if_unsigned_integer<Integer>=true>
 inline Integer absolute(Integer value)
 {
     return value;
@@ -67,7 +67,7 @@ These templates implement the logarithm functions.
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log=Integer,
-    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
+    if_integer<Integer>=true, if_integer<Integer>=true>
 inline Log ceilinged_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
@@ -77,7 +77,7 @@ inline Log ceilinged_log(Base base, Integer value)
 }
     
 // Returns 0 for undefined (value < 1).
-template <typename Integer, IS_INTEGER(Integer)=true>
+template <typename Integer, if_integer<Integer>=true>
 inline Integer ceilinged_log2(Integer value)
 {
     if (value < 1)
@@ -88,7 +88,7 @@ inline Integer ceilinged_log2(Integer value)
 
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Base, typename Integer, typename Log=Integer,
-    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
+    if_integer<Integer>=true, if_integer<Integer>=true>
 inline Log floored_log(Base base, Integer value)
 {
     if (base < 2 || value < 1)
@@ -100,7 +100,7 @@ inline Log floored_log(Base base, Integer value)
 }
 
 // Returns 0 for undefined (value < 1).
-template <typename Integer, IS_INTEGER(Integer)=true>
+template <typename Integer, if_integer<Integer>=true>
 inline Integer floored_log2(Integer value)
 {
     if (value < 1)
@@ -115,7 +115,7 @@ These templates implement the power functions.
 ```cpp
 // Returns 0 for undefined (0, 0).
 template <typename Base, typename Integer, typename Power=Base,
-    IS_INTEGER(Base)=true, IS_INTEGER(Integer)=true>
+    if_integer<Integer>=true, if_integer<Integer>=true>
 inline Power power(Base base, Integer exponent)
 {
     if (base == 0)
@@ -133,7 +133,7 @@ inline Power power(Base base, Integer exponent)
     return value;
 }
 
-template <typename Integer, IS_INTEGER(Integer)=true>
+template <typename Integer, if_integer<Integer>=true>
 inline Integer power2(Integer exponent)
 {
     if (exponent == 0)
