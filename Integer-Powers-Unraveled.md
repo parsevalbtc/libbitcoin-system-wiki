@@ -192,26 +192,32 @@ Template specialization could be further employed to reduce a couple calls when 
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
 
-These are the type constraint macros used above. As a rule I make very limited use of macros. But these improve readability and maintainability by reducing repetition, without impacting debugging. These will work on any C++11 or later compiler.
+These are the type constraints used above.
 ```cpp
-// Borrowing enable_if_t from C++14.
-// en.cppreference.com/w/cpp/types/enable_if
-template<bool Bool, class Type=void>
+#include <limits>
+#include <type_traits>
+
+// C++14: use enable_if_t.
+template <bool Bool, typename Type=void>
 using enable_if_type = typename std::enable_if<Bool, Type>::type;
 
-#define IS_INTEGER(Type) \
-enable_if_type< \
-    std::numeric_limits<Type>::is_integer, bool>
+template <typename Base, typename Type>
+using if_base_of = enable_if_type<
+    std::is_base_of<Base, Type>::value, bool>;
 
-#define IS_SIGNED_INTEGER(Type) \
-enable_if_type< \
-    std::numeric_limits<Type>::is_integer && \
-    std::numeric_limits<Type>::is_signed, bool>
+template <typename Type>
+using if_integer = enable_if_type<
+    std::numeric_limits<Type>::is_integer, bool>;
 
-#define IS_UNSIGNED_INTEGER(Type) \
-enable_if_type< \
-    std::numeric_limits<Type>::is_integer && \
-    !std::numeric_limits<Type>::is_signed, bool>
+template <typename Type>
+using if_signed_integer = enable_if_type<
+    std::numeric_limits<Type>::is_integer &&
+    std::numeric_limits<Type>::is_signed, bool>;
+
+template <typename Type>
+using if_unsigned_integer = enable_if_type<
+    std::numeric_limits<Type>::is_integer &&
+    !std::numeric_limits<Type>::is_signed, bool>;
 ```
 If one is not familiar with type constraints these can be a little hard to follow. `std::enable_if` is implemented as follows.
 ```cpp
