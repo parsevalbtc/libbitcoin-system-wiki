@@ -30,6 +30,7 @@
   * [BIP173 Unraveled](BIP173-Unraveled)
   * [Integer Powers Unraveled](Integer-Powers-Unraveled)
   * [Integer Division Unraveled](Integer-Division-Unraveled)
+  * [Type Constraints Unraveled](Type-Constraints-Unraveled)
 * **[Cryptoeconomics](Cryptoeconomics)**
   * [Foreword by Amir Taaki](Foreword-by-Amir-Taaki)
   * [Value Proposition](Value-Proposition)
