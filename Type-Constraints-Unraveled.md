@@ -40,13 +40,13 @@ When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `e
 The following `is_negative` overloads provide an example.
 ```cpp
 template <typename Integer, if_signed_integer<Integer>=true>
-inline bool is_negative(Integer value)
+bool is_negative(Integer value)
 {
     return value < 0;
 }
 
 template <typename Integer, if_unsigned_integer<Integer>=true>
-inline bool is_negative(Integer value)
+bool is_negative(Integer value)
 {
     return false;
 }
@@ -55,16 +55,66 @@ The above `is_negative` templates reduce to the following.
 ```cpp
 // if (std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed)
 template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
+bool is_negative(Integer value)
 {
     return value < 0;
 }
 
 // if (std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed)
 template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
+bool is_negative(Integer value)
 {
     return false;
 }
 ```
 A side effect of this technique is that the signature of `is_negative` is actually `is_negative<Integer, bool>(Integer value)`, where a `bool` value is ignored if specified.
+
+Another approach is to reply on `enable_if` alone.
+```cpp
+template <typename Integer, typename Unused = enable_if<std::numeric_limits<Integer>::is_integer>>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+The above example may also be written as the following, as the `Unused` type may be unnamed.
+```cpp
+template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+These resolve to the following.
+```cpp
+// if (std::numeric_limits<Integer>::is_integer)
+template <typename Integer, typename = (struct enable_if{ typedef bool type; })::type>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+
+// if (!std::numeric_limits<Integer>::is_integer)
+template <typename Integer, typename = (struct enable_if{})::type>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+And further reduce to the following.
+```cpp
+// if (std::numeric_limits<Integer>::is_integer)
+template <typename Integer, typename = bool>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+
+// if (!std::numeric_limits<Integer>::is_integer)
+template <typename Integer, typename = undefined>
+bool is_odd(Integer value)
+{
+    return (value % 2) != 0;
+}
+```
+As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
