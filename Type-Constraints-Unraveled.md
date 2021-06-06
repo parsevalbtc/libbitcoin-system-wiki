@@ -35,7 +35,7 @@ using if_unsigned_integer = enable_if_t<
     std::numeric_limits<Type>::is_integer &&
     !std::numeric_limits<Type>::is_signed, bool>;
 ```
-When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression `struct enable_if{}::type`. The former is then defaulted (i.e. using `=true` or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
+When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression `(struct enable_if{})::type`. The former is then defaulted (i.e. using `=true` or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
 
 The following `is_negative` overloads provide an example.
 ```cpp
