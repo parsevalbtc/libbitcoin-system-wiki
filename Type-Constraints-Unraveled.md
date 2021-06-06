@@ -16,7 +16,7 @@ struct enable_if<true, Type>
 template <bool Bool, typename Type=void>
 using enable_if_t = typename std::enable_if<Bool, Type>::type;
 ```
-
+The following helpers combine signed-ness with integer-ness (i.e. floating point excluded).
 ```cpp
 #include <limits>
 #include <type_traits>
