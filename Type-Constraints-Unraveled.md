@@ -148,7 +148,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-These resolve respectively to the following, under all conditions.
+These reduce respectively to the following, under all conditions.
 ```cpp
 template <typename Integer, typename = bool>
 bool is_odd(Integer value)
