@@ -13,7 +13,7 @@ struct enable_if<true, Type>
 };
 
 // C++14 implementation of use std::enable_if_t.
-template <bool Bool, typename Type=void>
+template <bool Bool, typename Type = void>
 using enable_if_t = typename enable_if<Bool, Type>::type;
 ```
 The following helpers combine signed-ness with integer-ness (i.e. [floating point excluded](https://en.cppreference.com/w/cpp/types/numeric_limits/is_integer)).
