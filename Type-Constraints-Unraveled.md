@@ -18,25 +18,26 @@ using enable_if_t = typename enable_if<Bool, Type>::type;
 ```
 The following helpers combine signed-ness with integer-ness (i.e. [floating point excluded](https://en.cppreference.com/w/cpp/types/numeric_limits/is_integer)).
 ```cpp
-#include <limits>
+#include <type_traits>
 
 template <typename Type>
 using if_integer = enable_if_t<
-    std::numeric_limits<Type>::is_integer, bool>;
+    std::is_integral<Type>::value, bool>;
 
 template <typename Type>
 using if_signed_integer = enable_if_t<
-    std::numeric_limits<Type>::is_integer &&
-    std::numeric_limits<Type>::is_signed, bool>;
+    std::is_integral<Type>::value &&
+    std::is_signed<Type>::value, bool>;
 
 template <typename Type>
 using if_unsigned_integer = enable_if_t<
-    std::numeric_limits<Type>::is_integer &&
-    !std::numeric_limits<Type>::is_signed, bool>;
+    std::is_integral<Type>::value &&
+    !std::is_signed<Type>::value, bool>;
 ```
-* `std::is_integral<Type>` and `std::is_signed<Type>` would require C++11
-* `std::numeric_limits<Type>` requires C++11 for `long long` and `unsigned long long`
-* For older versions of C++ these may be implemented with simple custom templates.
+* `std::is_integral<Type>` and `std::is_signed<Type>` require C++11
+* For older versions of C++ these may be implemented with simple [custom templates](https://en.cppreference.com/w/cpp/types/is_signed).
+* Use of `std::is_integral_v` or `std::is_signed_v` (which emit `::value`) would require C++17.
+* Use of `std::numeric_limits<Type>` would require C++11 for `long long` and `unsigned long long`
 
 When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression `(struct enable_if{})::type`. The former is then defaulted (i.e. using `=true` or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
 
@@ -58,14 +59,14 @@ bool is_negative(Integer value)
 ```
 These reduce to the following.
 ```cpp
-// if (std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed)
-template <typename Integer, bool=true>
+// if (std::is_integral<Integer>::value && std::is_signed<Integer>::value)
+template <typename Integer, bool = true>
 bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-// if (std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed)
+// if (std::is_integral<Integer>::value && !std::is_signed<Integer>::value)
 template <typename Integer, bool = true>
 bool is_negative(Integer value)
 {
@@ -78,7 +79,7 @@ A side effect of this technique is that the signature of `is_negative` is actual
 
 Another approach is to reply on `enable_if` alone.
 ```cpp
-template <typename Integer, typename Unused = enable_if<std::numeric_limits<Integer>::is_integer>::type>
+template <typename Integer, typename Unused = enable_if<std::is_integral<Integer>::value>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -86,7 +87,7 @@ bool is_odd(Integer value)
 ```
 As the `Unused` type may be unnamed, this may also be written as follows. 
 ```cpp
-template <typename Integer, typename = enable_if<std::numeric_limits<Integer>::is_integer>::type>
+template <typename Integer, typename = enable_if<std::is_integral<Integer>::value>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -94,14 +95,14 @@ bool is_odd(Integer value)
 ```
 These reduce to the following.
 ```cpp
-// if (std::numeric_limits<Integer>::is_integer)
+// if (std::is_integral<Integer>::value)
 template <typename Integer, typename = (struct enable_if{ typedef bool type; })::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
-// if (!std::numeric_limits<Integer>::is_integer)
+// if (!std::is_integral<Integer>::value)
 template <typename Integer, typename = (struct enable_if{})::type>
 bool is_odd(Integer value)
 {
@@ -110,21 +111,21 @@ bool is_odd(Integer value)
 ```
 And further reduce to the following.
 ```cpp
-// if (std::numeric_limits<Integer>::is_integer)
+// if (std::is_integral<Integer>::value)
 template <typename Integer, typename = bool>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
-// if (!std::numeric_limits<Integer>::is_integer)
+// if (!std::is_integral<Integer>::value)
 template <typename Integer, typename = undefined>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 ```
-The `bool` type is inferred from the expression `std::numeric_limits<Integer>::is_integer` which was passed to `enable_if`, exposed by `enable_if` via its `::type` declaration, and then dereferenced by `::type` in the template declaration.
+The `bool` type is inferred from the expression `std::is_integral<Integer>::value` which was passed to `enable_if`, exposed by `enable_if` via its `::type` declaration, and then dereferenced by `::type` in the template declaration.
 
 As the latter will not match any expression, the former remains. Therefore the signature is actually `is_odd<Integer, typename = bool>(Integer value)`, where the second template parameter may be any type and is ignored if specified.
 
