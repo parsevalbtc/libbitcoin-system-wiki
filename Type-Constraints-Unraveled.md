@@ -131,13 +131,13 @@ As the latter will not match any expression, the former remains. Therefore the s
 ## Common Mistakes
 These compile but **do not** constrain the type.
 ```cpp
-template <typename Integer, typename = enable_if_t<std::is_integral<Integer>::value>>
+template <typename Integer, typename = enable_if_t<std::numeric_limits<Integer>::is_integer>>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
-template <typename Integer, enable_if<std::is_integral<Integer>>::type = true>
+template <typename Integer, enable_if<std::numeric_limits<Integer>::is_integer>::type = true>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
