@@ -18,7 +18,6 @@ using enable_if_t = typename enable_if<Bool, Type>::type;
 ```
 The following helpers combine signed-ness with integer-ness (i.e. floating point excluded).
 ```cpp
-// 'std::numeric_limits<long long>' and 'std::numeric_limits<unsigned long long>' require C++11.
 #include <limits>
 
 template <typename Type>
@@ -35,6 +34,10 @@ using if_unsigned_integer = enable_if_t<
     std::numeric_limits<Type>::is_integer &&
     !std::numeric_limits<Type>::is_signed, bool>;
 ```
+* `std::is_integral<Type>` and `std::is_signed<Type>` would require C++11
+* `std::numeric_limits<Type>` requires C++11 for `long long` and `unsigned long long`
+* For older versions of C++ these may be implemented with simple custom templates.
+
 When the `Bool` parameter of `enable_if_t<bool Bool, typename Type>` is true, `enable_if_t` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression `(struct enable_if{})::type`. The former is then defaulted (i.e. using `=true` or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded.
 
 ## Using enable_if_t
