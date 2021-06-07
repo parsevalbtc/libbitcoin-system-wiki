@@ -33,7 +33,7 @@ The value type is the result type as the value is multiplied by itself.
 ## Implementation
 These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
-template <typename Integer, if_integer<Integer>=true>
+template <typename Integer, if_integer<Integer> = true>
 inline bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -115,7 +115,7 @@ These templates implement the power functions.
 ```cpp
 // Returns 0 for undefined (0, 0).
 template <typename Base, typename Integer, typename Power=Base,
-    if_integer<Integer>=true, if_integer<Integer>=true>
+    if_integer<Integer> = true, if_integer<Integer> = true>
 inline Power power(Base base, Integer exponent)
 {
     if (base == 0)
@@ -133,7 +133,7 @@ inline Power power(Base base, Integer exponent)
     return value;
 }
 
-template <typename Integer, if_integer<Integer>=true>
+template <typename Integer, if_integer<Integer> = true>
 inline Integer power2(Integer exponent)
 {
     if (exponent == 0)
