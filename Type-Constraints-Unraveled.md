@@ -95,7 +95,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-These reduce to the following.
+This resolves to the following.
 ```cpp
 // if (std::is_integral<Integer>::value)
 template <typename Integer,
@@ -113,7 +113,7 @@ bool is_odd(Integer value)
     return (value % 2) != 0;
 }
 ```
-And further reduce to the following.
+And these reduce to the following.
 ```cpp
 // if (std::is_integral<Integer>::value)
 template <typename Integer, typename = bool>
