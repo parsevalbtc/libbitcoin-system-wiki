@@ -79,7 +79,8 @@ A side effect of this technique is that the signature of `is_negative` is actual
 
 Another approach is to reply on `enable_if` alone.
 ```cpp
-template <typename Integer, typename Unused = enable_if<std::is_integral<Integer>::value>::type>
+template <typename Integer,
+    typename Unused = enable_if<std::is_integral<Integer>::value>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -87,7 +88,8 @@ bool is_odd(Integer value)
 ```
 As the `Unused` type may be unnamed, this may also be written as follows. 
 ```cpp
-template <typename Integer, typename = enable_if<std::is_integral<Integer>::value>::type>
+template <typename Integer,
+    typename = enable_if<std::is_integral<Integer>::value>::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
@@ -96,14 +98,16 @@ bool is_odd(Integer value)
 These reduce to the following.
 ```cpp
 // if (std::is_integral<Integer>::value)
-template <typename Integer, typename = (struct enable_if{ typedef bool type; })::type>
+template <typename Integer,
+    typename = (struct enable_if{ typedef bool type; })::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
 // if (!std::is_integral<Integer>::value)
-template <typename Integer, typename = (struct enable_if{})::type>
+template <typename Integer,
+    typename = (struct enable_if{})::type>
 bool is_odd(Integer value)
 {
     return (value % 2) != 0;
