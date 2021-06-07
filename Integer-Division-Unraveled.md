@@ -122,13 +122,13 @@ CR = TR
 These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
-template <typename Integer, if_signed_integer<Integer>=true>
+template <typename Integer, if_signed_integer<Integer> = true>
 inline bool is_negative(Integer value)
 {
     return value < 0;
 }
 
-template <typename Integer, if_unsigned_integer<Integer>=true>
+template <typename Integer, if_unsigned_integer<Integer> = true>
 inline bool is_negative(Integer)
 {
     return false;
@@ -137,14 +137,14 @@ inline bool is_negative(Integer)
 These templates are used to determine rounding direction.
 ```cpp
 template <typename Factor1, typename Factor2,
-    if_integer<Factor1>=true, if_integer<Factor2>=true>
+    if_integer<Factor1> = true, if_integer<Factor2> = true>
 inline bool is_negative(Factor1 factor1, Factor2 factor2)
 {
     return is_negative(factor1) != is_negative(factor2);
 }
 
 template <typename Dividend, typename Divisor,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline bool no_remainder(Dividend dividend, Divisor divisor)
 {
     return (dividend % divisor) == 0;
@@ -153,14 +153,14 @@ inline bool no_remainder(Dividend dividend, Divisor divisor)
 These templates combine those preceding into a single answer for a given rounding method.
 ```cpp
 template <typename Dividend, typename Divisor,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline bool is_ceilinged(Dividend dividend, Divisor divisor)
 {
     return is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline bool is_floored(Dividend dividend, Divisor divisor)
 {
     return !is_negative(dividend, divisor) || no_remainder(dividend, divisor);
@@ -169,7 +169,7 @@ inline bool is_floored(Dividend dividend, Divisor divisor)
 These templates implement the three common rounding methods.
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) + 
@@ -177,7 +177,7 @@ inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) -
@@ -185,7 +185,7 @@ inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) -
@@ -193,7 +193,7 @@ inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) +
@@ -201,14 +201,14 @@ inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 }
 
 template <typename Dividend, typename Divisor, typename Quotient,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Quotient truncated_divide(Dividend dividend, Divisor divisor)
 {
     return dividend / divisor;
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
-    if_integer<Dividend>=true, if_integer<Divisor>=true>
+    if_integer<Dividend> = true, if_integer<Divisor> = true>
 inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 {
     return dividend % divisor;
