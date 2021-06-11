@@ -147,7 +147,6 @@ inline Integer power2(Integer exponent)
     return value;
 }
 ```
-See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `is_negative` templates.
@@ -193,6 +192,8 @@ Without the template overloads there would be warnings on unsigned type `power` 
 Template specialization could be further employed to reduce a couple calls when parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
+
+See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
 There are no interesting consequences to the use of mixed sign operands.
