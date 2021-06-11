@@ -216,8 +216,6 @@ inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 ```
 Return value types default to the dividend type and can be specified by explicit template parameter.
 
-See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
-
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `is_negative<Integer>` templates.
 
@@ -246,39 +244,7 @@ Template specialization could be further employed to reduce a couple calls when 
 
 The templates can be factored into header (.hpp) and implementation (.ipp) files, just be sure to remove the default template parameter values in the implementation.
 
-```cpp
-namespace std
-{
-    template<bool Bool, typename Type=void>
-    struct enable_if
-    {
-    };
- 
-    template<class Type>
-    struct enable_if<true, Type>
-    {
-        typedef Type type;
-    };
-}
-```
-
-When the `Bool` parameter of `enable_if_type<bool Bool, typename Type>` is true, `enable_if_type` resolves to the specified `Type`, in the above cases `bool`. Otherwise it resolves to the undefined expression (`struct enable_if{}::type`). The former is then defaulted, using `=true` (or `=false`) so that it is not required. The latter will not match any expression, so that case is excluded. The `is_negative` templates become the following.
-
-```cpp
-// std::numeric_limits<Integer>::is_integer && std::numeric_limits<Integer>::is_signed
-template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
-{
-    return value < 0;
-}
-
-// std::numeric_limits<Integer>::is_integer && !std::numeric_limits<Integer>::is_signed
-template <typename Integer, bool=true>
-inline bool is_negative(Integer value)
-{
-    return false;
-}
-```
+See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
 It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. The warning is reproduced with the C++14 `decltype` keyword, and in C++11 the execution behavior is identical given the same return type, though without the warning. In either case, all division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result is certainly not intuitive, so I spent hours making sure that the test cases were valid.
