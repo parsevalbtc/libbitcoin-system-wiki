@@ -153,9 +153,9 @@ The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally we prefer to let the compiler make these decisions, preserving code readability.
 
-The `constexpr` keyword ensures that functions can be evaluated at compile time. In C++14 the inlined functions above can also be changed to `constexpr`. This also allows the functions to be integrated into template type constraints.
-
 > A compiler may warn (incorrectly) of division by zero "possibility" in a logarithm base `const` 0 test case, given that it is inlining an (unreachable) division by literal 0. Removal of the `inline` keyword can prevent this if desired, but the warning is beneficial for production (vs. test) code. A better alternative may be to use a non-const, zero-valued base variable in the logarithm test cases.
+
+The `constexpr` keyword ensures that functions can be evaluated at compile time. In C++14 the inlined functions above can also be changed to `constexpr`. This also allows the functions to be integrated into template type constraints.
 
 The following section of `power`, and the corresponding but reduced section of `power2`, implement three short-circuits that also serve as necessary guards for the `while` loops.
 ```cpp
