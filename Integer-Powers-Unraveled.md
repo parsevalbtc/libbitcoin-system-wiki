@@ -153,6 +153,8 @@ The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w
 
 The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally we prefer to let the compiler make these decisions, preserving code readability.
 
+The `constexpr` keyword ensures that functions can be evaluated at compile time. In C++14 the inlined functions above can also be changed to `constexpr`. This also allows the functions to be integrated into template type constraints.
+
 > A compiler may warn (incorrectly) of division by zero "possibility" in a logarithm base `const` 0 test case, given that it is inlining an (unreachable) division by literal 0. Removal of the `inline` keyword can prevent this if desired, but the warning is beneficial for production (vs. test) code. A better alternative may be to use a non-const, zero-valued base variable in the logarithm test cases.
 
 The following section of `power`, and the corresponding but reduced section of `power2`, implement three short-circuits that also serve as necessary guards for the `while` loops.
@@ -217,6 +219,7 @@ Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/I
 * There can be no "tautological compare" warnings from unsigned parameters.
 * The functions return a common sentinel for undefined operations.
 * Stack calls may be fully removed by inlining.
+* All functions can be `constexpr` in C++14.
 * The `is_negative` and `absolute` calls compile away for `unsigned` operators.
 * The `is_odd`, `is_negative`, and `absolute` calls compile away for `unsigned` and `constexpr` parameters.
 * All conditions compile away when the above render them tautological.
