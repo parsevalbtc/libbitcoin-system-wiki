@@ -123,13 +123,13 @@ These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
 template <typename Integer, if_signed_integer<Integer> = true>
-inline bool is_negative(Integer value)
+constexpr bool is_negative(Integer value)
 {
     return value < 0;
 }
 
 template <typename Integer, if_unsigned_integer<Integer> = true>
-inline bool is_negative(Integer)
+constexpr bool is_negative(Integer)
 {
     return false;
 }
@@ -138,14 +138,14 @@ These templates are used to determine rounding direction.
 ```cpp
 template <typename Factor1, typename Factor2,
     if_integer<Factor1> = true, if_integer<Factor2> = true>
-inline bool is_negative(Factor1 factor1, Factor2 factor2)
+constexpr bool is_negative(Factor1 factor1, Factor2 factor2)
 {
     return is_negative(factor1) != is_negative(factor2);
 }
 
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline bool no_remainder(Dividend dividend, Divisor divisor)
+constexpr bool no_remainder(Dividend dividend, Divisor divisor)
 {
     return (dividend % divisor) == 0;
 }
@@ -154,14 +154,14 @@ These templates combine those preceding into a single answer for a given roundin
 ```cpp
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline bool is_ceilinged(Dividend dividend, Divisor divisor)
+constexpr bool is_ceilinged(Dividend dividend, Divisor divisor)
 {
     return is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline bool is_floored(Dividend dividend, Divisor divisor)
+constexpr bool is_floored(Dividend dividend, Divisor divisor)
 {
     return !is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
@@ -170,7 +170,7 @@ These templates implement the three common rounding methods.
 ```cpp
 template <typename Dividend, typename Divisor, typename Quotient,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
+constexpr Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) + 
         (is_ceilinged(dividend, divisor) ? 0 : 1);
@@ -178,7 +178,7 @@ inline Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
 
 template <typename Dividend, typename Divisor, typename Remainder,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
+constexpr Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) -
         (is_ceilinged(dividend, divisor) ? 0 : divisor);
@@ -186,7 +186,7 @@ inline Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
 
 template <typename Dividend, typename Divisor, typename Quotient,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Quotient floored_divide(Dividend dividend, Divisor divisor)
+constexpr Quotient floored_divide(Dividend dividend, Divisor divisor)
 {
     return truncated_divide(dividend, divisor) -
         (is_floored(dividend, divisor) ? 0 : 1);
@@ -194,7 +194,7 @@ inline Quotient floored_divide(Dividend dividend, Divisor divisor)
 
 template <typename Dividend, typename Divisor, typename Remainder,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
+constexpr Remainder floored_modulo(Dividend dividend, Divisor divisor)
 {
     return truncated_modulo(dividend, divisor) +
         (is_floored(dividend, divisor) ? 0 : divisor);
@@ -202,14 +202,14 @@ inline Remainder floored_modulo(Dividend dividend, Divisor divisor)
 
 template <typename Dividend, typename Divisor, typename Quotient,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Quotient truncated_divide(Dividend dividend, Divisor divisor)
+constexpr Quotient truncated_divide(Dividend dividend, Divisor divisor)
 {
     return dividend / divisor;
 }
 
 template <typename Dividend, typename Divisor, typename Remainder,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-inline Remainder truncated_modulo(Dividend dividend, Divisor divisor)
+constexpr Remainder truncated_modulo(Dividend dividend, Divisor divisor)
 {
     return dividend % divisor;
 }
@@ -221,7 +221,7 @@ The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w
 
 The `%` operator may be invoked twice in `floored_modulo` and `ceilinged_modulo`. The first tests for remainder and the second produces it. It does not seem worth denormalizing the implementation by adding a variable to cache the value in the (sometimes) case where there is a non-zero remainder. So in these cases I am relying on CPU cache and/or compiler optimization to avoid remainder recomputation.
 
-The `inline` keyword advises the compiler that inlining of the functions is preferred. This removes call stack overhead, assuming the compiler respects the request. Generally I prefer to let the compiler make these decisions, preserving code readability.
+The `constexpr ` keyword ensures that the functions can be evaluated at compile time and advises the compiler that inlining of the functions is preferred. Generally I prefer to let the compiler make these decisions, preserving code readability.
 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
