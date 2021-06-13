@@ -34,31 +34,31 @@ The value type is the result type as the value is multiplied by itself.
 These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
 template <typename Integer, if_integer<Integer> = true>
-inline bool is_odd(Integer value)
+constexpr bool is_odd(Integer value)
 {
     return (value % 2) != 0;
 }
 
 template <typename Integer, if_signed_integer<Integer> = true>
-inline bool is_negative(Integer value)
+constexpr bool is_negative(Integer value)
 {
     return value < 0;
 }
 
 template <typename Integer, if_unsigned_integer<Integer> = true>
-inline bool is_negative(Integer value)
+constexpr bool is_negative(Integer value)
 {
     return false;
 }
 
 template <typename Integer, if_signed_integer<Integer> = true>
-inline Integer absolute(Integer value)
+constexpr Integer absolute(Integer value)
 {
     return is_negative(value) ? -value : value;
 }
 
 template <typename Integer, if_unsigned_integer<Integer> = true>
-inline Integer absolute(Integer value)
+constexpr Integer absolute(Integer value)
 {
     return value;
 }
