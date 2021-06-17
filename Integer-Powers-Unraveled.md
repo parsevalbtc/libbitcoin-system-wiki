@@ -62,7 +62,8 @@ constexpr Absolute absolute(Integer value) noexcept
 }
 
 template <typename Integer,
-    typename Absolute = Integer, if_unsigned_integer<Integer> = true>
+    typename Absolute = Integer,
+    if_unsigned_integer<Integer> = true>
 constexpr Absolute absolute(Integer value) noexcept
 {
     return value;
