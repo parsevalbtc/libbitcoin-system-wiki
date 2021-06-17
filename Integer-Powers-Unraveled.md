@@ -23,7 +23,7 @@ All integer power parameters are defined with the exception of `power(0, 0)`. Ap
 The value type is the result type as the value is multiplied by itself.
 
 ## Log
-Integer logarithms are implemented as repeated division of the value by the base (i.e. until a quotient of zero). Native C++ division is truncated. However logarithms allow only positive value and base. Truncation of a positive quotient is floored, so only floored and ceilinged functions are required to support the [three common rounding methods](Integer-Division-Unraveled).
+Integer logarithms are implemented as repeated division of the value by the base. Native C++ division is truncated. However logarithms allow only positive value and base. Truncation of a positive quotient is floored, so only floored and ceilinged functions are required to support the [three common rounding methods](Integer-Division-Unraveled).
 
 Base 2 logarithm is repeated division by 2, so the right shift operator (`>>`) may be used as a performance optimization. While the compiler may optimize for division by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
 
