@@ -72,51 +72,51 @@ constexpr Absolute absolute(Integer value) noexcept
 These templates implement the logarithm functions.
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Log = size_t, typename Base, typename Integer,
-    if_integer<Log> = true, if_integer<Base> = true, if_integer<Integer> = true>
-inline Log ceilinged_log(Base base, Integer value) noexcept
+template <typename Exponent = size_t, typename Base, typename Value,
+    if_integer<Exponent> = true, if_integer<Base> = true, if_integer<Value> = true>
+inline Exponent ceilinged_log(Base base, Value value) noexcept
 {
     if (base < 2 || value < 1)
         return 0;
 
-    const auto log = floored_log<Log>(base, value);
-    return log + ((power<Integer>(base, log) != value) ? 0 : 1);
+    const auto log = floored_log<Exponent>(base, value);
+    return log + ((power<Value>(base, log) == value) ? 0 : 1);
 }
     
 // Returns 0 for undefined (value < 1).
-template <typename Log = size_t, typename Integer,
-    if_integer<Log> = true, if_integer<Integer> = true>
-inline Integer ceilinged_log2(Integer value) noexcept
+template <typename Exponent = size_t, typename Value,
+    if_integer<Exponent> = true, if_integer<Value> = true>
+inline Exponent ceilinged_log2(Value value) noexcept
 {
     if (value < 1)
         return 0;
 
-    const auto log = floored_log2<Log>(value);
-    return log + ((power2<Integer>(log) == value) ? 0 : 1);
+    const auto log = floored_log2<Exponent>(value);
+    return log + ((power2<Value>(log) == value) ? 0 : 1);
 }
 
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Log = size_t, typename Base, typename Integer,
-    if_integer<Log> = true, if_integer<Base> = true, if_integer<Integer> = true>
-inline Log floored_log(Base base, Integer value) noexcept
+template <typename Exponent = size_t, typename Base, typename Value,
+    if_integer<Exponent> = true, if_integer<Base> = true, if_integer<Value> = true>
+inline Exponent floored_log(Base base, Value value) noexcept
 {
     if (base < 2 || value < 1)
         return 0;
 
-    Log exponent = 0;
+    Exponent exponent = 0;
     while (((value /= base)) > 0) { ++exponent; }
     return exponent;
 }
 
 // Returns 0 for undefined (value < 1).
-template <typename Log = size_t, typename Integer,
-    if_integer<Log> = true, if_integer<Integer> = true>
-inline Integer floored_log2(Integer value) noexcept
+template <typename Exponent = size_t, typename Value,
+    if_integer<Exponent> = true, if_integer<Value> = true>
+inline Exponent floored_log2(Value value) noexcept
 {
     if (value < 1)
         return 0;
 
-    Log exponent = 0;
+    Exponent exponent = 0;
     while (((value >>= 1)) > 0) { ++exponent; };
     return exponent;
 }
@@ -124,9 +124,9 @@ inline Integer floored_log2(Integer value) noexcept
 These templates implement the power functions.
 ```cpp
 // Returns 0 for undefined (0, 0).
-template <typename Power = size_t, typename Base, typename Integer,
-    if_integer<Power> = true, if_integer<Base> = true, if_integer<Integer> = true>
-inline Power power(Base base, Integer exponent) noexcept
+template <typename Value, typename Base, typename Exponent,
+    if_integer<Value> = true, if_integer<Base> = true, if_integer<Exponent> = true>
+inline Value power(Base base, Exponent exponent) noexcept
 {
     if (base == 0)
         return 0;
@@ -138,14 +138,21 @@ inline Power power(Base base, Integer exponent) noexcept
         return absolute(base) > 1 ? 0 :
             (is_odd(exponent) && is_negative(base) ? -1 : 1);
 
-    Power value = base;
+    Value value = base;
     while (--exponent > 0) { value *= base; }
     return value;
 }
 
-template <typename Power = size_t, typename Integer,
-    if_integer<Power> = true, if_integer<Integer> = true>
-inline Power power2(Integer exponent) noexcept
+template <typename Base, typename Exponent,
+    if_integer<Base> = true, if_integer<Exponent> = true>
+inline Base power(Base base, Exponent exponent) noexcept
+{
+    return power<Base>(base, exponent);
+}
+
+template <typename Value = size_t, typename Exponent,
+    if_integer<Value> = true, if_integer<Exponent> = true>
+inline Value power2(Exponent exponent) noexcept
 {
     if (exponent == 0)
         return 1;
@@ -153,7 +160,7 @@ inline Power power2(Integer exponent) noexcept
     if (is_negative(exponent))
         return 0;
 
-    Power value = 2;
+    Value value = 2;
     while (--exponent > 0) { value <<= 1; };
     return value;
 }
