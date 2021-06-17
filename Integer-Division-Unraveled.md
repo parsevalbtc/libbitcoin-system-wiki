@@ -171,7 +171,7 @@ These templates implement the three common rounding methods.
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
 constexpr auto ceilinged_divide(Dividend dividend, Divisor divisor) noexcept
-    -> decltype(dividend % divisor)
+    -> decltype(dividend / divisor)
 {
     return truncated_divide(dividend, divisor) + 
         (is_ceilinged(dividend, divisor) ? 0 : 1);
@@ -189,7 +189,7 @@ constexpr auto ceilinged_modulo(Dividend dividend, Divisor divisor) noexcept
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
 constexpr auto floored_divide(Dividend dividend, Divisor divisor) noexcept
-    -> decltype(dividend % divisor)
+    -> decltype(dividend / divisor)
 {
     return truncated_divide(dividend, divisor) -
         (is_floored(dividend, divisor) ? 0 : 1);
@@ -207,7 +207,7 @@ constexpr auto floored_modulo(Dividend dividend, Divisor divisor) noexcept
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
 constexpr auto truncated_divide(Dividend dividend, Divisor divisor) noexcept
-    -> decltype(dividend % divisor)
+    -> decltype(dividend / divisor)
 {
     return dividend / divisor;
 }
