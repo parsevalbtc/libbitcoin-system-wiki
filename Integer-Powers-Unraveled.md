@@ -192,13 +192,6 @@ Despite the relative verbosity of the templates the result should be as optimal 
 Given that the C++ division operator determines the logarithm result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
 
 #### C++14
-* `typename Log=decltype(Integer / Base)`
-
-In C++11 the return type can be explicitly specified by template parameter, and is defaulted in the above templates to the value type.
-
-#### C++11
-* `typename Log=Integer`
-
 Without the template overloads there would be warnings on unsigned type `power` operands, as they all invoke `value < 0`, which is always `false` (tautological). It is trivial to replace all of these calls with `value < 1` calls, as in each case `0` has been excluded. However, this materially impacts readability and there is no performance benefit. In fact, the inlined templates compile away for unsigned types whereas a `< 1`condition would not, so there is a performance advantage. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled. The use of `std::abs` avoided as [it is limited](https://en.cppreference.com/w/cpp/numeric/math/abs) to signed types.
 
 Template specialization could be further employed to reduce a couple calls when parameters are unsigned. However there is little to no actual performance optimization and the denormalization didn't seem like a worthwhile compromise.
