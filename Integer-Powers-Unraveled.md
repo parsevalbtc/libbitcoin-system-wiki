@@ -20,7 +20,7 @@ Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) 
 
 All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the logarithm functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
 
-The value type is the result type as the value is multiplied by itself.
+The result type is the value type, as the value is multiplied by itself.
 
 ## Log
 Integer logarithms are implemented as repeated division of the value by the base. Native C++ division is truncated. However logarithms allow only positive value and base. Truncation of a positive quotient is floored, so only floored and ceilinged functions are required to support the [three common rounding methods](Integer-Division-Unraveled).
@@ -204,7 +204,7 @@ The templates can be factored into header (.hpp) and implementation (.ipp) files
 See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
-There are no interesting consequences to the use of mixed sign operands.
+As the power result is always positive, the value type is defaulted to `size_t`. Ideally for powers it would default to Base, which may be unsigned and/or non-integral. However this would complicate providing a simple overridable default, as Value would have to follow Base in the template parameter list. As `size_t` is generally the largest integral type this is a reasonable default for all integral parameters, and can be overridden with a single template parameter as desired. The logarithm result defaults to `size_t` as it is a count, not based on any parameter.
 
 ## Test Vectors
 Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/Inverse_function), so these relations must hold for all defined { b, n }, excepting overflows.
