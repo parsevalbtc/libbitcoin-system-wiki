@@ -5,7 +5,7 @@ A quick stop at Stack Overflow shows how confounding this can be. There are seve
 ## Objectives
 * Provide ceilinged and floored `\` and `%` functions, for all integer types.
 * Maintain the failure behavior of native operators (i.e. `x / 0` and `x % 0`)
-* Maintain the return type deduction of native operators.
+* Maintain the result type deduction of native operators.
 * Maintain overflow behavior of native operators.
 * Avoid unnecessary computation.
 
@@ -123,13 +123,13 @@ These templates determine the sign of a signed or unsigned integer type.
 
 ```cpp
 template <typename Integer, if_signed_integer<Integer> = true>
-constexpr bool is_negative(Integer value)
+constexpr bool is_negative(Integer value) noexcept
 {
     return value < 0;
 }
 
 template <typename Integer, if_unsigned_integer<Integer> = true>
-constexpr bool is_negative(Integer)
+constexpr bool is_negative(Integer) noexcept
 {
     return false;
 }
@@ -138,14 +138,14 @@ These templates are used to determine rounding direction.
 ```cpp
 template <typename Factor1, typename Factor2,
     if_integer<Factor1> = true, if_integer<Factor2> = true>
-constexpr bool is_negative(Factor1 factor1, Factor2 factor2)
+constexpr bool is_negative(Factor1 factor1, Factor2 factor2) noexcept
 {
     return is_negative(factor1) != is_negative(factor2);
 }
 
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr bool no_remainder(Dividend dividend, Divisor divisor)
+constexpr bool no_remainder(Dividend dividend, Divisor divisor) noexcept
 {
     return (dividend % divisor) == 0;
 }
@@ -154,62 +154,68 @@ These templates combine those preceding into a single answer for a given roundin
 ```cpp
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr bool is_ceilinged(Dividend dividend, Divisor divisor)
+constexpr bool is_ceilinged(Dividend dividend, Divisor divisor) noexcept
 {
     return is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr bool is_floored(Dividend dividend, Divisor divisor)
+constexpr bool is_floored(Dividend dividend, Divisor divisor) noexcept
 {
     return !is_negative(dividend, divisor) || no_remainder(dividend, divisor);
 }
 ```
 These templates implement the three common rounding methods.
 ```cpp
-template <typename Dividend, typename Divisor, typename Quotient,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Quotient ceilinged_divide(Dividend dividend, Divisor divisor)
+constexpr auto ceilinged_divide(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return truncated_divide(dividend, divisor) + 
         (is_ceilinged(dividend, divisor) ? 0 : 1);
 }
 
-template <typename Dividend, typename Divisor, typename Remainder,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Remainder ceilinged_modulo(Dividend dividend, Divisor divisor)
+constexpr auto ceilinged_modulo(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return truncated_modulo(dividend, divisor) -
         (is_ceilinged(dividend, divisor) ? 0 : divisor);
 }
 
-template <typename Dividend, typename Divisor, typename Quotient,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Quotient floored_divide(Dividend dividend, Divisor divisor)
+constexpr auto floored_divide(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return truncated_divide(dividend, divisor) -
         (is_floored(dividend, divisor) ? 0 : 1);
 }
 
-template <typename Dividend, typename Divisor, typename Remainder,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Remainder floored_modulo(Dividend dividend, Divisor divisor)
+constexpr auto floored_modulo(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return truncated_modulo(dividend, divisor) +
         (is_floored(dividend, divisor) ? 0 : divisor);
 }
 
-template <typename Dividend, typename Divisor, typename Quotient,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Quotient truncated_divide(Dividend dividend, Divisor divisor)
+constexpr auto truncated_divide(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return dividend / divisor;
 }
 
-template <typename Dividend, typename Divisor, typename Remainder,
+template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
-constexpr Remainder truncated_modulo(Dividend dividend, Divisor divisor)
+constexpr auto truncated_modulo(Dividend dividend, Divisor divisor) noexcept
+    -> decltype(dividend % divisor)
 {
     return dividend % divisor;
 }
@@ -226,17 +232,7 @@ The `constexpr ` keyword ensures that the functions can be evaluated at compile 
 Despite the relative verbosity of the templates the result should be as optimal as manually inlining the minimal *necessary* operations. A few runs through an NDEBUG build in a debugger confirm this.
 
 ## Template Type Constraints
-Given that the C++ operators determine the result type (based on the operand types) the return type must be so determined. This is achieved by using the C++14 `decltype` keyword.
-
-#### C++14
-* `typename Quotient=decltype(Dividend / Divisor)`
-* `typename Remainder=decltype(Dividend % Divisor)`
-
-In C++11 the return type can be explicitly specified by template parameter, and is defaulted in the above templates to the dividend type.
-
-#### C++11
-* `typename Quotient=Dividend`
-* `typename Remainder=Dividend`
+Given that the C++ operators determine the result type (based on the operand types) the return type must be so determined. This is achieved by using the `decltype` keyword.
 
 Without the template overloads there would be warnings on unsigned operands, as they all invoke `factor < 0`, which is always `false` (tautological). These also bypass unnecessary conditions at compile time. For functions or operand combinations that are not referenced, the corresponding templates are not even compiled.
 
@@ -251,8 +247,8 @@ It is an objective is to reproduce native operand behavior, changing only the ro
 
 ## Conclusion
 * Behavior satisfies the identity function for all sign combinations.
-* Return type is deduced in C++14 and in C++11 can be specified.
 * Behavior is consistent with native operators.
+* Return type is consistent with native operators.
 * The functions cannot *cause* overflows.
 * There can be no "tautological compare" warnings from unsigned parameters.
 * The functions fail as native operators with a zero-valued divisor.
