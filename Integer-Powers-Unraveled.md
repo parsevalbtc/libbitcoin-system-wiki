@@ -13,6 +13,15 @@
 * Return a common sentinel for undefined operations.
 * Avoid unnecessary computation.
 
+## Power
+Integer powers are implemented as repeated multiplication of the base by itself.
+
+Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) may be used as a performance optimization. While the compiler may optimize for multiplication by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
+
+All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the logarithm functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
+
+The value type is the result type as the value is multiplied by itself.
+
 ## Log
 Integer logarithms are implemented as repeated division of the value by the base (i.e. until a quotient of zero). Native C++ division is truncated. However logarithms allow only positive value and base. Truncation of a positive quotient is floored, so only floored and ceilinged functions are required to support the [three common rounding methods](Integer-Division-Unraveled).
 
@@ -22,14 +31,6 @@ The logarithm of a base less than 2 or a value less than 1 is undefined. Apart f
 
 Iteration counting implies that the the result type is a non-negative arbitrary integer.
 
-## Power
-Integer powers are implemented as repeated multiplication of the base by itself.
-
-Base 2 power is repeated multiplication by 2, so the left shift operator (`<<`) may be used as a performance optimization. While the compiler may optimize for multiplication by 2 at run time, compiling for it explicitly precludes at least one condition and branch in the object code.
-
-All integer power parameters are defined with the exception of `power(0, 0)`. Apart from an overflow, 0 is the valid result only for any power of 0. So 0 is used as the invalid parameter sentinel for consistency with the logarithm functions. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
-
-The value type is the result type as the value is multiplied by itself.
 ## Implementation
 These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
@@ -66,6 +67,52 @@ template <typename Integer,
     if_unsigned_integer<Integer> = true>
 constexpr Absolute absolute(Integer value) noexcept
 {
+    return value;
+}
+```
+These templates implement the power functions.
+```cpp
+// Returns 0 for undefined (0, 0).
+template <typename Value, typename Base, typename Exponent,
+    if_integer<Value> = true, if_integer<Base> = true, if_integer<Exponent> = true>
+inline Value power(Base base, Exponent exponent) noexcept
+{
+    if (base == 0)
+        return 0;
+
+    if (exponent == 0)
+        return 1;
+
+    if (is_negative(exponent))
+        return absolute(base) > 1 ? 0 :
+            (is_odd(exponent) && is_negative(base) ? -1 : 1);
+
+    Value value = base;
+    while (--exponent > 0) { value *= base; }
+    return value;
+}
+
+// This overload allows the return type to default to Base while not requiring
+// the unnecessary Base parameter just to specify the Value return parameter.
+template <typename Base, typename Exponent,
+    if_integer<Base> = true, if_integer<Exponent> = true>
+inline Base power(Base base, Exponent exponent) noexcept
+{
+    return power<Base>(base, exponent);
+}
+
+template <typename Value = size_t, typename Exponent,
+    if_integer<Value> = true, if_integer<Exponent> = true>
+inline Value power2(Exponent exponent) noexcept
+{
+    if (exponent == 0)
+        return 1;
+
+    if (is_negative(exponent))
+        return 0;
+
+    Value value = 2;
+    while (--exponent > 0) { value <<= 1; };
     return value;
 }
 ```
@@ -119,52 +166,6 @@ inline Exponent floored_log2(Value value) noexcept
     Exponent exponent = 0;
     while (((value >>= 1)) > 0) { ++exponent; };
     return exponent;
-}
-```
-These templates implement the power functions.
-```cpp
-// Returns 0 for undefined (0, 0).
-template <typename Value, typename Base, typename Exponent,
-    if_integer<Value> = true, if_integer<Base> = true, if_integer<Exponent> = true>
-inline Value power(Base base, Exponent exponent) noexcept
-{
-    if (base == 0)
-        return 0;
-
-    if (exponent == 0)
-        return 1;
-
-    if (is_negative(exponent))
-        return absolute(base) > 1 ? 0 :
-            (is_odd(exponent) && is_negative(base) ? -1 : 1);
-
-    Value value = base;
-    while (--exponent > 0) { value *= base; }
-    return value;
-}
-
-// This overload allows the return type to default to Base while not requiring
-// the unnecessary Base parameter just to specify the Value return parameter.
-template <typename Base, typename Exponent,
-    if_integer<Base> = true, if_integer<Exponent> = true>
-inline Base power(Base base, Exponent exponent) noexcept
-{
-    return power<Base>(base, exponent);
-}
-
-template <typename Value = size_t, typename Exponent,
-    if_integer<Value> = true, if_integer<Exponent> = true>
-inline Value power2(Exponent exponent) noexcept
-{
-    if (exponent == 0)
-        return 1;
-
-    if (is_negative(exponent))
-        return 0;
-
-    Value value = 2;
-    while (--exponent > 0) { value <<= 1; };
-    return value;
 }
 ```
 
