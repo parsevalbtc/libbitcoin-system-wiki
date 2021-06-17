@@ -20,7 +20,7 @@ Base 2 logarithm is repeated division by 2, so the right shift operator (`>>`) m
 
 The logarithm of a base less than 2 or a value less than 1 is undefined. Apart from an overflow, there is no valid 0 result. So 0 is used as the invalid parameter sentinel. As with all native operators, overflow guards are left to the caller. The implementation may not *cause* an overflow that is not inherent in the parameterization.
 
-Division implies that the native division operator (`/`) determines the result type, based on its operand types.
+Iteration counting implies that the the result type is a non-negative arbitrary integer.
 
 ## Power
 Integer powers are implemented as repeated multiplication of the base by itself.
@@ -33,32 +33,37 @@ The value type is the result type as the value is multiplied by itself.
 ## Implementation
 These templates determine the odd-ness, sign, and absolute value of a signed or unsigned integer type.
 ```cpp
+#include <type_traits>
+
 template <typename Integer, if_integer<Integer> = true>
-constexpr bool is_odd(Integer value)
+constexpr bool is_odd(Integer value) noexcept
 {
     return (value % 2) != 0;
 }
 
 template <typename Integer, if_signed_integer<Integer> = true>
-constexpr bool is_negative(Integer value)
+constexpr bool is_negative(Integer value) noexcept
 {
     return value < 0;
 }
 
 template <typename Integer, if_unsigned_integer<Integer> = true>
-constexpr bool is_negative(Integer value)
+constexpr bool is_negative(Integer value) noexcept
 {
     return false;
 }
 
-template <typename Integer, if_signed_integer<Integer> = true>
-constexpr Integer absolute(Integer value)
+template <typename Integer,
+    typename Absolute = std::make_unsigned<Integer>::type,
+    if_signed_integer<Integer> = true>
+constexpr Absolute absolute(Integer value) noexcept
 {
     return is_negative(value) ? -value : value;
 }
 
-template <typename Integer, if_unsigned_integer<Integer> = true>
-constexpr Integer absolute(Integer value)
+template <typename Integer,
+    typename Absolute = Integer, if_unsigned_integer<Integer> = true>
+constexpr Absolute absolute(Integer value) noexcept
 {
     return value;
 }
@@ -66,30 +71,33 @@ constexpr Integer absolute(Integer value)
 These templates implement the logarithm functions.
 ```cpp
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Base, typename Integer, typename Log=Integer,
-    if_integer<Integer> = true, if_integer<Integer> = true>
-inline Log ceilinged_log(Base base, Integer value)
+template <typename Log = size_t, typename Base, typename Integer,
+    if_integer<Log> = true, if_integer<Base> = true, if_integer<Integer> = true>
+inline Log ceilinged_log(Base base, Integer value) noexcept
 {
     if (base < 2 || value < 1)
         return 0;
 
-    return floored_log(base, value) + ((value % base) != 0 ? 1 : 0);
+    const auto log = floored_log<Log>(base, value);
+    return log + ((power<Integer>(base, log) != value) ? 0 : 1);
 }
     
 // Returns 0 for undefined (value < 1).
-template <typename Integer, if_integer<Integer> = true>
-inline Integer ceilinged_log2(Integer value)
+template <typename Log = size_t, typename Integer,
+    if_integer<Log> = true, if_integer<Integer> = true>
+inline Integer ceilinged_log2(Integer value) noexcept
 {
     if (value < 1)
         return 0;
 
-    return floored_log2(value) + (value % 2);
+    const auto log = floored_log2<Log>(value);
+    return log + ((power2<Integer>(log) == value) ? 0 : 1);
 }
 
 // Returns 0 for undefined (base < 2 or value < 1).
-template <typename Base, typename Integer, typename Log=Integer,
-    if_integer<Integer> = true, if_integer<Integer> = true>
-inline Log floored_log(Base base, Integer value)
+template <typename Log = size_t, typename Base, typename Integer,
+    if_integer<Log> = true, if_integer<Base> = true, if_integer<Integer> = true>
+inline Log floored_log(Base base, Integer value) noexcept
 {
     if (base < 2 || value < 1)
         return 0;
@@ -100,13 +108,14 @@ inline Log floored_log(Base base, Integer value)
 }
 
 // Returns 0 for undefined (value < 1).
-template <typename Integer, if_integer<Integer> = true>
-inline Integer floored_log2(Integer value)
+template <typename Log = size_t, typename Integer,
+    if_integer<Log> = true, if_integer<Integer> = true>
+inline Integer floored_log2(Integer value) noexcept
 {
     if (value < 1)
         return 0;
 
-    Integer exponent = 0;
+    Log exponent = 0;
     while (((value >>= 1)) > 0) { ++exponent; };
     return exponent;
 }
@@ -114,9 +123,9 @@ inline Integer floored_log2(Integer value)
 These templates implement the power functions.
 ```cpp
 // Returns 0 for undefined (0, 0).
-template <typename Base, typename Integer, typename Power=Base,
-    if_integer<Integer> = true, if_integer<Integer> = true>
-inline Power power(Base base, Integer exponent)
+template <typename Power = size_t, typename Base, typename Integer,
+    if_integer<Power> = true, if_integer<Base> = true, if_integer<Integer> = true>
+inline Power power(Base base, Integer exponent) noexcept
 {
     if (base == 0)
         return 0;
@@ -133,8 +142,9 @@ inline Power power(Base base, Integer exponent)
     return value;
 }
 
-template <typename Integer, if_integer<Integer> = true>
-inline Integer power2(Integer exponent)
+template <typename Power = size_t, typename Integer,
+    if_integer<Power> = true, if_integer<Integer> = true>
+inline Power power2(Integer exponent) noexcept
 {
     if (exponent == 0)
         return 1;
@@ -142,7 +152,7 @@ inline Integer power2(Integer exponent)
     if (is_negative(exponent))
         return 0;
 
-    Integer value = 2;
+    Power value = 2;
     while (--exponent > 0) { value <<= 1; };
     return value;
 }
@@ -205,11 +215,6 @@ Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/I
 
 * `floored_log(b, power(b, n)) == n`.
 * `ceilinged_log(b, power(b, n)) == n`.
-* `power(b, floored_log(b, n)) == (n - (n % b))`.
-* where `(n % b) == 0`, `power(b, ceilinged_log(b, n)) == n`.
-* where `(n % b) != 0`, `power(b, ceilinged_log(b, n)) == (n - (n % b)) * b`.
-* where `(n % b) == 0`, `ceilinged_log == floored_log`.
-* where `(n % b) != 0`, `ceilinged_log == floored_log + 1`.
 
 ## Conclusion
 * Behavior satisfies the inverse relation for all sign combinations.
