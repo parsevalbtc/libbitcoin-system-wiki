@@ -204,7 +204,7 @@ The templates can be factored into header (.hpp) and implementation (.ipp) files
 See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
-As the power result is always positive, the value type is defaulted to `size_t`. Ideally for powers it would default to Base, which may be unsigned and/or non-integral. However this would complicate providing a simple overridable default, as Value would have to follow Base in the template parameter list. As `size_t` is generally the largest integral type this is a reasonable default for all integral parameters, and can be overridden with a single template parameter as desired. The logarithm result defaults to `size_t` as it is a count, not based on any parameter.
+As the power result is always non-negative, the value type is defaulted to `size_t`. Ideally for powers it would default to Base, which may be unsigned and/or non-integral. However this would complicate providing a simple overridable default, as Value would have to follow Base in the template parameter list. As `size_t` is generally the largest integral type this is a reasonable default for all integral parameters, and can be overridden with a single template parameter as desired. The logarithm result defaults to `size_t` as it is a count, not based on any parameter.
 
 ## Test Vectors
 Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/Inverse_function), so these relations must hold for all defined { b, n }, excepting overflows.
