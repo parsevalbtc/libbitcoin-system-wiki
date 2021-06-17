@@ -8,7 +8,7 @@
   * log2(n) identical in behavior to log(2, n).
   * power2(n) identical in behavior to power(2, n).
 * Provide both ceilinged and floored logarithm variants.
-* Maintain the return type deduction of native operators.
+* Allow result type specification with appropriate defaults.
 * Maintain overflow behavior of native operators.
 * Return a common sentinel for undefined operations.
 * Avoid unnecessary computation.
@@ -219,7 +219,7 @@ Exponents and logarithms are [inverse functions](https://en.wikipedia.org/wiki/I
 
 ## Conclusion
 * Behavior satisfies the inverse relation for all sign combinations.
-* Return type is deduced in C++14 and in C++11 can be specified.
+* Result type may be specified and defaults rationally.
 * Behavior is consistent with native operators.
 * The functions cannot *cause* overflows.
 * There can be no "tautological compare" warnings from unsigned parameters.
