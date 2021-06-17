@@ -72,8 +72,10 @@ constexpr Absolute absolute(Integer value) noexcept
 ```
 These templates implement the power functions.
 ```cpp
+#include <cstddef>
+
 // Returns 0 for undefined (0, 0).
-template <typename Value, typename Base, typename Exponent,
+template <typename Value = size_t, typename Base, typename Exponent,
     if_integer<Value> = true, if_integer<Base> = true, if_integer<Exponent> = true>
 inline Value power(Base base, Exponent exponent) noexcept
 {
@@ -90,15 +92,6 @@ inline Value power(Base base, Exponent exponent) noexcept
     Value value = base;
     while (--exponent > 0) { value *= base; }
     return value;
-}
-
-// This overload allows the return type to default to Base while not requiring
-// the unnecessary Base parameter just to specify the Value return parameter.
-template <typename Base, typename Exponent,
-    if_integer<Base> = true, if_integer<Exponent> = true>
-inline Base power(Base base, Exponent exponent) noexcept
-{
-    return power<Base>(base, exponent);
 }
 
 template <typename Value = size_t, typename Exponent,
@@ -118,6 +111,8 @@ inline Value power2(Exponent exponent) noexcept
 ```
 These templates implement the logarithm functions.
 ```cpp
+#include <cstddef>
+
 // Returns 0 for undefined (base < 2 or value < 1).
 template <typename Exponent = size_t, typename Base, typename Value,
     if_integer<Exponent> = true, if_integer<Base> = true, if_integer<Value> = true>
