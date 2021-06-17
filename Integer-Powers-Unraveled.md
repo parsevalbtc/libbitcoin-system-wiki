@@ -143,6 +143,8 @@ inline Value power(Base base, Exponent exponent) noexcept
     return value;
 }
 
+// This overload allows the return type to default to Base while not requiring
+// the unnecessary Base parameter when specifying the Value return parameter.
 template <typename Base, typename Exponent,
     if_integer<Base> = true, if_integer<Exponent> = true>
 inline Base power(Base base, Exponent exponent) noexcept
