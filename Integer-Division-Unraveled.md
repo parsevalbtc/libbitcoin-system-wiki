@@ -243,7 +243,7 @@ The templates can be factored into header (.hpp) and implementation (.ipp) files
 See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
-It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. The warning is reproduced with the C++14 `decltype` keyword, and in C++11 the execution behavior is identical given the same return type, though without the warning. In either case, all division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result is certainly not intuitive, so I spent hours making sure that the test cases were valid.
+It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. All division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result can be non-intuitive.
 
 ## Conclusion
 * Behavior satisfies the identity function for all sign combinations.
@@ -261,7 +261,7 @@ It is an objective is to reproduce native operand behavior, changing only the ro
 ## Test Vectors
 These expressions demonstrate and prove the correctness of the algorithm above. They may be useful in generating a test matrix.
 ```cpp
-// C++11: if the quotient x/y is representable in the type of the result:
+// If the quotient x/y is representable in the type of the result:
 // Identity: (x / y) * y + (x % y) = x
 
 // Divide increment magnitude.
