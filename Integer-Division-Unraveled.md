@@ -168,6 +168,8 @@ constexpr bool is_floored(Dividend dividend, Divisor divisor) noexcept
 ```
 These templates implement the three common rounding methods.
 ```cpp
+#include <type_traits>
+
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
 constexpr auto ceilinged_divide(Dividend dividend, Divisor divisor) noexcept
@@ -180,7 +182,7 @@ constexpr auto ceilinged_divide(Dividend dividend, Divisor divisor) noexcept
 template <typename Dividend, typename Divisor,
     if_integer<Dividend> = true, if_integer<Divisor> = true>
 constexpr auto ceilinged_modulo(Dividend dividend, Divisor divisor) noexcept
-    -> decltype(dividend % divisor)
+    -> typename std::make_signed<decltype(dividend % divisor)>::type
 {
     return truncated_modulo(dividend, divisor) -
         (is_ceilinged(dividend, divisor) ? 0 : divisor);
@@ -220,7 +222,6 @@ constexpr auto truncated_modulo(Dividend dividend, Divisor divisor) noexcept
     return dividend % divisor;
 }
 ```
-Return value types default to the dividend type and can be specified by explicit template parameter.
 
 ## Optimization
 The use of `std::signbit` is avoided as [it casts](https://en.cppreference.com/w/cpp/numeric/math/signbit) to `double`, though otherwise would be sufficient to replace the `is_negative<Integer>` templates.
@@ -243,7 +244,43 @@ The templates can be factored into header (.hpp) and implementation (.ipp) files
 See [Type Constraints Unraveled](Type-Constraints-Unraveled) for an explanation of the template type constraints used above.
 
 ## Mixing Unsigned and Signed Operands
-It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. All division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned. The same values with different sign types may produce different results. The result can be non-intuitive.
+It is an objective is to reproduce native operand behavior, changing only the rounding. The native operators allow mixed sign types, although compilers warn that the signed operand will be converted to unsigned. All division and modulo operations are executed in the original data type against the native operators. The consequence is that when mixing signed and unsigned *type* operands, the operation is unsigned.
+
+The quotient sign is always consistent with native operations. Only a signed operand can cause a negative quotient, and in this case the deduced quotient type is signed. Notice that an unsigned deduced quotient type always corresponds to a positive logical result.
+
+| operation | rounding  | dividend | divisor  | quotient  | sign  |
+|-----------|-----------|----------|----------|-----------|-------|
+| divide    | truncated | signed   | signed   | signed    |  +/-  |
+| divide    | truncated | unsigned | signed   | signed    |  +/-  |
+| divide    | truncated | signed   | signed   | signed    |  +/-  |
+| divide    | truncated | unsigned | unsigned | unsigned  |   +   |
+| divide    | floored   | signed   | signed   | signed    |  +/-  |
+| divide    | floored   | unsigned | signed   | signed    |  +/-  |
+| divide    | floored   | signed   | signed   | signed    |  +/-  |
+| divide    | floored   | unsigned | unsigned | unsigned  |  +    |
+| divide    | ceilinged | signed   | signed   | signed    |  +/-  |
+| divide    | ceilinged | unsigned | signed   | signed    |  +/-  |
+| divide    | ceilinged | signed   | signed   | signed    |  +/-  |
+| divide    | ceilinged | unsigned | unsigned | unsigned  |   +   |
+
+However, a ceilinged modulo of unsigned operands produces a logically a negative remainder, but in this case the deduced remainder type is unsigned.
+
+| operation | rounding  | dividend | divisor  | remainder | sign  |
+|-----------|-----------|----------|----------|-----------|-------|
+| modulo    | truncated | signed   | signed   | signed    |  +/-  |
+| modulo    | truncated | unsigned | signed   | signed    |  +/-  |
+| modulo    | truncated | signed   | signed   | signed    |  +/-  |
+| modulo    | truncated | unsigned | unsigned | unsigned  |   +   |
+| modulo    | floored   | signed   | signed   | signed    |  +/-  |
+| modulo    | floored   | unsigned | signed   | signed    |  +/-  |
+| modulo    | floored   | signed   | signed   | signed    |  +/-  |
+| modulo    | floored   | unsigned | unsigned | unsigned  |  +    |
+| modulo    | ceilinged | signed   | signed   | signed    |  +/-  |
+| modulo    | ceilinged | unsigned | signed   | signed    |  +/-  |
+| modulo    | ceilinged | signed   | signed   | signed    |  +/-  |
+| modulo    | ceilinged | unsigned | unsigned | unsigned  |   -   |
+
+The consequence would be a two's complement representation of the logically-negative remainder. In call cases of calling `ceilinged_modulo` with signed operands the positive unsigned remainder would have to be interpreted as logically negative. For this reason the return type on this operation is converted to the unsigned type of the same size, using `std::make_signed`.
 
 ## Conclusion
 * Behavior satisfies the identity function for all sign combinations.
