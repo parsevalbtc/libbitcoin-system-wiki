@@ -25,6 +25,8 @@
   * [Script Machine](Script-Machine)
   * [Fork Rules](Fork-Rules)
 * **[Tutorials (aaronjaramillo)](http://aaronjaramillo.org/category/libbitcoindocs)**
+* **[Maintainer Documentation](Maintainer-Documentation)**
+  * [Inclusion Restrictions](Inclusion-Restrictions)
 * **[Bitcoin Unraveled](Bitcoin-Unraveled)**
   * [BIP38 Security Unraveled](BIP38-Security-Unraveled)
   * [BIP173 Unraveled](BIP173-Unraveled)
