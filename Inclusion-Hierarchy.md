@@ -37,3 +37,5 @@ Once the asio dependency is isolated from /crypto, the /log and /concurrent dire
 The `property_tree` class is slated to be replaced with a native implementation. This should be moved to the root directory to isolate /wallet from /config.
 
 The /wallet-/chain dependency should be broken by isolating the `checked` type and emitting it in place of `payment_address` in /chain/chain_state, and by isolating a basic `checkpoint` tuple type from /chain/input and /chain/output.
+
+The /chain-machine cycle should be broken by moving the enums from /machine to /chain.
