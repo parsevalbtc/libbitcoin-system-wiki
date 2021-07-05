@@ -32,7 +32,7 @@ constraints : constants
 /wallet     : /message {cycle}, /config (property_tree)
 settings    : /config
 ```
-assert should be consolidated to define (version on the other hand is generated).
+The assert header should be consolidated to define (version on the other hand is generated).
 
 Once the asio dependency is isolated from /crypto, the /log and /concurrent directories will be moved to libbitcoin-network.
 
