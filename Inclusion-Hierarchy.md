@@ -12,26 +12,28 @@ error       : define
 exceptions  : define
 constants   : define
 constraints : constants
-/concurrent : constraints
-/unicode    : define
+/concurrent : constraints, error
+/unicode    : exceptions
 /log        : unicode, concurrent (asio)
 /data       : unicode
 /words      : /data
 /radix      : /data, /words
 /serial     : /radix
-/stream     : /serial
+/stream     : /serial, error
 /crypto     : /stream, concurrent (asio)
-/math       : constraints
+/math       : constraints, exceptions
 /chain      : /math, /crypo, [/settings],
               /config (chain_state->checkpoint) {cycle},
               /wallet (input|output->payment_address) {cycle},
               /machine (enums) {cycle}
 /machine    : /chain {cycle}
 /message    : /chain
-/config     : /message, /exceptions
+/config     : /message
 /wallet     : /message {cycle}, /config (property_tree)
 settings    : /config
 ```
+assert should be consolidated to define (version on the other hand is generated).
+
 Once the asio dependency is isolated from /crypto, the /log and /concurrent directories will be moved to libbitcoin-network.
 
 The `property_tree` class is slated to be replaced with a native implementation. This should be moved to the root directory to isolate /wallet from /config.
