@@ -12,9 +12,7 @@ error       : define
 exceptions  : define
 constants   : define
 constraints : constants
-/concurrent : constraints, error
 /unicode    : exceptions
-/log        : unicode, concurrent (asio)
 /data       : unicode
 /words      : /data
 /radix      : /data, /words
@@ -27,9 +25,12 @@ constraints : constants
               /wallet (input|output->payment_address) {cycle}
 /machine    : /chain
 /message    : /chain
-/config     : /message
+/config     : /message {cycle}
 /wallet     : /message {cycle}, /config (property_tree)
 settings    : /config
+
+/concurrent : constraints, error
+/log        : unicode, concurrent
 ```
 The /log and /concurrent directories will be moved to libbitcoin-network.
 
