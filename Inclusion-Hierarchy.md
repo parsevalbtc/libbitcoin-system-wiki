@@ -32,4 +32,6 @@ property_tree : /config
 ```
 The assert header should be consolidated to define (version on the other hand is generated).
 
-The /wallet-/chain dependency should be broken by isolating the `checked` type and emitting it in place of `payment_address` in /chain/chain_state, and by isolating a basic `checkpoint` tuple type from /chain/input and /chain/output.
+The /wallet-/chain cycle should be broken by emitting the `checked` type in place of `wallet::payment_address`.
+
+The /config-/chain cycle should be broken by emitting a `checkpoint` tuple in place of `config::checkpoint`.
