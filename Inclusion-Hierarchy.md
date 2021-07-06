@@ -20,7 +20,7 @@ constraints : constants
 /radix      : /data, /words
 /serial     : /radix
 /stream     : /serial, error
-/crypto     : /stream, concurrent (asio)
+/crypto     : /stream
 /math       : constraints, exceptions
 /chain      : /math, /crypo, [/settings],
               /config (chain_state->checkpoint) {cycle},
