@@ -31,9 +31,9 @@ constraints : constants
 /wallet     : /message {cycle}, /config (property_tree)
 settings    : /config
 ```
-The assert header should be consolidated to define (version on the other hand is generated).
+The /log and /concurrent directories will be moved to libbitcoin-network.
 
-Once the asio dependency is isolated from /crypto, the /log and /concurrent directories will be moved to libbitcoin-network.
+The assert header should be consolidated to define (version on the other hand is generated).
 
 The `property_tree` class is slated to be replaced with a native implementation. This should be moved to the root directory to isolate /wallet from /config.
 
