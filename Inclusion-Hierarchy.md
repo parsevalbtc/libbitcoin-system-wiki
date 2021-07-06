@@ -6,6 +6,7 @@ A dependency is indicated below in a manner similar to class inheritance, using 
 
 ```
 assert      :
+boost       :
 version     :
 define      : assert, version
 error       : define
@@ -13,24 +14,23 @@ exceptions  : define
 constants   : define
 constraints : constants
 /unicode    : exceptions
-/data       : unicode
+/data       : /unicode
 /words      : /data
-/radix      : /data, /words
+/radix      : /words
 /serial     : /radix
 /stream     : /serial, error
 /crypto     : /stream
 /math       : constraints, exceptions
-/chain      : /math, /crypo, [/settings],
+/chain      : boost, /math, /crypo, [/settings],
               /config (chain_state->checkpoint) {cycle},
               /wallet (input|output->payment_address) {cycle}
 /machine    : /chain
 /message    : /chain
 /config     : /message {cycle}
-/wallet     : /message {cycle}, /config (property_tree)
+/wallet     : /message {cycle}
 settings    : /config
+property_tree : /config
 ```
 The assert header should be consolidated to define (version on the other hand is generated).
-
-The `property_tree` class is slated to be replaced with a native implementation. This should be moved to the root directory to isolate /wallet from /config.
 
 The /wallet-/chain dependency should be broken by isolating the `checked` type and emitting it in place of `payment_address` in /chain/chain_state, and by isolating a basic `checkpoint` tuple type from /chain/input and /chain/output.
