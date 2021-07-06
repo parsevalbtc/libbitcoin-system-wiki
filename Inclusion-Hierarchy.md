@@ -28,12 +28,7 @@ constraints : constants
 /config     : /message {cycle}
 /wallet     : /message {cycle}, /config (property_tree)
 settings    : /config
-
-/concurrent : constraints, error
-/log        : unicode, concurrent
 ```
-The /log and /concurrent directories will be moved to libbitcoin-network.
-
 The assert header should be consolidated to define (version on the other hand is generated).
 
 The `property_tree` class is slated to be replaced with a native implementation. This should be moved to the root directory to isolate /wallet from /config.
