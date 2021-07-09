@@ -25,8 +25,6 @@
   * [Script Machine](Script-Machine)
   * [Fork Rules](Fork-Rules)
 * **[Tutorials (aaronjaramillo)](http://aaronjaramillo.org/category/libbitcoindocs)**
-* **[Maintainer Documentation](Maintainer-Documentation)**
-  * [Inclusion Hierarchy](Inclusion-Hierarchy)
 * **[Bitcoin Unraveled](Bitcoin-Unraveled)**
   * [BIP38 Security Unraveled](BIP38-Security-Unraveled)
   * [BIP173 Unraveled](BIP173-Unraveled)
@@ -151,6 +149,7 @@
   * [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server/blob/master/README.md)
 * **Maintainer Information**
   * [Build Status](https://github.com/libbitcoin/libbitcoin-build/blob/master/README.md)
+  * [Inclusion Graph](Inclusion-Graph)
   * [Style Guide](Style-Guide)
   * [Test Guide](Test-Guide)
 * **Miscellaneous Articles**
