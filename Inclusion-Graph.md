@@ -21,7 +21,7 @@ constraints   : constants
 /data         : /math, /unicode
 /words        : /data
 /radix        : /words
-/serial       : /radix,
+/serial       : /radix
 /stream       : /serial, error
 /crypto       : /stream
 /chain        : /crypo, mutex, optional, [/settings]
