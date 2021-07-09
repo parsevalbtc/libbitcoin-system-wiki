@@ -17,14 +17,14 @@ exceptions    : define
 constants     : define
 constraints   : constants
 /unicode      : exceptions
-/data         : /unicode
+/math         : constraints, exceptions
+/data         : /math, /unicode
 /words        : /data
 /radix        : /words
-/serial       : /radix
+/serial       : /radix,
 /stream       : /serial, error
 /crypto       : /stream
-/math         : constraints, exceptions
-/chain        : mutex, optional, /math, /crypo, [/settings]
+/chain        : mutex, optional, /crypo, [/settings]
 /machine      : /chain
 /message      : /chain
 /config       : /message
