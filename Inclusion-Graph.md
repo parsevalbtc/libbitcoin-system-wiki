@@ -29,6 +29,6 @@ constraints   : constants
 /message      : /chain
 /config       : /message
 /wallet       : /message
-settings      : /config
+settings      : /chain
 property_tree : /config, /wallet
 ```
