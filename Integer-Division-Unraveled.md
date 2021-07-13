@@ -280,7 +280,7 @@ However, a ceilinged modulo of unsigned operands produces a logically a negative
 | modulo    | ceilinged | signed   | signed   | signed    |  +/-  |
 | modulo    | ceilinged | unsigned | unsigned | unsigned  |   -   |
 
-The consequence would be a [two's complement](https://en.wikipedia.org/wiki/Two%27s_complement) representation of the logically-negative remainder. In all cases of calling `ceilinged_modulo` with **unsigned** operands the positive unsigned remainder would have to be interpreted as logically **negative**. For this reason the return type on this operation is converted to the unsigned type of the same size, using `std::make_signed`.
+The consequence would be a [two's complement](https://en.wikipedia.org/wiki/Two%27s_complement) representation of the logically-negative remainder. In all cases of calling `ceilinged_modulo` with **unsigned** operands the positive unsigned remainder would have to be interpreted as logically **negative**. For this reason the return type on this operation is converted to the signed type of the same size, using `std::make_signed`.
 
 ## Conclusion
 * Behavior satisfies the identity function for all sign combinations.
