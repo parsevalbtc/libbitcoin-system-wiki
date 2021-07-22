@@ -1,5 +1,5 @@
 There is a theory that the [utility](Glossary#utility) created by an [economy](Glossary#economy) varies with the square of the number of its [merchants](Glossary#merchant), assuming each merchant offers the same value of goods or services for sale in the one [coin](Glossary#coin). The theory is an application of [Metcalfe's Law](https://en.wikipedia.org/wiki/Metcalfe%27s_law).
 
-This implies that an even [split](Glossary#split) of the economy reduces combined utility by half. For example, if 20 merchants has utility 400 then 2 networks of 10 of these merchants has utility 200.
+This implies that an even [split](Glossary#split) of the economy reduces combined utility by half. For example, if one network of 20 merchants has utility 400 then 2 networks of 10 of these merchants has utility 200.
 
 However, the ability to [exchange](Glossary#exchange) any [units](Glossary#unit) of one coin for the other collapses the utility of the two economies into a hybrid economy. Due to the [conversion cost](Consolidation-Principle) **the hybrid coin has lower utility than would a single, but this cannot be comparable to loss of one of the two entirely unless the conversion cost is unbounded**. The theory is therefore invalid.
