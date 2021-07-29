@@ -25,9 +25,9 @@ constraints   : constants
 /stream       : /serial, error
 /crypto       : /stream
 /chain        : /crypo, mutex, optional, [/settings]
+settings      : /chain
 /machine      : /chain
 /message      : /chain
 /config       : /message
 /wallet       : /message
-settings      : /chain
 ```
