@@ -53,25 +53,30 @@ savings-ratio = loaned / (borrowed - loaned)
 #### Balance Sheet
 The pure bank has no liabilities, only shareholder equity.
 
-|bank assets       |shareholder equity |
-|------------------|-------------------|
-|loaned + reserved |borrowed           |
+|bank assets     |shareholder equity |
+|----------------|-------------------|
+|lent + reserved |borrowed           |
 
 #### Rate of Return
-Creditor rate of return is additionally a function of the interest rate. The creditor's rate of return is less than the debtor's interest rate due to cash drag, the necessary expense of demand withdrawal. To reduce this expense, time constraints are typically included in [real bank contracts](https://www.chase.com/content/dam/chasecom/en/checking/documents/deposit_account_agreement.pdf). For example, by law any withdrawal from an interest-bearing U.S. bank account can be delayed for seven days. The creditor can only eliminate cash drag by holding the debt in an investment fund (i.e without settlement assurances) as opposed to a bank.
+Creditor rate of return is additionally a function of the interest rate. The creditor's rate of return is less than the debtor's interest rate due to cash drag, the necessary expense of demand withdrawal. To reduce this expense, time constraints are typically included in [real bank contracts](https://www.chase.com/content/dam/chasecom/en/checking/documents/deposit_account_agreement.pdf). For example, by law any withdrawal from an interest-bearing U.S. bank account can be delayed for seven days. The creditor can only eliminate cash drag by holding the debt in an investment fund (i.e without settlement assurances).
 ```
 return-rate = interest-rate * loaned / borrowed
 ```
-As shown in [Savings Relation](Savings-Relation) the capital ratio is the interest rate. The capital ratio includes present goods depreciation, which for money is demurrage. The pure bank demurrage is 1, so this drops out. Substituting capital ratio obtains a rate of return in terms of borrowed and loaned capital.
+As shown in [Savings Relation](Savings-Relation)individual capital ratios fully determine the market interest rate. When we consider every person operating as a pure bank, it becomes clear that the capital ratio determines the interest rate. A capital ratio of 0% for all people implies that capital is free and has no return. At increasing capital ratios, the interest rate increases accordingly. At full hoarding the cost of capital is “infinite” – none can be obtained for production.
+
+The presumption of the [money relation](Inflation-Principle) is that price is proportional to the ratio of demand to supply. But as shown in Savings Relation, supply and demand for capital exist in a zero-sum relation. An increase in [hoarding](Glossary#hoard) implies a corresponding decrease in lending and the reverse implies an increase. As such neither the capital ratio nor the interest rate is linear in relation to change in the amount hoarded (or lent). This has led some to search for a “[golden ratio](https://en.wikipedia.org/wiki/Golden_Rule_savings_rate)”. Yet given the subjectivity of value, this is ultimately an exercise in futility.
+
+Yet capital ratios fully determine the interest rate. As all people individually attempt to obtain a golden ratio based on their own preferences, the market rate of interest results. Substituting the capital ratio for the interest rate demonstrates the effect of reservation on the Pure Bank, under the additional assumption that everyone operates as a Pure Bank and with the same capital ratio. The capital ratio includes present goods depreciation, which for money is demurrage. The Pure Bank demurrage ratio is 1, so this drops out.
 ```
 return-rate = (reserved * demurrage-ratio / loaned) * (loaned / borrowed)
 return-rate = (reserved / borrowed) * demurrage-ratio
 return-rate = reserved / borrowed
 ```
-**The rate of return on pure bank investment is the reserve ratio.**
+The rate of return on Pure Bank investment becomes the reserve ratio. This does not
+imply that an individual Pure Bank can set its own return by setting its capital ratio. It merely reflects that the market capital ratio determines the return on capital. If *all lenders* doubled their present capital ratio their returns would necessarily double, as the cost for capital, and therefore its return, would double.
 
 #### Real Banks
-The independent capital ratios of all people, based on individual time preference, determine the [market](Glossary#market) rate of interest. The above substitution for the bank's own capital ratio as the interest rate implies that the bank is setting the interest rate. However this is inherent in the concept of time preference. A bank can set any level of interest it prefers. There is no assumption for real banks that the market will oblige, so market interest and therefore market returns are assumed.
+The independent capital ratios of all people, based on individual time preference, determine the [market](Glossary#market) rate of interest. The above substitution for the bank's own capital ratio as the interest rate seems to imply that the bank is setting the interest rate. However this is inherent in the concept of time preference. A bank can set any level of interest it prefers. There is no assumption for real banks that the market will oblige, so market interest and therefore market returns are assumed.
 ```
 market-return-rate = market-interest-rate * (loaned / borrowed)
 market-return-rate = market-capital-ratio * (loaned / borrowed)
@@ -90,4 +95,4 @@ central-return-rate = real-bank-return-rate * subsidy-income-ratio
 ```
 Where tax includes seigniorage of the bank money, the [Fisher Equation](https://en.wikipedia.org/wiki/Fisher_equation) must be applied above to translate the interest rate from a nominal rate to a real rate. No other change is implied other than tax, which is accounted for by the real bank above. This tax is generally the source of subsidy, which is accounted for by the central bank above.
 
-Every [person](Glossary#person), or company of people, is a real bank, and the [state](Glossary#state) is a central bank. A real bank produces the service of liquid investment, an economic good. The cost of production is the depreciation of its reserve. This is the model of all production.
+Every [person](Glossary#person), or company of people, is a real bank, and the [state](Glossary#state) is a central bank. A real bank produces the service of liquid investment, an [economic good](https://en.wikipedia.org/wiki/Goods). The cost of production is the depreciation of its reserve. This is the model of all production.
