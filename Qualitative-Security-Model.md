@@ -2,7 +2,7 @@
 
 In [Social Network Principle](Social-Network-Principle) it is shown that Bitcoin is a network of [human](Glossary#person) relationships. This can be modeled as a [directed graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph) where each vertex represents a [merchant](Glossary#merchant) and each edge represents a [trade](Glossary#trade) for bitcoin. Edges indicate the direction of movement of [coin](Glossary#coin) and are quantified in the number of [units](Glossary#unit) traded. All [owners](Glossary#owner) are presumed to have been merchants at the time of coin receipt, including as [miners](Glossary#miner) (selling [confirmations](Glossary#confirmation)) and as recipients of charity (selling [goodwill](https://en.wikipedia.org/wiki/Goodwill_(accounting))).
 
-If a person is not personally accepting coin, or does not personally [validate](Glossary#validation) coin accepted, the person cannot reject invalid coin. The person is entrusting this task to a [central](Glossary#centralization) authority. All people utilizing the same delegate are reduced to just one vertex that represents the delegate.
+If a person is not personally accepting coin, or does not personally [validate](Glossary#validation) coin accepted, the person cannot reject invalid coin. The person is entrusting this task to a [central](Glossary#centralization) authority. **All people utilizing the same delegate are reduced to just one vertex that represents the delegate.**
 
 For any period of time, [economic](Glossary#economy) security is a function of the number of merchants and the similarity of amounts traded. The strongest economy would be all people in the world trading for the same number of units in the period, an ideal which can be called a "distributed" (or fully-decentralized) economy. The weakest would be one delegate accepting all units traded in the period, which would be a "centralized" economy.
 
@@ -22,7 +22,7 @@ confirmation-decentralization = distribution(hash-power) * miners
 
 **Security Model**
 
-Decentralization alone is not security. **Security is the product of activity, distribution of that activity, and the fraction of participating humanity.**
+[Decentralization](Glossary#decentralization) alone is not security. Security is the product of activity, distribution of that activity, and the fraction of participating humanity.
 ```
 security = activity * distribution * participation
 ```
