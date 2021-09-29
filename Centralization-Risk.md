@@ -7,9 +7,9 @@ Centralization pressures include:
 * Difficulty of use discount.
 * On-chain settlement discount.
 
-If [exchange](Glossary#exchange) is difficult for a customer, the merchant must discount merchandise in order to accept the [coin](Glossary#coin). If exchange is difficult for the merchant, an additional cost is incurred. If referring payments to a trusted third party reduces the size of this discount and/or cost, return on capital is increased.
+If [exchange](Glossary#exchange) is difficult for a customer, the merchant must discount merchandise in order to accept the [coin](Glossary#coin). If exchange is difficult for the merchant, an additional cost is incurred. When referring payments to a trusted third party reduces the size of this discount and/or cost, return on capital is increased.
 
-[Transfer](Glossary#transfer) incurs [fees](Glossary#fee) which also requires a merchant to discount merchandise. If using a trusted intermediary to settle transfers off-[chain](Glossary#chain) reduces fees and thereby the discount, return on capital is increased.
+[Transfer](Glossary#transfer) incurs [fees](Glossary#fee) which also requires a merchant to discount merchandise. When using a trusted intermediary to settle transfers off-[chain](Glossary#chain) reduces fees and thereby the discount, return on capital is increased.
 
 Centralization manifests as:
 
@@ -17,4 +17,4 @@ Centralization manifests as:
 * Web and other trusting wallets
 * Hosted APIs for accessing chain
 
-In a [low threat environment](Threat-Level-Paradox) the merchant has diminished financial incentive to subsidize Bitcoin security. As the [cost of alternatives](https://en.wikipedia.org/wiki/Foreign_exchange_controls) increases the discount becomes unavoidable. At this point the customer decides the pay a higher price or the merchant closes the business as capital seeks [market](Glossary#market) rates of return.
+In a [low threat](Threat-Level-Paradox) environment the merchant has diminished financial incentive to subsidize Bitcoin security. As the cost of [alternatives](https://en.wikipedia.org/wiki/Foreign_exchange_controls) increases the discount becomes unavoidable. At this point the customer decides the pay a higher price or the merchant closes the business as capital seeks [market](Glossary#market) rates of return.
