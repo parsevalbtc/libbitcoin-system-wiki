@@ -1,6 +1,10 @@
 There is a theory that [fractional reserve banking](https://en.wikipedia.org/wiki/Fractional-reserve_banking) inherently gives banks the ability to create money at no material cost. The theory does not depend on the [state](Glossary#state) privilege of [seigniorage](https://en.wikipedia.org/wiki/Seigniorage). It is considered a consequence of the accounting practices of [free banking](https://en.wikipedia.org/wiki/Free_banking). This is sometimes referred to as creating money *ex nihilo* or "[out of thin air](https://en.wikipedia.org/wiki/Fractional-reserve_banking#Criticisms_of_textbook_descriptions_of_the_monetary_system)".
 
-> Lord Adair Turner, formerly the UK's chief financial regulator, said "Banks do not, as too many textbooks still suggest, take deposits of existing money from savers and lend it out to borrowers: they create credit and money ex nihilo – extending a loan to the borrower and simultaneously crediting the borrower’s money account."
+> Banks do not, as too many textbooks still suggest, take deposits of existing money from savers and lend it out to borrowers: they create credit and money ex nihilo – extending a loan to the borrower and simultaneously crediting the borrower’s money account."
+>
+> *Lord Turner, Chairman of the UK Financial Services Authority until its abolition in March 2013* 
+> *Stockholm School of Economics Conference on: “Towards a Sustainable Financial System"* 
+> *12 September 2013*
 
 Adherents describe two competing views on money creation. The traditional understanding is naive in relation to their more practical view, as implied by Lord Turner. The theory states that banking inherently creates not only credit, but also money.
 
@@ -14,7 +18,7 @@ Money substitutes are created by banks, at no material cost, as a consequence of
 
 In a free market people can perform the same operations as banks, without necessarily calling themselves banks. Therefore the distinction between these two possibilities must be based on obscuration of the supposed fraud. The theory holds that this obscuration is accomplished using an accounting trick that is not widely understood. So let us investigate the difference. Any money will suffice in this investigation of the [money substitutes](https://wiki.mises.org/wiki/Money_substitutes) created in either case, including Gold, Bitcoin or [monopoly money](Money-Taxonomy).
 
-In the naive view, the potential lender has saved both the liquidity required for personal consumption (hoard) and the amount intended for earning [interest](Glossary#interest) (investment). All lending in this scenario originates from savings, such as gold accumulated from [panning](https://en.m.wikipedia.org/wiki/Gold_panning). Savings includes the sum of the hoard (money) and the amount that credit exceeds debt: `savings = money + (credit - debt)`. Money is gold and credits are money substitutes:
+In the naive view, the potential lender has saved both the liquidity required for personal consumption ([hoard](Glossary#lend)) and the amount intended for earning [interest](Glossary#interest) ([investment](Glossary#investment)). All lending in this scenario originates from savings, such as gold accumulated from [panning](https://en.m.wikipedia.org/wiki/Gold_panning). Savings includes the sum of the hoard (money) and the amount that credit exceeds debt: `savings = money + (credit - debt)`. Money is gold and credits are money substitutes:
 
 |         |savings   |money     |credit    |debt      |
 |---------|----------|----------|----------|----------|
@@ -59,6 +63,9 @@ The [money multiplier](https://en.wikipedia.org/wiki/Money_multiplier) is given 
 ```
 1/rr = 1/(100oz/890.3oz) = 8.903
 ```
+It is only because a single dollar is considered the smallest lendable unit that the series is limited to 43 iterations. A continuous function produces a money multiplier of 9 at 10% hoarding.
+
+Iteration yields the following table:
 
 | Loan | Hoarded | Loaned | Credit |
 |------|---------|--------|--------|
@@ -118,9 +125,7 @@ In the typical practice of bank accounting, Bank does not hand over the money. I
 |Bank       |          |      90oz|      81oz|     171oz|     171oz|     171oz|
 |Borrower   |          |          |      81oz|      81oz|      81oz|      81oz|
 
-This is where [explanations of the theory](https://www.sciencedirect.com/science/article/pii/S1057521915001477) tend to terminate. The offsetting accounts of both Bank and Borrower balance, but Borrower has 81oz of gold to spend, and Bank has not had to turn over any gold to Borrower. There is still only 100oz of money, but Borrower has 81oz of money substitute and Bank has 81oz more in assets. The theory proclaims that Bank has thus created not only credit, but also *money*. Notice that everything still balances, and all accounts can be settled, seemingly validating the theory as espoused by Lord Turner:
-
-> “...they create credit and money ex nihilo – extending a loan to the borrower and simultaneously crediting the borrower’s money account."
+This is where [explanations of the theory](https://www.sciencedirect.com/science/article/pii/S1057521915001477) tend to terminate. The offsetting accounts of both Bank and Borrower balance, but Borrower has 81oz of gold to spend, and Bank has not had to turn over any gold to Borrower. There is still only 100oz of money, but Borrower has 81oz of money substitute and Bank has 81oz more in assets. The theory proclaims that Bank has thus created not only credit, but also *money*. Notice that everything still balances, and all accounts can be settled, seemingly validating the theory as espoused by Lord Turner, that: "...they create credit and money ex nihilo – extending a loan to the borrower and simultaneously crediting the borrower’s money account."
 
 This however demonstrates no actual spending of either the loan credit or the bank asset. Let us take this a bit further by assuming Borrower clears his account, and therefore the corresponding Bank asset and liability entries.
 
@@ -130,11 +135,11 @@ This however demonstrates no actual spending of either the loan credit or the ba
 |Bank       |          |       9oz|      81oz|      90oz|      90oz|      90oz|
 |Borrower   |          |      81oz|          |      81oz|      81oz|      81oz|
 
-Notice that the this is identical to the outcome of the naive view. **There is no distinction between these supposedly-competing views on money creation**, invaliding the theory. This resolves the [centuries-old debate](https://en.wikipedia.org/wiki/Credit_theory_of_money#Scholarship), apparently begun between [Plato](https://en.wikipedia.org/wiki/Plato) and [Aristotle](https://en.wikipedia.org/wiki/Aristotle), regarding whether money is based on mining or credit. The theories are identical, as money and credit are a [duality](https://en.wiktionary.org/wiki/duality).
+Notice that the this is identical to the outcome of the naive view. **There is no distinction between these supposedly-competing views on money creation,** invaliding the theory. This resolves the [centuries-old debate](https://en.wikipedia.org/wiki/Credit_theory_of_money#Scholarship), apparently begun between [Plato](https://en.wikipedia.org/wiki/Plato) and [Aristotle](https://en.wikipedia.org/wiki/Aristotle), regarding whether money is based on mining or credit. The theories are identical, as money and credit are a [duality](https://en.wiktionary.org/wiki/duality).
 
 > According to Joseph Schumpeter, the first known advocate of a credit theory of money was Plato. Schumpeter describes metallism as the other of "two fundamental theories of money", saying the first known advocate of metallism was Aristotle.
 
-Adherents of the two theories are merely [talking past each other](https://en.m.wikipedia.org/wiki/Talking_past_each_other). Bitcoin, as fiat (i.e. non-[use-value](https://en.m.wikipedia.org/wiki/Use_value) money) [without state support](Value-Proposition), has finally made observable both the logical errors of [metallism](https://en.m.wikipedia.org/wiki/Metallism), which [attempted to show](Regression-Fallacy) the necessity of use value to money, and [chartalism](https://en.m.wikipedia.org/wiki/Chartalism), which [attempted to show](Debt-Loop-Fallacy) the necessity of state support to fiat.
+Adherents of the two theories are merely [talking past each other](https://en.m.wikipedia.org/wiki/Talking_past_each_other). Bitcoin, as fiat (i.e. [non-use-value](https://en.m.wikipedia.org/wiki/Use_value) money) [without state support](Value-Proposition), has finally made observable both the logical errors of [metallism](https://en.m.wikipedia.org/wiki/Metallism), which [attempted to show](Regression-Fallacy) the necessity of use value to money, and [chartalism](https://en.m.wikipedia.org/wiki/Chartalism), which [attempted to show](Debt-Loop-Fallacy) the necessity of state support to fiat.
 
 Recall that each loan is reserved at 10%, so Bank can lend up 8.903 times the amount of money on reserve, or 890.3oz of money substitute against 100oz money reserved. If Bank reserves each loan at 0%, credit expansion would be infinite. However this implies zero time preference, or the idea that time has no value, implying that all money is lent indefinitely. In the case of Bank, 0% reserve implies no liquidity to satisfy any withdrawal (i.e. immediate failure). Yet given zero time preference there could never be any withdrawals, making the scenario irrelevant. Credit expansion is necessarily finite.
 
@@ -153,7 +158,7 @@ When Borrower trades 1oz (from his credit account) for a car, his credit account
 |Borrower   |      -1oz|          |     999oz|    1000oz|     999oz|    1000oz|
 |Merchant   |       1oz|          |       1oz|          |       1oz|          |
 
-All looks good until Merchant attempts to withdraw from his account. At that point Bank has defaulted and Merchant is unpaid. If Merchant's account is with another bank, the payment fails as soon as the two banks attempt to settle accounts. With a hypothetical negative reserve, the accounts balance as follows, indicating Bank's [demise](https://en.wikipedia.org/wiki/Bank_failure) (negative money): 
+All looks good until Merchant attempts to withdraw from his account. At that point Bank has defaulted and Merchant is unpaid. If Merchant's account is with another bank, the payment fails as soon as the two banks attempt to settle accounts. With a hypothetical negative reserve, the accounts balance as follows, indicating [Bank's demise](https://en.wikipedia.org/wiki/Bank_failure) (negative money): 
 
 |           |savings   |money     |credit    |debt      |asset     |liability |
 |-----------|----------|----------|----------|----------|----------|----------|
@@ -161,16 +166,16 @@ All looks good until Merchant attempts to withdraw from his account. At that poi
 |Borrower   |          |          |     999oz|    1000oz|     999oz|    1000oz|
 |Merchant   |       1oz|       1oz|          |          |       1oz|          |
 
-The money must actually be [moved](https://www.brinks.com/en/public/brinks/logistics) from the control of Bank to Merchant or Merchant's bank, which is not possible. A simpler example is the failure of any attempt by Borrower to [withdraw](https://en.wikipedia.org/wiki/Automated_teller_machine) from his account. Bank may create as much money substitute as it wants, but negative reserve is just an [empty promise](https://en.wiktionary.org/wiki/empty_promise). In this example Bank has created 1000oz of promises that it cannot keep.
+The money [must actually be moved](https://www.brinks.com/en/public/brinks/logistics) from the control of Bank to Merchant or Merchant's bank, which is not possible. A simpler example is the failure of any attempt by Borrower to [withdraw](https://en.wikipedia.org/wiki/Automated_teller_machine) from his account. Bank may create as much money substitute as it wants, but negative reserve is just an [empty promise](https://en.wiktionary.org/wiki/empty_promise). In this example Bank has created 1000oz of promises that it cannot keep.
 
-The failure to recognize these principles likely results from [failure to consider the settlement process](https://www.youtube.com/watch?v=IzE038REw2k). This likely stems from the failure to recognize the inherent *duality of money and credit*, as the former must always exist to settle the claims implied by the latter. This likely stems from the habit of referring to money (e.g. gold) in the same terms as money substitutes (e.g. credits for gold).
+The failure to recognize these principles likely results from failure to consider the [settlement process](https://www.youtube.com/watch?v=IzE038REw2k). This likely stems from the failure to recognize the inherent *duality of money and credit*, as the former must always exist to settle the claims implied by the latter. This likely stems from the habit of referring to money (e.g. gold) in the same terms as money substitutes (e.g. credits for gold).
 
 The offsetting asset and liability entries served only to account for loans issued and outstanding, which are the basis of Bank's balance sheet. Bank similarly did not create the offsetting credit and debt entries to obscure fraudulent money creation. Bank created these accounts for two reasons:
 
 * Preclude physical transfer just to redeposit the money into Bank.
 * Encourage redeposit into Bank as opposed to a competitor (or Borrower hoard).
 
-When Bank has insufficient reserve to satisfy withdrawals, either due to loans in default or a [bank run](https://en.wikipedia.org/wiki/Bank_run), it has only two options, default or borrow. To prevent the former, [central banking](https://en.wikipedia.org/wiki/Central_bank) exists to provide the latter. This is the meaning of the term "[lender of last resort](https://en.wikipedia.org/wiki/Lender_of_last_resort)". [State Banking Principle](State-Banking-Principle) provides a detailed explanation of this *actual* source of [monetary inflation](https://en.wikipedia.org/wiki/Monetary_inflation).
+When Bank has insufficient reserve to satisfy withdrawals, either due to loans in default or a [bank run](https://en.wikipedia.org/wiki/Bank_run), it has only two options, default or borrow. To prevent the former, [central banking](https://en.wikipedia.org/wiki/Central_bank) exists to provide the latter. This is the meaning of the term "[lender of last resort](https://en.wikipedia.org/wiki/Lender_of_last_resort)". [State Banking Principle](State-Banking-Principle) provides a detailed explanation of this actual source of [monetary inflation](https://en.wikipedia.org/wiki/Monetary_inflation).
 
 In summary, it has been shown that:
 
