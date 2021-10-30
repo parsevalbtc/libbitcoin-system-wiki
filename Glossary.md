@@ -1,6 +1,6 @@
 #### Activation
 Starting to [Enforce](#enforcement) a new [Rule](#rule).
-#### Adjustmenttta
+#### Adjustment
 A change to [Difficulty](#difficulty).
 #### Aggregation
 The tendency toward reduced participation in [Mining](#mine) or [Validation](#validation). Implies [pooling](#pooling) or [centralization](#centralization).
@@ -77,7 +77,7 @@ The level of [Proof](#proof) required for [Validity](#validity).
 #### Double Spend
 The [Endorsement](#endorsement) of the same [Output](#output) [Contract](#contract) by distinct [Spends](#spend).
 #### Dust
-An insufficient number of [Units](#unit) for [Transfer](#transfer) via an [Output](#output). BTC [Consensus Rules] prohibit transfer of less than one unit.
+An insufficient number of [Units](#unit) for [Transfer](#transfer) via an [Output](#output). BTC [Consensus Rules](#consensus-rules) prohibit transfer of less than one unit.
 #### Economy
 The set of all [Merchants](#merchant).
 #### Endorsement
