@@ -62,7 +62,7 @@ Creditor rate of return is additionally a function of the interest rate. The cre
 ```
 return-rate = interest-rate * loaned / borrowed
 ```
-As shown in [Savings Relation](Savings-Relation)individual capital ratios fully determine the market interest rate. When we consider every person operating as a pure bank, it becomes clear that the capital ratio determines the interest rate. A capital ratio of 0% for all people implies that capital is free and has no return. At increasing capital ratios, the interest rate increases accordingly. At full hoarding the cost of capital is “infinite” – none can be obtained for production.
+As shown in [Savings Relation](Savings-Relation) individual capital ratios fully determine the market interest rate. When we consider every person operating as a pure bank, it becomes clear that the capital ratio determines the interest rate. A capital ratio of 0% for all people implies that capital is free and has no return. At increasing capital ratios, the interest rate increases accordingly. At full hoarding the cost of capital is “infinite” – none can be obtained for production.
 
 The presumption of the [money relation](Inflation-Principle) is that price is proportional to the ratio of demand to supply. But as shown in Savings Relation, supply and demand for capital exist in a zero-sum relation. An increase in [hoarding](Glossary#hoard) implies a corresponding decrease in lending and the reverse implies an increase. As such neither the capital ratio nor the interest rate is linear in relation to change in the amount hoarded (or lent). This has led some to search for a “[golden ratio](https://en.wikipedia.org/wiki/Golden_Rule_savings_rate)”. Yet given the subjectivity of value, this is ultimately an exercise in futility.
 
