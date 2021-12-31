@@ -7,6 +7,8 @@ Proving statements about Bitcoin requires reliance on axiomatic systems, specifi
 > Yes, but we can win a major battle in the arms race and gain a new territory of freedom for several years.
 >
 > Governments are good at cutting off the heads of a centrally controlled networks like Napster, but pure P2P networks like Gnutella and Tor seem to be holding their own.
+>
+> *Satoshi Thu Nov 6 15:15:40 EST 2008*
 
 In other words there is an assumption that it is *possible* for a system to resist [state](Glossary#state) control. This is not accepted as a fact but deemed to be a reasonable assumption, due to the behavior of similar systems, on which to base the system.
 
