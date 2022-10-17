@@ -31,13 +31,13 @@ The outcome for mutual Dollar (Punishment):
 |Bitcoin       |R\R    |S\T   |
 |Dollar        |T\S    |P\P   |
 
-To be considered a prisoner's dilemma T > R > P > S must be true where:
+To be considered a prisoner's dilemma T > R > P > S [must be true](https://plato.stanford.edu/entries/prisoner-dilemma/#Symm2t2PDOrdiPayo) where:
 * T > R and P > S imply that Dollar is the dominant strategy for each.
 * R > P implies that mutual Bitcoin is preferred by each to mutual Dollar.
 
 We can conclude that P > S holds, as individual sanction implies no international settlement and therefore no benefit from a [foreign exchange reserve](https://en.wikipedia.org/wiki/Foreign-exchange_reserves), and presumably sanctions are undesirable.
 
-To determine if R > P and T > R hold, an objective method is required to relate only seigniorage and sanction, as presumably sanctions are undesirable. This can be obtained by the observation that Gold is subject to neither [seigniorage](https://en.wikipedia.org/wiki/Seigniorage) nor sanction. In other words Gold provides the above benefits of Bitcoin without sanction. Yet Gold has not been chosen (and was previously dropped in favor of Dollar), which implies the Dollar outcome is preferred to Gold and therefore Bitcoin. As such, neither of the [dominant strategies](https://en.wikipedia.org/wiki/Strategic_dominance) hold. **As such there is no dilemma.**
+To determine if R > P and T > R hold, an objective method is required to relate only seigniorage and sanction, as presumably sanctions are undesirable. This can be obtained by the observation that Gold is subject to neither [seigniorage](https://en.wikipedia.org/wiki/Seigniorage) nor sanction. In other words Gold provides the above benefits of Bitcoin without sanction. Yet Gold has not been chosen (and was previously dropped in favor of Dollar), which implies the Dollar outcome is preferred to Gold and therefore Bitcoin. As such, neither of the [strategies](https://en.wikipedia.org/wiki/Strategic_dominance) hold. **As such there is no dilemma.**
 
 #### Strong Asymmetric Dilemma With Ordinal Outcome Relations
 
@@ -46,7 +46,7 @@ To determine if R > P and T > R hold, an objective method is required to relate 
 |Bitcoin       |Rr\Rc  |Sr\Tc |
 |Dollar        |Tr\Sc  |Pr\Pc |
 
-To be considered a prisoner's dilemma Ti > Ri > Pi > Si must be true where:
+To be considered a prisoner's dilemma Ti > Ri > Pi > Si [must be true](https://plato.stanford.edu/entries/prisoner-dilemma/#Asym) where:
 * Tr > Rr and Pr > Sr
 * Tc > Rc and Pc > Sc
 * Rr > Pr and Rc > Pc
