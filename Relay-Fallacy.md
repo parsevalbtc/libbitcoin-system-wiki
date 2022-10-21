@@ -4,7 +4,7 @@ However this protection comes at a cost in terms of [announcement](Glossary#anno
 
 One way to improve dissemination is to *optimize* the peer-to-peer network. The other is to join a distinct network, called a [relay](Glossary#relay), that has lower latency due to elimination of denial-of-service protections, for [example](http://bitcoinfibre.org):
 
-> [T]he cmpctblock message format was designed to ensure it fits neatly into a UDP-FEC-based relay mechanism. The only difference is that we send it over UDP with FEC... This way, extra hops do not introduce more latency. Sadly, due to the nature of our FEC encoding, we cannot know if individual packets are a part of a legitimate, or any, block, and thus only enable this optimization between nodes run by the same group. - 
+> [T]he cmpctblock message format was designed to ensure it fits neatly into a UDP-FEC-based relay mechanism. The only difference is that we send it over UDP with FEC... This way, extra hops do not introduce more latency. Sadly, due to the nature of our FEC encoding, we cannot know if individual packets are a part of a legitimate, or any, block, and thus only enable this optimization between nodes run by the same group.
 >
 > *bitcoinfibre.org*
 
