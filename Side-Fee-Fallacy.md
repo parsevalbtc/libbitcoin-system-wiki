@@ -6,7 +6,7 @@ Another impact is that disparate relative fee levels can highlight certain trans
 
 There is no impact on market fee rates or the ability of others to obtain confirmations. If the arrangement deviates from market rates then either the miner or the merchant is accepting an unnecessary loss. This is no different than the miner confirming transactions with below-market on-chain fees or the merchant overestimating on-chain fees, respectively. In any case there would be no harm to system security even if all fees were paid off chain.
 
-Bitcoin provides a mechanism for on-chain fees so that a transaction can compensate *any* miner without the use of [identity](Glossary#identity). It is a privacy-preserving convenience. **If miners and merchants prefer to weaken their own privacy by performing additional tasks, there is no basis to consider that undesirable.** This theory is therefore invalid. This theory is therefore invalid.
+Bitcoin provides a mechanism for on-chain fees so that a transaction can compensate *any* miner without the use of [identity](Glossary#identity). It is a privacy-preserving convenience. **If miners and merchants prefer to weaken their own privacy by performing additional tasks, there is no basis to consider that undesirable.** This theory is therefore invalid.
 
 Furthermore, the merchant must accept a delayed confirmation time inversely proportional to the miner’s [hash power](Glossary#hash-power). The side-fee is offered at the market rate since the miner will incur an opportunity cost otherwise.
 
