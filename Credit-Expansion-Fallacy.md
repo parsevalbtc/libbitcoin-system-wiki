@@ -18,7 +18,7 @@ The total amount of [U.S. Dollars in circulation](https://en.wikipedia.org/wiki/
 |Intangible           |  $1,535,857,000,000|
 |**Total Money (M0)** |  $3,274,841,000,000|
 
-M0 plus all bank account money is referred to as "M3". This is no longer published by the Fed, but is [estimated](https://fred.stlouisfed.org/series/MABMM301USM189S) at $17,682,335,000,000. The total amount of credit extended in U.S. Dollars can be estimated from the sum of Dollar-denominated [money accounts](https://en.wikipedia.org/wiki/Bank_account), [bonds](https://www.forbes.com/sites/kevinmcpartland/2018/10/11/understanding-us-bond-market), [public equities](https://data.worldbank.org/indicator/cm.mkt.lcap.cd) and [private equities](https://www.quora.com/What-is-the-estimated-total-value-of-all-US-private-companies).
+M0 plus all bank account money is referred to as "M3". This is no longer published by the Fed, but is [estimated](https://fred.stlouisfed.org/series/MABMM301USM189S) at $17,682,335,000,000. The total amount of credit extended in U.S. Dollars can be estimated from the sum of Dollar-denominated money [accounts](https://en.wikipedia.org/wiki/Bank_account), [bonds](https://www.forbes.com/sites/kevinmcpartland/2018/10/11/understanding-us-bond-market), [public equities](https://data.worldbank.org/indicator/cm.mkt.lcap.cd) and [private equities](https://www.quora.com/What-is-the-estimated-total-value-of-all-US-private-companies).
 
 |Dollar Credit    |Amount (2019)       |
 |-----------------|--------------------|
@@ -26,13 +26,12 @@ M0 plus all bank account money is referred to as "M3". This is no longer publish
 |Bond             | $41,000,000,000,000|
 |Public Equity	  | $32,891,169,631,125|
 |Private Equity	  |  $6,426,333,525,358|
-|**Total Credit** | $94,724,997,156,483|
 
 **From the table:**
 
-* The total ratio of money to credit is ~3.46%, or **credit expansion of 29.9 x money**.
-* Bank [reserves](https://www.federalreserve.gov/releases/h3/current/default.htm) of $1,400,949,000,000 indicate a bank reserve ratio of ~11.11% against bank credit, or **credit expansion of 9.0 x money**. This is slightly above the [required reserve](https://en.wikipedia.org/wiki/Reserve_requirement) ratio, which is [no more than 10%](https://en.wikipedia.org/wiki/Reserve_requirement#United_States).
-* Reserve of remaining money (i.e. excluding bank reserves) relative to bond and equity markets (i.e. the ratio of M0 minus bank reserves to the sum of bonds and equity) is ~2.08%, or **credit expansion of 48.0 x money**.
+* The total ratio of money to credit is ~3.46%, or credit expansion of 29.9 x money.
+* Bank [reserves](https://www.federalreserve.gov/releases/h3/current/default.htm) of $1,400,949,000,000 indicate a bank reserve ratio of ~11.11% against bank credit, or credit expansion of 9.0 x money. This is slightly above the [required reserve](https://en.wikipedia.org/wiki/Reserve_requirement) ratio, which is [no more than 10%](https://en.wikipedia.org/wiki/Reserve_requirement#United_States).
+* Reserve of remaining money (i.e. excluding bank reserves) relative to bond and equity markets (i.e. the ratio of M0 minus bank reserves to the sum of bonds and equity) is ~2.08%, or credit expansion of 48.0 x money.
 
 **Eliminating credit expansion requires elimination of credit, and therefore production.** All credit is subject to default. However the theory holds that bank credit is different in the presumption of being "risk free". This presumption arises from the fact of [taxpayer insurance](https://www.fdic.gov) of the credit. This is not a consequence of banking but of state intervention in banking. To the extent the presumption is attributed to [free banking](https://en.wikipedia.org/wiki/Free_banking), the theory is invalid. All classes of business are subject to failure, and in doing so free banking eliminates this misperception.
 
@@ -46,6 +45,6 @@ Bank credit is not truly fungible. This can be seen in everyday use of credit ca
 
 The decision to [hoard vs. invest](Savings-Relation) is based strictly on each person's [time preference](https://en.wikipedia.org/wiki/Time_preference). Time preference is not derivable from any condition. It is, as the name implies, a human preference. Human preferences change and therefore so does time preference. Time preference determines the economic [interest](Glossary#interest) rate which can also be considered the cost of capital. An increase in the cost of capital resulting from increasing time preference causes credit available to contract, and a decrease has the opposite effect. With infinite time preference all capital would be hoarded for consumption, ending all production.
 
-It matters not whether a lender is referred to as a "bank", all investment implies the same behavior. If banks operated with a 100% hoard they would not be lenders. This does not imply any reduction in lending, as the rate of lending is determined by time preference alone. Bitcoin can be lent and does nothing to limit credit expansion. The theory is therefore invalid.
+It matters not whether a lender is referred to as a "bank", all investment implies the same behavior. If banks operated with a 100% hoard they would not be lenders. This does not imply any reduction in lending, as the [rate of lending](Unlendable-Money-Fallacy) is determined by time preference alone. Bitcoin can be lent and does nothing to limit credit expansion. The theory is therefore invalid.
 
 Eliminating credit expansion is equivalent to the condition of infinite time preference, an infinite interest rate, no capital available for production, and no products available for consumption. In states where credit is limited or prohibited by statute ([usury](https://en.wikipedia.org/wiki/Usury) laws), investment moves to equity instruments, [loan sharking](https://en.wikipedia.org/wiki/Loan_shark), or an end to production.
