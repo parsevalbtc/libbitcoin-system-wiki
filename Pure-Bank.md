@@ -1,4 +1,4 @@
-The concept of a pure bank can be useful in demonstrating [lending](Glossary#lend) behavior generally.
+The concept of a Pure Bank can be useful in demonstrating [lending](Glossary#lend) behavior generally.
 
 A pure bank provides only the following services:
 
@@ -15,9 +15,9 @@ The bank is owned by its creditors in proportion to their credit, as is the case
 
 Creditor accounts are [money substitutes](https://wiki.mises.org/wiki/Money_substitutes). This aspect distinguishes the bank from an investment fund. The money substitute may be either a [demand deposit](https://en.wikipedia.org/wiki/Demand_deposit) or a [money market](https://en.wikipedia.org/wiki/Money_market_fund). The distinction is in the allocation of insufficient reserve (negative rate of return), with the former being "[first come, first served](https://en.wikipedia.org/wiki/Bank_run)" and the latter "[breaking the buck](https://en.wikipedia.org/wiki/Money_market_fund#Breaking_the_buck)".
 
-The lack of state intervention is the common concept of [free banking](https://en.wikipedia.org/wiki/Free_banking), where there is no [statutory control](https://en.wikipedia.org/wiki/Federal_Reserve), state [insurance](https://www.fdic.gov), [discount capital](https://en.wikipedia.org/wiki/Discount_window), or [seigniorage](https://en.wikipedia.org/wiki/Seigniorage). The bank uses commodity [money](Money-Taxonomy) unless otherwise specified, which simplifies calculations by [eliminating](Inflation-Principle) the need to offset [price inflation](https://en.wikipedia.org/wiki/Inflation) or [price deflation](https://en.wikipedia.org/wiki/Deflation).
+The lack of state intervention is the common concept of [free banking](https://en.wikipedia.org/wiki/Free_banking), where there is no [statutory control](https://en.wikipedia.org/wiki/Federal_Reserve), [state insurance](https://www.fdic.gov), [discount capital](https://en.wikipedia.org/wiki/Discount_window), or [seigniorage](https://en.wikipedia.org/wiki/Seigniorage). The bank uses [commodity money](Money-Taxonomy) unless otherwise specified, which simplifies calculations by [eliminating](Inflation-Principle) the need to offset [price inflation](https://en.wikipedia.org/wiki/Inflation) or [price deflation](https://en.wikipedia.org/wiki/Deflation).
 
-Perfect efficiency differs from a real bank only in the rate of return, as nothing is consumed in operations. All earning is a consequence of [time preference](Time-Preference-Fallacy). Uniform interest is assumed, as rate [arbitrage](https://en.m.wikipedia.org/wiki/Arbitrage) is an expense. [Demurrage](https://en.wikipedia.org/wiki/Demurrage_(currency)) is the expense of storing money. The expense ratio (inclusive of demurrage) is 1 for the pure bank.
+Perfect efficiency differs from a real bank only in the rate of return, as nothing is consumed in operations. All earning is a consequence of [time preference](Time-Preference-Fallacy). Uniform interest is assumed, as rate [arbitrage](https://en.m.wikipedia.org/wiki/Arbitrage) is an expense. [Demurrage](https://en.wikipedia.org/wiki/Demurrage_(currency)) is the expense of storing money. The expense ratio (inclusive of demurrage) is 1 for the Pure Bank.
 
 [Reserved](Reserve-Definition) capital is the money in which credit and debt are [settled](https://en.wikipedia.org/wiki/Settlement_(finance)) (zero [maturity](https://en.wikipedia.org/wiki/Maturity_(finance))). [Depreciation](Depreciation-Principle) is the [opportunity cost](https://en.wikipedia.org/wiki/Opportunity_cost) of it not being loaned, also known as "cash drag". Interest relations assume a single [compounding period](https://en.wikipedia.org/wiki/Compound_interest) with the rate of interest over that period. This presentation simplification is inconsequential to implied relations.
 
@@ -29,7 +29,7 @@ depreciation = interest-rate * reserved
 interest     = interest-rate * loaned
 return       = expense-ratio * interest
 ```
-For the pure bank, the [reserve ratio](https://en.wikipedia.org/wiki/Reserve_requirement) fully determines [capital ratio](https://en.wikipedia.org/wiki/Capital_requirement), [debt ratio](https://en.wikipedia.org/wiki/Debt_ratio), and [savings ratio](https://en.wikipedia.org/wiki/Golden_Rule_savings_rate)
+For the pure bank, the [reserve ratio](https://en.wikipedia.org/wiki/Reserve_requirement) fully determines [capital ratio](https://en.wikipedia.org/wiki/Capital_requirement), [debt ratio](https://en.wikipedia.org/wiki/Debt_ratio), and savings ratio.
 #### Reserve Ratio
 ```
 reserve-ratio = reserved / borrowed
@@ -76,7 +76,7 @@ The rate of return on Pure Bank investment becomes the reserve ratio. This does 
 imply that an individual Pure Bank can set its own return by setting its capital ratio. It merely reflects that the market capital ratio determines the return on capital. If *all lenders* doubled their present capital ratio their returns would necessarily double, as the cost for capital, and therefore its return, would double.
 
 #### Real Banks
-The independent capital ratios of all people, based on individual time preference, determine the [market](Glossary#market) rate of interest. The above substitution for the bank's own capital ratio as the interest rate seems to imply that the bank is setting the interest rate. However this is inherent in the concept of time preference. A bank can set any level of interest it prefers. There is no assumption for real banks that the market will oblige, so market interest and therefore market returns are assumed.
+The independent capital ratios of all people, based on individual time preference, determine the market rate of interest. The above substitution for the bank's own capital ratio as the interest rate seems to imply that the bank is setting the interest rate. However this is inherent in the concept of time preference. A bank can set any level of interest it prefers. There is no assumption for real banks that the market will oblige, so market interest and therefore market returns are assumed.
 ```
 market-return-rate = market-interest-rate * (loaned / borrowed)
 market-return-rate = market-capital-ratio * (loaned / borrowed)
@@ -85,14 +85,14 @@ The free bank also differs from the pure bank by operational expense, which dire
 ```
 free-bank-return-rate = market-return-rate * expense-ratio
 ```
-The real bank only differs from the free bank by tax (inclusive of regulatory expense), which directly reduces rate of return.
+The Real Bank only differs from the free bank by tax (inclusive of regulatory expense), which directly reduces rate of return.
 ```
 real-return-rate = free-bank-return-rate * tax-expense-ratio
 ```
-The central bank (state) only differs from the real bank by taxpayer subsidy (inclusive of discounted borrowing), which directly increases rate of return.
+The Central Bank (state) only differs from the real bank by taxpayer subsidy (inclusive of discounted borrowing), which directly increases rate of return.
 ```
 central-return-rate = real-bank-return-rate * subsidy-income-ratio
 ```
-Where tax includes seigniorage of the bank money, the [Fisher Equation](https://en.wikipedia.org/wiki/Fisher_equation) must be applied above to translate the interest rate from a nominal rate to a real rate. No other change is implied other than tax, which is accounted for by the real bank above. This tax is generally the source of subsidy, which is accounted for by the central bank above.
+Where tax includes seigniorage of the bank money, the [Fisher Equation](https://en.wikipedia.org/wiki/Fisher_equation) must be applied above to translate the interest rate from a nominal rate to a real rate. No other change is implied other than tax, which is accounted for by the Real Bank above. This tax is generally the source of subsidy, which is accounted for by the Central Bank above.
 
-Every [person](Glossary#person), or company of people, is a real bank, and the [state](Glossary#state) is a central bank. A real bank produces the service of liquid investment, an [economic good](https://en.wikipedia.org/wiki/Goods). The cost of production is the depreciation of its reserve. This is the model of all production.
+Every [person](Glossary#person), or company of people, is a Real Bank, and the [state](Glossary#state) is a Central Bank. A Real Bank produces the service of liquid investment, an [economic good](https://en.wikipedia.org/wiki/Goods). The cost of production is the depreciation of its reserve. This is the model of all production.
