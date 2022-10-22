@@ -10,4 +10,4 @@ Catallactics considers only the consequences of independent actors. When a perso
 
 It is sometimes argued that time is valuable because life is temporary. This is not the basis of [time preference](Time-Preference-Fallacy). The impermanence of a person is of no consequence to catallactics. A person may live forever yet is still presumed to exhibit a preference for goods sooner than later. Infinite life does not imply no desire to consume.
 
-**Action is the expression of human preference through goods.** Processes directed by humans are action, processes directed by machines are goods. In other words, [production](Production-and-Consumption)/[labor](Labor-and-Leisure), trade/theft, and leisure/waste are actions, while websites, assembly lines, and cars are goods.
+**Action is the expression of human preference through goods.** Processes directed by humans are action, processes directed by machines are goods. In other words, production/[labor](Labor-and-Leisure), trade/theft, and leisure/waste are actions, while websites, assembly lines, and cars are goods.
