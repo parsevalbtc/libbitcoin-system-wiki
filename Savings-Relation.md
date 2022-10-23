@@ -18,34 +18,34 @@ The *individual* does not control the market interest rate. The individual contr
 
 The following vertical bar chart provides an example of an individual’s savings.
 ```
-    Individual Capital Ratio (time preference)
-           |
-           |
-   21 [
-   20 [ H  |
-   19 [ HH |
-   ---[----+--------------------- Market Interest (time price)
- U 18 [ HHH|TTTTTTTTTTTTTTTTT
- N 17 [ HHH|PTTTTTTTTTTTTTTTT
- I 16 [ HHH|PPTTTTTTTTTTTTTTT
- T 15 [ HHH|PPPTTTTTTTTTTTTTT
-   14 [ HHH|PPPPTTTTTTTTTTTTT
- O 13 [ HHH|PPPPPTTTTTTTTTTTT
- R 12 [ HHH|PPPPPPTTTTTTTTTTT
- D 11 [ HHH|PPPPPPPTTTTTTTTTT
- I 10 [ HHH|PPPPPPPPTTTTTTTTT
- N  9 [ HHH|PPPPPPPPPTTTTTTTT
- A  8 [ HHH|PPPPPPPPPPTTTTTTT
- L  7 [ HHH|PPPPPPPPPPPTTTTTT
-    6 [ HHH|PPPPPPPPPPPPTTTTT
- V  5 [ HHH|PPPPPPPPPPPPPTTTT
- A  4 [ HHH|PPPPPPPPPPPPPPTTT
- L  3 [ HHH|PPPPPPPPPPPPPPPTT
- U  2 [ HHH|PPPPPPPPPPPPPPPPT
- E  1 [ HHH|PPPPPPPPPPPPPPPPP
-      =======================
-        abc|defghijklmnopqrst
- UNIT BY DESCENDING MARGINAL VALUE
+           Individual Capital Ratio (time preference)
+          |
+          |
+  21 [
+  20 [ H  |
+  19 [ HH |
+  ---[----+--------------------- Market Interest (time price)
+U 18 [ HHH|TTTTTTTTTTTTTTTTT
+N 17 [ HHH|PTTTTTTTTTTTTTTTT
+I 16 [ HHH|PPTTTTTTTTTTTTTTT
+T 15 [ HHH|PPPTTTTTTTTTTTTTT
+  14 [ HHH|PPPPTTTTTTTTTTTTT
+O 13 [ HHH|PPPPPTTTTTTTTTTTT
+R 12 [ HHH|PPPPPPTTTTTTTTTTT
+D 11 [ HHH|PPPPPPPTTTTTTTTTT
+I 10 [ HHH|PPPPPPPPTTTTTTTTT
+N  9 [ HHH|PPPPPPPPPTTTTTTTT
+A  8 [ HHH|PPPPPPPPPPTTTTTTT
+L  7 [ HHH|PPPPPPPPPPPTTTTTT
+   6 [ HHH|PPPPPPPPPPPPTTTTT
+V  5 [ HHH|PPPPPPPPPPPPPTTTT
+A  4 [ HHH|PPPPPPPPPPPPPPTTT
+L  3 [ HHH|PPPPPPPPPPPPPPPTT
+U  2 [ HHH|PPPPPPPPPPPPPPPPT
+E  1 [ HHH|PPPPPPPPPPPPPPPPP
+     =======================
+       abc|defghijklmnopqrst
+UNIT BY DESCENDING MARGINAL VALUE
 ```
 Each ordinal increment represents a marginal value increment. Symbols H, P, and T represent Hoard, Present and Time value increments respectively. Hoarded value is the present value of a unit not lent. Present value is that of a lent unit had it not been lent. Time value is the expected net value (principal + interest) of the lent unit over a period of time at the market interest rate for that period.
 
@@ -62,96 +62,96 @@ what is hoarded, not in what is lent. As shown in the [Depreciation Principle](D
 
 Notice that, relative to the previous chart, a decrease in the interest rate by the value of the 18th ordinal increment implies that one less unit is lent.
 ```
-    Individual Capital Ratio (time preference)
-            |
-            |
-   21 [
-   20 [ H   |
-   19 [ HH  |
-   18 [ HHH |TTTTTTTTTTTTTTTT
- U ---[-----+-------------------- Market Interest (time price) 
- N 17 [ HHHH|TTTTTTTTTTTTTTTT
- I 16 [ HHHH|PTTTTTTTTTTTTTTT
- T 15 [ HHHH|PPTTTTTTTTTTTTTT
-   14 [ HHHH|PPPTTTTTTTTTTTTT
- O 13 [ HHHH|PPPPTTTTTTTTTTTT
- R 12 [ HHHH|PPPPPTTTTTTTTTTT
- D 11 [ HHHH|PPPPPPTTTTTTTTTT
- I 10 [ HHHH|PPPPPPPTTTTTTTTT
- N  9 [ HHHH|PPPPPPPPTTTTTTTT
- A  8 [ HHHH|PPPPPPPPPTTTTTTT
- L  7 [ HHHH|PPPPPPPPPPTTTTTT
-    6 [ HHHH|PPPPPPPPPPPTTTTT
- V  5 [ HHHH|PPPPPPPPPPPPTTTT
- A  4 [ HHHH|PPPPPPPPPPPPPTTT
- L  3 [ HHHH|PPPPPPPPPPPPPPTT
- U  2 [ HHHH|PPPPPPPPPPPPPPPT
- E  1 [ HHHH|PPPPPPPPPPPPPPPP
-      =======================
-        abcd|efghijklmnopqrst
- UNIT BY DESCENDING MARGINAL VALUE
+           Individual Capital Ratio (time preference)
+           |
+           |
+  21 [
+  20 [ H   |
+  19 [ HH  |
+  18 [ HHH |TTTTTTTTTTTTTTTT
+U ---[-----+-------------------- Market Interest (time price) 
+N 17 [ HHHH|TTTTTTTTTTTTTTTT
+I 16 [ HHHH|PTTTTTTTTTTTTTTT
+T 15 [ HHHH|PPTTTTTTTTTTTTTT
+  14 [ HHHH|PPPTTTTTTTTTTTTT
+O 13 [ HHHH|PPPPTTTTTTTTTTTT
+R 12 [ HHHH|PPPPPTTTTTTTTTTT
+D 11 [ HHHH|PPPPPPTTTTTTTTTT
+I 10 [ HHHH|PPPPPPPTTTTTTTTT
+N  9 [ HHHH|PPPPPPPPTTTTTTTT
+A  8 [ HHHH|PPPPPPPPPTTTTTTT
+L  7 [ HHHH|PPPPPPPPPPTTTTTT
+   6 [ HHHH|PPPPPPPPPPPTTTTT
+V  5 [ HHHH|PPPPPPPPPPPPTTTT
+A  4 [ HHHH|PPPPPPPPPPPPPTTT
+L  3 [ HHHH|PPPPPPPPPPPPPPTT
+U  2 [ HHHH|PPPPPPPPPPPPPPPT
+E  1 [ HHHH|PPPPPPPPPPPPPPPP
+     =======================
+       abcd|efghijklmnopqrst
+UNIT BY DESCENDING MARGINAL VALUE
 ```
 This holds at every increment down to the level of interest in which the individual does
 not lend.
 ```
-                            Individual Capital Ratio (time preference)
-                            |
-                            |
-   21 [                     |
-   20 [ H                   |
-   19 [ HH                  |
- U 18 [ HHH                 |
- N 17 [ HHHH                |
- I 16 [ HHHHH               |
- T 15 [ HHHHHH              |
-   14 [ HHHHHHH             |
- O 13 [ HHHHHHHH            |
- R 12 [ HHHHHHHHH           |
- D 11 [ HHHHHHHHHH          |
- I 10 [ HHHHHHHHHHH         |
- N  9 [ HHHHHHHHHHHH        |
- A  8 [ HHHHHHHHHHHHH       |
- L  7 [ HHHHHHHHHHHHHH      |
-    6 [ HHHHHHHHHHHHHHH     |
- V  5 [ HHHHHHHHHHHHHHHH    |
- A  4 [ HHHHHHHHHHHHHHHHH   |
- L  3 [ HHHHHHHHHHHHHHHHHH  |
- U  2 [ HHHHHHHHHHHHHHHHHHH |
- E  1 [ HHHHHHHHHHHHHHHHHHHH|
-   ---[---------------------+---- Market Interest (time price) 
-      =======================
-        abcdefghijklmnopqrst|
- UNIT BY DESCENDING MARGINAL VALUE
+                           Individual Capital Ratio (time preference)
+                           |
+                           |
+  21 [                     |
+  20 [ H                   |
+  19 [ HH                  |
+U 18 [ HHH                 |
+N 17 [ HHHH                |
+I 16 [ HHHHH               |
+T 15 [ HHHHHH              |
+  14 [ HHHHHHH             |
+O 13 [ HHHHHHHH            |
+R 12 [ HHHHHHHHH           |
+D 11 [ HHHHHHHHHH          |
+I 10 [ HHHHHHHHHHH         |
+N  9 [ HHHHHHHHHHHH        |
+A  8 [ HHHHHHHHHHHHH       |
+L  7 [ HHHHHHHHHHHHHH      |
+   6 [ HHHHHHHHHHHHHHH     |
+V  5 [ HHHHHHHHHHHHHHHH    |
+A  4 [ HHHHHHHHHHHHHHHHH   |
+L  3 [ HHHHHHHHHHHHHHHHHH  |
+U  2 [ HHHHHHHHHHHHHHHHHHH |
+E  1 [ HHHHHHHHHHHHHHHHHHHH|
+  ---[---------------------+---- Market Interest (time price) 
+     =======================
+       abcdefghijklmnopqrst|
+UNIT BY DESCENDING MARGINAL VALUE
 ```
 Similarly this relation holds to the point where the individual lends all of his capital.
 
 ```
-        Individual Capital Ratio (time preference)
-        |
-        |
-   ---[-+------------------------ Market Interest (time price) 
-   21 [ |TTTTTTTTTTTTTTTTTTTT
-   20 [ |PTTTTTTTTTTTTTTTTTTT
-   19 [ |PPTTTTTTTTTTTTTTTTTT
- U 18 [ |PPPTTTTTTTTTTTTTTTTT
- N 17 [ |PPPPTTTTTTTTTTTTTTTT
- I 16 [ |PPPPPTTTTTTTTTTTTTTT
- T 15 [ |PPPPPPTTTTTTTTTTTTTT
-   14 [ |PPPPPPPTTTTTTTTTTTTT
- O 13 [ |PPPPPPPPTTTTTTTTTTTT
- R 12 [ |PPPPPPPPPTTTTTTTTTTT
- D 11 [ |PPPPPPPPPPTTTTTTTTTT
- I 10 [ |PPPPPPPPPPPTTTTTTTTT
- N  9 [ |PPPPPPPPPPPPTTTTTTTT
- A  8 [ |PPPPPPPPPPPPPTTTTTTT
- L  7 [ |PPPPPPPPPPPPPPTTTTTT
-    6 [ |PPPPPPPPPPPPPPPTTTTT
- V  5 [ |PPPPPPPPPPPPPPPPTTTT
- A  4 [ |PPPPPPPPPPPPPPPPPTTT
- L  3 [ |PPPPPPPPPPPPPPPPPPTT
- U  2 [ |PPPPPPPPPPPPPPPPPPPT
- E  1 [ |PPPPPPPPPPPPPPPPPPPP
-     ========================
-        |abcdefghijklmnopqrst
- UNIT BY DESCENDING MARGINAL VALUE
+       Individual Capital Ratio (time preference)
+       |
+       |
+  ---[-+------------------------ Market Interest (time price) 
+  21 [ |TTTTTTTTTTTTTTTTTTTT
+  20 [ |PTTTTTTTTTTTTTTTTTTT
+  19 [ |PPTTTTTTTTTTTTTTTTTT
+U 18 [ |PPPTTTTTTTTTTTTTTTTT
+N 17 [ |PPPPTTTTTTTTTTTTTTTT
+I 16 [ |PPPPPTTTTTTTTTTTTTTT
+T 15 [ |PPPPPPTTTTTTTTTTTTTT
+  14 [ |PPPPPPPTTTTTTTTTTTTT
+O 13 [ |PPPPPPPPTTTTTTTTTTTT
+R 12 [ |PPPPPPPPPTTTTTTTTTTT
+D 11 [ |PPPPPPPPPPTTTTTTTTTT
+I 10 [ |PPPPPPPPPPPTTTTTTTTT
+N  9 [ |PPPPPPPPPPPPTTTTTTTT
+A  8 [ |PPPPPPPPPPPPPTTTTTTT
+L  7 [ |PPPPPPPPPPPPPPTTTTTT
+   6 [ |PPPPPPPPPPPPPPPTTTTT
+V  5 [ |PPPPPPPPPPPPPPPPTTTT
+A  4 [ |PPPPPPPPPPPPPPPPPTTT
+L  3 [ |PPPPPPPPPPPPPPPPPPTT
+U  2 [ |PPPPPPPPPPPPPPPPPPPT
+E  1 [ |PPPPPPPPPPPPPPPPPPPP
+     =======================
+       |abcdefghijklmnopqrst
+UNIT BY DESCENDING MARGINAL VALUE
 ```
