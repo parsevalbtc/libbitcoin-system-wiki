@@ -20,7 +20,7 @@ Commodity money is also market money, as it does not rely on monopoly privilege 
 
 Both money and money substitutes constitute [currency](https://en.wikipedia.org/wiki/Currency). Money is sometimes referred to as base money. All monies are subject to lending and therefore necessarily [credit expansion](Credit-Expansion-Fallacy) (i.e. into money substitutes) and its corresponding [fractional reservation](Reserve-Definition).
 
-### Summary
+The following table offers examples of each of the aforementioned classifications.
 * [currency](https://en.wikipedia.org/wiki/Currency)
   * [money](https://en.wikipedia.org/wiki/Money) [present]
     * [commodity](https://en.wikipedia.org/wiki/Commodity_money) [use value]
