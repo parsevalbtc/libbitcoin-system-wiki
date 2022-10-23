@@ -9,11 +9,11 @@ Notice that the theory does not merely attempt to explain the origin of the mone
 
 The theorem contradicts the [subjective theory of value](https://en.m.wikipedia.org/wiki/Subjective_theory_of_value) upon which it relies. Value is subjective, which implies it can be based on anything, even if objectively that basis appears irrational.
 
-**The theorem fails to terminate its regression by not explaining how a person comes to value something for its *original* utility.** One must assume (not remember) something will be useful if nobody has ever attempted to use it. This assumption of utility is the first valuation, which remains subjective. The first valuation of a thing, like all after, can be for any reason, [including its use as a money](Collectible-Tautology).
+**The theorem fails to terminate its regression by not explaining how a person comes to value something for its original utility.** One must assume (not remember) something will be useful if nobody has ever attempted to use it. This assumption of utility is the first valuation, which remains subjective. The first valuation of a thing, like all after, can be for any reason, [including its use as a money](Collectible-Tautology).
 
 Given a preexisting concept of money, it has been [suggested](https://mises.org/library/cryptocurrencies-and-wider-regression-theorem) that anticipation of being a money is sufficient to satisfy the theorem. In other words the money does not need to follow the progression in actual practice. In this case, given a preexisting concept of money, anything can begin as money. This interpretation renders the theorem tautological - anything that people value as money can be money. In other words, it reduces to subjective first value.
 
-The theorem is actually based on the *empirical* observation of monetary evolution. Yet the [rational economic theory](https://en.m.wikipedia.org/wiki/Catallactics) on which it is based, and the theorem itself, explicitly reject empiricism.
+The theorem is actually based on the *empirical* observation of monetary evolution. Yet the rational [economic theory](https://en.m.wikipedia.org/wiki/Catallactics) on which it is based, and the theorem itself, explicitly reject empiricism.
 
 > All these statements implied in the regression theorem are enounced apodictically as implied in the apriorism of praxeology. It must happen this way. Nobody can ever succeed in construction a hypothetical case in which things were to occur in a different way.
 
