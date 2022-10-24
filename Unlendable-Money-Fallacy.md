@@ -1,6 +1,6 @@
 The [Fisher Equation](https://en.wikipedia.org/wiki/Fisher_equation) must be used for combining a rate of growth in a money that is itself subject to [inflation](https://en.wikipedia.org/wiki/Monetary_inflation), as depreciation occurs in the future money. This adjusts the nominal interest rate to obtain the real interest rate. Presentation is simplified by using ratios in place of rates. As shown in [Depreciation Principle](Depreciation-Principle), the commodity money growth rate is 0%, or a growth ratio of 100%.
 
-[Monopoly money](Money-Taxonomy) also exhibits depreciation due to [seigniorage](https://en.wikipedia.org/wiki/Seigniorage).
+[Monopoly money](Money-Taxonomy) exhibits depreciation due to [seigniorage](https://en.wikipedia.org/wiki/Seigniorage).
 ```
 monopoly-money-growth-ratio = commodity-money-growth-ratio / seigniorage-ratio.
 ~97% = 100% / 103%
@@ -22,7 +22,7 @@ interest-ratio / growth-ratio = depreciation-ratio
 interest-ratio / growth-ratio > 100%
 interest-ratio > growth-ratio
 ```
-Economic contraction (decreasing wealth) implies an increasing rate of [interest](Glossary#interest), as implied by the [theory of marginal utility](https://en.wikipedia.org/wiki/Marginal_utility), until positive growth is restored. As such contraction is a self-correcting condition.
+Economic contraction (decreasing wealth) implies an increasing rate of [interest](Glossary#interest), as implied by the theory of [marginal utility](https://en.wikipedia.org/wiki/Marginal_utility), until positive growth is restored. As such contraction is a self-correcting condition.
 ```
 depreciation-ratio > interest-ratio > 100%
 interest-ratio / growth-ratio = depreciation-ratio
