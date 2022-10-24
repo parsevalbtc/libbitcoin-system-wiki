@@ -2,8 +2,8 @@ There is a theory that [fractional reserve banking](https://en.wikipedia.org/wik
 
 > Banks do not, as too many textbooks still suggest, take deposits of existing money from savers and lend it out to borrowers: they create credit and money ex nihilo – extending a loan to the borrower and simultaneously crediting the borrower’s money account."
 >
-> *Lord Turner, Chairman of the UK Financial Services Authority until its abolition in March 2013* 
-> *Stockholm School of Economics Conference on: “Towards a Sustainable Financial System"* 
+> *Lord Turner, Chairman of the UK Financial Services Authority until its abolition in March 2013.* 
+> *Stockholm School of Economics Conference on: “Towards a Sustainable Financial System".*
 > *12 September 2013*
 
 Adherents describe two competing views on money creation. The traditional understanding is naive in relation to their more practical view, as implied by Lord Turner. The theory states that banking inherently creates not only credit, but also money.
@@ -20,20 +20,20 @@ In a free market people can perform the same operations as banks, without necess
 
 In the naive view, the potential lender has saved both the liquidity required for personal consumption ([hoard](Glossary#lend)) and the amount intended for earning [interest](Glossary#interest) ([investment](Glossary#investment)). All lending in this scenario originates from savings, such as gold accumulated from [panning](https://en.m.wikipedia.org/wiki/Gold_panning). Savings includes the sum of the hoard (money) and the amount that credit exceeds debt: `savings = money + (credit - debt)`. Money is gold and credits are money substitutes:
 
-|         |savings   |money     |credit    |debt      |
+|         |Savings   |Money     |Credit    |Debt      |
 |---------|----------|----------|----------|----------|
 |Person   |     100oz|     100oz|          |          |
 
 In this view of personal lending, Person hands over 81oz of gold to Borrower. Borrower accepts an obligation to repay Person with interest at [loan maturity](https://en.wikipedia.org/wiki/Maturity_(finance)). To simplify the accounting we will assume zero interest and no accounting (i.e. discounting) for repayment risk:
 
-|           |savings   |money     |credit    |debt      |
+|           |Savings   |Money     |Credit    |Debt      |
 |-----------|----------|----------|----------|----------|
 |Person     |     100oz|      19oz|      81oz|          |
 |Borrower   |          |      81oz|          |      81oz|
 
 Person has actually lent to his own enterprise (e.g. lending business) a fraction of his savings, which is accounted for below. Let us assume that Person hoards 10% of his savings for the liquidity required for near-term consumption and his Business hoards 10% for the same reason:
 
-|           |savings   |money     |credit    |debt      |
+|           |Savings   |Money     |Credit    |Debt      |
 |-----------|----------|----------|----------|----------|
 |Person     |     100oz|      10oz|      90oz|          |
 |Business   |          |       9oz|      81oz|      90oz|
@@ -41,7 +41,7 @@ Person has actually lent to his own enterprise (e.g. lending business) a fractio
 
 Person's business is operating with 10% reserve, as 90% of his deposited money is at risk of default. Projecting this into the naive view of banking requires only renaming "Lender" to "Depositor" and "Business" to "Bank". There is no need to assume that these are distinct individuals:
 
-|           |savings   |money     |credit    |debt      |
+|           |Savings   |Money     |Credit    |Sebt      |
 |-----------|----------|----------|----------|----------|
 |Depositor  |     100oz|      10oz|      90oz|          |
 |Bank       |          |       9oz|      81oz|      90oz|
@@ -119,7 +119,7 @@ No further expansion is possible without an increase in the amount of money or a
 
 In the typical practice of bank accounting, Bank does not hand over the money. Instead it creates account entries in a process referred to as "credit creation". It creates offsetting [ledger](https://en.wikipedia.org/wiki/Ledger) entries for Depositor's proceeds and loan ("credit" and "debt"), and offsetting [balance sheet](https://en.wikipedia.org/wiki/Balance_sheet) entries for itself ("asset" and "liability"). At the time of loan issuance, the accounts are as follows:
 
-|           |savings   |money     |credit    |debt      |asset     |liability |
+|           |Savings   |Money     |Credit    |Debt      |Asset     |Liability |
 |-----------|----------|----------|----------|----------|----------|----------|
 |Depositor  |     100oz|      10oz|      90oz|          |     100oz|          |
 |Bank       |          |      90oz|      81oz|     171oz|     171oz|     171oz|
@@ -129,7 +129,7 @@ This is where [explanations of the theory](https://www.sciencedirect.com/science
 
 This however demonstrates no actual spending of either the loan credit or the bank asset. Let us take this a bit further by assuming Borrower clears his account, and therefore the corresponding Bank asset and liability entries.
 
-|           |savings   |money     |credit    |debt      |asset     |liability |
+|           |Savings   |Money     |Credit    |Debt      |Asset     |Liability |
 |-----------|----------|----------|----------|----------|----------|----------|
 |Depositor  |     100oz|      10oz|      90oz|          |     100oz|          |
 |Bank       |          |       9oz|      81oz|      90oz|      90oz|      90oz|
@@ -145,14 +145,14 @@ Recall that each loan is reserved at 10%, so Bank can lend up 8.903 times the am
 
 So let us revisit the scenario where Bank creates credit at negative reserve (i.e. out of thin air), this time considering spending. For example, on deposits of 0oz Bank intends to issue a loan of 1000oz. Instead of relying on reserved money to eventually settle the loan, Bank "creates money" on its balance sheet. Bank then increases Borrower's credit and debt accounts, representing the borrowed money and the obligation to repay respectively:
 
-|           |savings   |money     |credit    |debt      |asset     |liability |
+|           |Savings   |Money     |Credit    |Debt      |Asset     |Liability |
 |-----------|----------|----------|----------|----------|----------|----------|
 |Bank       |          |          |    1000oz|    1000oz|    1000oz|    1000oz|
 |Borrower   |          |          |    1000oz|    1000oz|    1000oz|    1000oz|
 
 When Borrower trades 1oz (from his credit account) for a car, his credit account is decreased by 1oz and Merchant's is increased by 1oz. Note that Borrower now owes Bank 1oz, as anticipated by the loan agreement.
 
-|           |savings   |money     |credit    |debt      |asset     |liability |
+|           |Savings   |Money     |Credit    |Debt      |Asset     |Liability |
 |-----------|----------|----------|----------|----------|----------|----------|
 |Bank       |          |          |    1000oz|    1000oz|    1000oz|    1000oz|
 |Borrower   |      -1oz|          |     999oz|    1000oz|     999oz|    1000oz|
@@ -160,7 +160,7 @@ When Borrower trades 1oz (from his credit account) for a car, his credit account
 
 All looks good until Merchant attempts to withdraw from his account. At that point Bank has defaulted and Merchant is unpaid. If Merchant's account is with another bank, the payment fails as soon as the two banks attempt to settle accounts. With a hypothetical negative reserve, the accounts balance as follows, indicating [Bank's demise](https://en.wikipedia.org/wiki/Bank_failure) (negative money): 
 
-|           |savings   |money     |credit    |debt      |asset     |liability |
+|           |Savings   |Money     |Credit    |Debt      |Asset     |Liability |
 |-----------|----------|----------|----------|----------|----------|----------|
 |Bank       |      -1oz|      -1oz|    1000oz|     999oz|     999oz|     999oz|
 |Borrower   |          |          |     999oz|    1000oz|     999oz|    1000oz|
