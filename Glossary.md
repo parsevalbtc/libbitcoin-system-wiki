@@ -3,11 +3,11 @@ Starting to [Enforce](#enforcement) a new [Rule](#rule).
 #### Adjustment
 A change to [Difficulty](#difficulty).
 #### Aggregation
-The tendency toward reduced participation in [Mining](#mine) or [Validation](#validation). Implies [pooling](#pooling) or [centralization](#centralization).
+The tendency toward reduced participation in [Mining](#mine) or [Validation](#validation). Implies [Pooling](#pooling) or [Centralization](#centralization).
 #### Announcement
-The first communication of a [Block](#block) to another [Person](#person).
+The first [Communication](#communication) of a [Block](#block) to another [Person](#person).
 #### Apparent Hash Power
-A fraction of [Blocks](#block) in a [Chain](#chain) [Segment](#segment). Public estimates of specific [miner](#miner) [hash power](#hash-power) are based on this.
+A fraction of [Blocks](#block) in a [Chain](#chain) [Segment](#segment). Public estimates of specific [Miner](#miner) [Hash Power](#hash-power) are based on this.
 #### Attack
 Use of [Hash Power](#hash-power) to enable [Double Spending](#double-spend).
 #### Bitcoin
@@ -28,10 +28,10 @@ The limit to [Supply](#supply) over all time.
 The product of [Price](#price) and [Supply](#supply).
 #### Censorship
 Subjective [Confirmation](#confirmation).
+#### Centralization
+The tendency toward few [Merchants](#merchant). Merchants directly control [Validation](#validation). May also refer to [Pooling](#pooling)
 #### Chain
 The [Branch](#branch) with the most cumulative [Proof](#proof).
-#### Centralization
-The tendency toward few [Merchants](#merchant). Merchants directly control [validation](#validation). May also refer to [Pooling](#pooling)
 #### Claimant
 A [Person](#person) who holds a claim on property under the control of a [Custodian](#custodian). Also a lien-holder, shareholder, [lender](#lend), or depositor.
 #### Client-Server
@@ -63,9 +63,9 @@ The tendency opposing [Centralization](#centralization).
 #### Decouple
 A [Mine](#mine) that shares [Reward](#reward) with another to reduce [Variance](#variance).
 #### Delegation
-The tendency toward few [Owners](#owner). Owners directly control [spending](#spend).
+The tendency toward few [Owners](#owner). Owners directly control [Spending](#spend).
 #### Denial of Service
-Using [Communication](#communication) to exploit [Protocol](#protocol) or [Implementation](#implementation) flaws that  degrade performance. DoS is an acronym for this.
+Using [Communication](#communication) to exploit [Protocol](#protocol) or [Implementation](#implementation) flaws that degrade performance. DoS is an acronym for this.
 #### Depth
 One more than the count of [Blocks](#block) after a [Confirmation](#confirmation).
 #### Developer
@@ -74,10 +74,12 @@ A [Person](#person) creating an [Implementation](#implementation).
 The level of [Proof](#proof) required for [Validity](#validity).
 #### Distortion
 [Market](#market) aggression that skews the cost of [Mining](#mine).
-#### Double Spend
+#### Double-Spend
 The [Endorsement](#endorsement) of the same [Output](#output) [Contract](#contract) by distinct [Spends](#spend).
 #### Dust
 An insufficient number of [Units](#unit) for [Transfer](#transfer) via an [Output](#output). BTC [Consensus Rules](#consensus-rules) prohibit transfer of less than one unit.
+#### Economic Power
+A fraction of all property offered in [Exchange](#exchange).
 #### Economy
 The set of all [Merchants](#merchant).
 #### Endorsement
@@ -99,7 +101,7 @@ A [Person](#person) operating a [Grind](#grind).
 #### Halving
 A reduction in the [Subsidy](#subsidy) rate (by half).
 #### Hard Fork
-A [Fork](#fork) that implies a [Split](#split). Expansion of the set of potentially-[valid](#validity) [blocks](#block).
+A [Fork](#fork) that implies a [Split](#split). Expansion of the set of potentially-[Valid](#validity) [Blocks](#block).
 #### Hash
 An atomic computation to [Prove](#proof) [Candidate](#candidate) [Validity](#validity).
 #### Hash Power
@@ -125,7 +127,7 @@ The rate of increase in [Utility](#utility) from [Lending](#lend).
 #### Latency
 The delay inherent in [Communication](#communication).
 #### Layering
-[Trade](#trade) using a sequence of [Unconfirmed](#unconfirmed) [Transactions](#transaction) that can be [Settled](#settlement) by either party.
+Trade using a sequence of [Unconfirmed](#unconfirmed) [Transactions](#transaction) that can be [Settled](#settlement) by either party.
 #### Lend
 To [Trade](#trade) time without [Units](#units) for property of greater [Utility](#utility). [Invest](#lend) is an alias for this.
 #### Locktime
@@ -181,9 +183,9 @@ The relative level of control of a [Person](#person) over the [Chain](#chain) or
 #### Previous Output
 The [Output](#output) to which an [Input](#input) refers.
 #### Price
-A moving average of [Exchange](#exchange) rates.
+An average or instantaneous [Exchange](#exchange) rate.
 #### Price Inflation
-The increase in average [Exchange](#exchange) prices over time.
+The increase in [Price](#price) over time.
 #### Profit
 A return on [Investment](#lend) above the [Market](#market) rate of [Interest](#interest).
 #### Proof
@@ -192,7 +194,7 @@ A return on [Investment](#lend) above the [Market](#market) rate of [Interest](#
 Probabilistic [Proof](#proof) of an amount of usable computing memory (PoM).
 #### Proof-of-Stake
 Cryptographic [Proof](#proof) of an amount of [Ownership](#ownership) (PoS).
-#### Proof-Of-Work
+#### Proof-of-Work
 Probabilistic [Proof](#proof) of an amount of [Work](#work) performed (PoW).
 #### Protocol
 A set of [Communication](#communication) conventions.
@@ -213,13 +215,13 @@ A contiguous subset of a [Branch](#branch).
 #### Selfish
 A [Miner](#miner) who is not always [Honest](#honest).
 #### Settlement
-[Confirmation](#confirmation) of [layered](#layering) [transactions](#transaction).
+[Confirmation](#confirmation) of [Layered](#layering) [Transactions](#transaction).
 #### Signal
 A [Miner](#miner) indication via [Block](#block) data of intent to [Enforce](#enforcement) a new [Rule](#rule).
 #### Soft Fork
-A [Fork](#fork) that implies a [Split](#split) unless [Enforced](#enforcement) by [Majority Hash Power](#majority-hash-power). Contraction of the set of potentially-[valid](#validity) [blocks](#block).
+A [Fork](#fork) that implies a [Split](#split) unless [Enforced](#enforcement) by [Majority Hash Power](#majority-hash-power). Contraction of the set of potentially-[Valid](#validity) [Blocks](#block).
 #### Speculate
-To [Own](#owner) in expectation of [Price](#price) increase. Also to [borrow](#borrow) in expectation of price decrease.
+To [Own](#owner) in expectation of [Price](#price) increase. Also to [Borrow](#borrow) in expectation of price decrease.
 #### Spend
 The initial publication of a [Transaction](#transaction).
 #### Split
@@ -245,13 +247,13 @@ A voluntary swap of property between two [People](#person).
 #### Transaction
 A [Valid](#validity) record of [Transfer](#transfer).
 #### Transaction Pool
-The set of [Unconfirmed Transactions](#unconfirmed). Memory Pool is a misnomer for this.
+The set of [Unconfirmed](#unconfirmed)[Transactions](#transaction). Memory Pool is a misnomer for this.
 #### Transfer
 The change of control over certain [Units](#unit).
 #### Unconfirmed
 A [Transaction](#transaction) that does not exist in a [Block](#block).
 #### Unit
-A minimum transferable amount of property represented by a [Coin](#coin). The Satoshi is the Bitcoin unit.
+A minimum [Transferable](#transfer) amount of property represented by a [Coin](#coin). The satoshi is the Bitcoin unit.
 #### Utility
 The usefulness of certain property to a [Person](#person).
 #### Validation
