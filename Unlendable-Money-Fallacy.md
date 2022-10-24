@@ -3,12 +3,12 @@ The [Fisher Equation](https://en.wikipedia.org/wiki/Fisher_equation) must be use
 [Monopoly money](Money-Taxonomy) exhibits depreciation due to [seigniorage](https://en.wikipedia.org/wiki/Seigniorage).
 ```
 monopoly-money-growth-ratio = commodity-money-growth-ratio / seigniorage-ratio.
-~97% = 100% / 103%
+100% / 103% = ~97%
 ```
 Fixed supply money may appreciate due to [price deflation](https://en.wikipedia.org/wiki/Deflation).
 ```
 fixed-supply-money-growth-ratio = commodity-money-growth-ratio / inflation-ratio.
-~103% = 100% / 97%
+100% / 97% = ~103%
 ```
 A fixed-supply money is often presumed to change in [purchasing power](Inflation-Principle) in proportion to the products it represents (i.e. demand). In other words, with twice the amount of products each [unit](Glossary#unit) of the money will [trade](Glossary#trade) for twice its previous amount of products.
 ```
